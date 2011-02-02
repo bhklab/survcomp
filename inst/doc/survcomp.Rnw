@@ -1,0 +1,355 @@
+%\VignetteIndexEntry{SurvComp An Introduction (HowTo)}
+%\VignetteDepends{survival, ipred, prodlim, survivalROC, SuppDists, bootstrap}
+%\VignetteSuggests{Hmisc}
+%\VignetteKeywords{Breast Cancer, Survival Analysis}
+%\VignettePackage{survcomp}
+
+%documentclass[12pt, a4paper]{article}
+\documentclass[12pt]{article}
+
+\usepackage{amsmath}
+\usepackage{times}
+\usepackage{hyperref}
+\usepackage[numbers]{natbib}
+\usepackage[american]{babel}
+\usepackage{authblk}
+\usepackage{Sweave}
+
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\textfraction}{0.1}
+
+
+\textwidth=6.2in
+\textheight=8.5in
+%\parskip=.3cm
+\oddsidemargin=.1in
+\evensidemargin=.1in
+\headheight=-.3in
+
+%------------------------------------------------------------
+% newcommand
+%------------------------------------------------------------
+\newcommand{\scscst}{\scriptscriptstyle}
+\newcommand{\scst}{\scriptstyle}
+\newcommand{\Robject}[1]{{\texttt{#1}}}
+\newcommand{\Rfunction}[1]{{\texttt{#1}}}
+\newcommand{\Rclass}[1]{\textit{#1}}
+\newcommand{\Rpackage}[1]{\textit{#1}}
+\newcommand{\Rexpression}[1]{\texttt{#1}}
+\newcommand{\Rmethod}[1]{{\texttt{#1}}}
+\newcommand{\Rfunarg}[1]{{\texttt{#1}}}
+
+
+
+\begin{document}
+
+%------------------------------------------------------------
+\title{\Rpackage{survcomp}: a package for performance assessment and comparison for survival analysis}
+%------------------------------------------------------------
+\author[1,2,3]{Benjamin Haibe-Kains}
+\author[1,5]{Markus Schr\"{o}der}
+\author[1,2]{John Quackenbush}
+\author[4]{Christine Desmedt}
+\author[4]{Christos Sotiriou}
+\author[3]{Gianluca Bontempi}
+\affil[1]{Computational Biology and Functional Genomics Laboratory, Dana-Farber Cancer Institute, Harvard School of Public Health}
+\affil[2]{Center for Cancer Computational Biology, Dana-Farber Cancer Institute}
+\affil[3]{Machine Learning Group, Universit\'{e} Libre de Bruxelles}
+\affil[4]{Functional Genomics Unit, Universit\'{e} Libre de Bruxelles}
+\affil[5]{BRF, Center for Biotechnology (CeBiTec), Bielefeld University, Germany}
+
+
+\maketitle
+\tableofcontents
+
+%------------------------------------------------------------
+\section{Introduction}
+%------------------------------------------------------------ 
+
+The \Rpackage{survcomp} package is providing functions to assess and to compare the performance of risk prediction (survival) models. This package has been primarily used in gene expression studies and the corresponding results have been published in high impact journals (Bioinformatics, Clinical Cancer Research, Journal of Clinical Oncology, ...). We plan to extend its use to other -omics high-throughput data in a close future.
+
+%------------------------------------------------------------
+\subsection{Installation}
+%------------------------------------------------------------ 
+
+\Rpackage{survcomp} requires that \Rpackage{survival}, \Rpackage{ipred},  \Rpackage{prodlim}, \Rpackage{survivalROC}, \Rpackage{SuppDists}, \Rpackage{bootstrap} and \Rpackage{R} (>= 2.3.0) are installed. These should be installed automatically when you install \Rpackage{survcomp}. To install \Rpackage{survcomp}, source biocLite from bioconductor
+
+<<install-pkg, eval=false>>=
+source("http://bioconductor.org/biocLite.R")
+biocLite("survcomp")
+@
+
+<<loadlib,echo=FALSE,results=hide>>==
+library(survcomp)
+@ 
+
+%------------------------------------------------------------
+\subsection{Further help}
+%------------------------------------------------------------ 
+To view the \Rpackage{survcomp} description and a summary of all the functions within \Rpackage{survcomp}, type the following:\\ \\
+\Rfunction{> library(help=survcomp)}
+
+%<<survcomphelp,echo=FALSE,results=hide>>==
+%library(help=survcomp)
+%@
+
+%------------------------------------------------------------
+\subsection{Citing}
+%------------------------------------------------------------ 
+We are delighted if you use this package. Please do email us if you find a bug or have a suggestion.  We would be very grateful if you could cite:
+
+B. Haibe-Kains, C. Desmedt, C. Sotiriou and G. Bontempi (2008) A comparative study of survival models for breast cancer prognostication based on microarray data: does a single gene beat them all? \textit{Bioinformatics} \textbf{24(19):}2200-2208.
+
+\newpage
+
+%------------------------------------------------------------
+\section{Quickstart}
+%------------------------------------------------------------ 
+We will very briefly demonstrate some of the functions in \Rpackage{survcomp}.
+
+%------------------------------------------------------------
+\subsection{Overview}
+%------------------------------------------------------------ 
+
+%------------------------------------------------------------
+\subsubsection{The Concordance Index}
+%------------------------------------------------------------ 
+The Concordance Index function computes the concordance index for a risk prediction, i.e. the probability that, for a pair of randomly chosen comparable samples, the sample with the higher risk prediction will experience an event before the other sample or belongs to a higher binary class. The usage is:\\
+
+\Rfunction{concordance.index(x, surv.time, surv.event, cl, weights, strat, alpha = 0.05, outx = TRUE, method = c("conservative", "noether", "nam"), na.rm = FALSE)}\\ \\
+And a small example with random data could look like this:
+
+<<concordance.index.example>>==
+set.seed(12345)
+age <- rnorm(100, 50, 10)
+sex <- sample(0:1, 100, replace=TRUE)
+stime <- rexp(100)
+cens   <- runif(100,.5,2)
+sevent  <- as.numeric(stime <= cens)
+stime <- pmin(stime, cens)
+strat <- sample(1:3, 100, replace=TRUE)
+cat("survival prediction:\n")
+ci <- concordance.index(x=age, surv.time=stime, surv.event=sevent, strat=strat, method="noether")
+ci[1:5]
+@ 
+
+%------------------------------------------------------------
+\subsubsection{The D Index}
+%------------------------------------------------------------ 
+The D Index function computes the D index for a risk prediction, i.e. an estimate of the log hazard ratio comparing two equal-sized prognostic groups. This is a natural measure of separation between two independent survival distributions under the proportional hazards assumption. The usage is:\\
+
+\Rfunction{D.index(x, surv.time, surv.event, weights, strat, alpha = 0.05, na.rm = FALSE, ...)}\\ \\
+And a small example with random data could look like this:
+
+<<D.index.example>>==
+set.seed(12345)
+age <- rnorm(100, 50, 10)
+stime <- rexp(100)
+cens   <- runif(100,.5,2)
+sevent  <- as.numeric(stime <= cens)
+stime <- pmin(stime, cens)
+strat <- sample(1:3, 100, replace=TRUE)
+di <- D.index(x=age, surv.time=stime, surv.event=sevent, strat=strat)
+di[1:8]
+@ 
+
+
+%------------------------------------------------------------
+\subsubsection{The Hazard Ratio}
+%------------------------------------------------------------ 
+The Hazard Ratio function computes the hazard ratio for a risk prediction. The usage is:\\
+
+\Rfunction{hazard.ratio(x, surv.time, surv.event, weights, strat, alpha = 0.05, na.rm = FALSE, ...)}\\ \\
+And a small example with random data could look like this:
+
+<<hazard.ratio.example>>==
+set.seed(12345)
+age <- rnorm(100, 50, 10)
+stime <- rexp(100)
+cens   <- runif(100,.5,2)
+sevent  <- as.numeric(stime <= cens)
+stime <- pmin(stime, cens)
+strat <- sample(1:3, 100, replace=TRUE)
+hr <- hazard.ratio(x=age, surv.time=stime, surv.event=sevent, strat=strat)
+hr[1:8]
+@ 
+
+
+%------------------------------------------------------------
+\subsubsection{The Brier Score}
+%------------------------------------------------------------ 
+The Brier Score function computes all the Brier scores (BSC) and the corresponding integrated Briser score (IBSC) from a risk score, for all the times of event occurrence. The risk score is first transformed in survival probabilities using either a Cox model or the product-limit estimator. The usage is:\\
+
+\Rfunction{sbrier.score2proba(data.tr, data.ts, method = c("cox", "prodlim"))}\\ \\
+And a small example with random data could look like this:
+
+<<hazard.ratio.example>>==
+set.seed(12345)
+age <- rnorm(30, 50, 10)
+stime <- rexp(30)
+cens <- runif(30,.5,2)
+sevent <- as.numeric(stime <= cens)
+stime <- pmin(stime, cens)
+dd <- data.frame("time"=stime, "event"=sevent, "score"=age)
+
+#Cox's model
+sb1 <- sbrier.score2proba(data.tr=dd, data.ts=dd, method="cox")
+#product-limit estimator
+sb2 <- sbrier.score2proba(data.tr=dd, data.ts=dd, method="prodlim")
+sb1$bsc.integrated
+sb2$bsc.integrated
+@ 
+
+%\begin{figure}[htbp]
+%\begin{center}
+%<<overviewKhan2, fig=TRUE>>=
+%overview(k.data, classvec=k.class, labels=k.class)
+%@
+%\caption{Overview of Khan data. A) dendrogram showing results of average linkage clustering, B) boxplot and C) histrogram. In this case we have added %a vector of class (classvec) to color the overview by class membership}
+%\label{figure 1} 
+%\end{center}
+%\end{figure}
+
+\newpage
+
+%------------------------------------------------------------
+\section{Functions in survcomp}
+%------------------------------------------------------------ 
+
+\begin{table}[h]
+\begin{tabular}{p{3.5cm} p{12cm}}
+\noindent \textsc{Function} & \noindent \textsc{Description}\\
+D.index & Function to compute the D index\\
+censor.time & Function to artificially censor survival data\\
+cindex.comp & Function to compare two concordance indices\\
+cindex.comp.meta & Function to compare two concordance indices\\
+combine.est & Function to combine estimates\\
+combine.test & Function to combine probabilities\\
+concordance.index & Function to compute the concordance index for survival or binary class prediction\\
+cvpl & Function to compute the CVPL\\
+dindex.comp & Function to compare two D indices\\
+dindex.comp.meta & Function to compare two concordance indices\\
+fisherz & Function to compute Fisher z transformation\\
+forestplot.surv & Function to create a Forest Plot\\
+getsurv2 & Function to retrieve the survival probabilities at a specific point in time\\
+hazard.ratio & Function to estimate the hazard ratio through Cox regression\\
+hr.comp & Function to statistically compare two hazard ratios\\
+hr.comp.meta & Function to compare two concordance indices\\
+hr.comp2 & Function to statistically compare two hazard ratios (alternative interface)\\
+iauc.comp & Function to compare two IAUCs through time-dependent ROC curves\\
+ibsc.comp & Function to compare two IBSCs\\
+km.coxph.plot & Function to plot several Kaplan-Meier survival curves\\
+logpl & Function to compute the log partial likelihood of a Cox model\\
+no.at.risk & Function to compute the number of individuals at risk\\
+sbrier.score2proba & Function to compute the BSCs from a risk score, for all the times of event occurrence\\
+score2proba & Function to compute the survival probabilities from a risk score\\
+survcomp-package & Performance Assessment and Comparison for Survival Analysis\\
+td.sens.spec & Function to compute sensitivity and specificity for a binary classification of survival data\\
+tdrocc & Function to compute time-dependent ROC curves\\
+test.hetero.est & Function to test the heterogeneity of set of probabilities\\
+test.hetero.test & Function to test the heterogeneity of set of probabilities\\
+\end{tabular}
+\end{table}
+
+
+\newpage
+\begin{thebibliography}{10}
+
+\bibitem{Cochrane1954}
+Cochrane, W. G.:
+\newblock The combination of estimates from different experiments.
+\newblock \textit{Biometrics}, \textbf{10}, 101-129. 1954.
+
+\bibitem{Whitlock2005}
+Whitlock, M. C.:
+\newblock Combining probability from independent tests: the weighted Z-method is superior to Fisher's approach.
+\newblock \textit{J. Evol. Biol.}, \textbf{18}, 1368-1373. 2005.
+
+\bibitem{Heagerty2000}
+Heagerty, P. J. and Lumley, T. L. and Pepe, M. S.:
+\newblock Time-Dependent ROC Curves for Censored Survival Data and a Diagnostic Marker.
+\newblock \textit{Biometrics}, \textbf{56}, 337-344. 2000.    
+
+\bibitem{Efron1986}
+Efron, B. and Tibshirani, R.:
+\newblock The Bootstrap Method for standard errors, confidence intervals, and other measures of statistical accuracy.
+\newblock \textit{Statistical Science}, \textbf{1}, 1-35. 1986.
+
+\bibitem{Becker1988}
+Becker, R. A., Chambers, J. M. and Wilks, A. R.:
+\newblock The New S Language.
+\newblock \textit{Wadsworth \& Brooks/Cole}, 1988.
+
+\bibitem{Cox1972}
+Cox, D. R.:
+\newblock Regression Models and Life Tables.
+\newblock \textit{Journal of the Royal Statistical Society Series B}, \textbf{34}, 187-220. 1972.
+
+\bibitem{Andersen1993}
+Andersen, P. K. and Borgan, O. and Gill, R. D. and Keiding, N.:
+\newblock Statistical Models Based on Counting Processes
+\newblock \textit{Springer}, 1993.
+
+\bibitem{Brier1950}
+Brier, G. W.:
+\newblock Verification of forecasts expressed in terms of probabilities.
+\newblock \textit{Monthly Weather Review}, \textbf{78}, 1-3. 1950.
+
+\bibitem{Graf1999}
+Graf, E. and Schmoor, C. and Sauerbrei, W. and Schumacher, M.:
+\newblock Assessment and comparison of prognostic classification schemes for survival data.
+\newblock \textit{Statistics in Medicine}, \textbf{18}, 2529-2545. 1999.
+
+\bibitem{Wilcoxon1945}
+Wilcoxon, F.:
+\newblock Individual comparisons by ranking methods.
+\newblock \textit{Biometrics Bulletin}, \textbf{1}, 80-83. 1945.
+
+\bibitem{Haibe-Kains2008}
+Haibe-Kains, B. and Desmedt, C. and Sotiriou, C. and Bontempi, G.:
+\newblock A comparative study of survival models for breast cancer prognostication based on microarray data: does a single gene beat them all?
+\newblock \textit{Bioinformatics}, \textbf{24}:19, 2200-2208. 2008.
+
+\bibitem{Student1908}
+Student:
+\newblock The Probable Error of a Mean.
+\newblock \textit{Biometrika}, \textbf{6}, 1-25. 1908.
+
+\bibitem{Fisher1915}
+R. A. Fisher:
+\newblock Frequency distribution of the values of the correlation coefficient in samples of an indefinitely large population.
+\newblock \textit{Biometrika}, \textbf{10}, 507-521. 1915.
+
+\bibitem{Verweij1993}
+Verweij PJM. and van Houwelingen H:
+\newblock Cross-validation in survival analysis.
+\newblock \textit{Statistics in Medicine}, \textbf{12}, 2305-2314. 1993.
+
+\bibitem{Houwelingen2006}
+van Houwelingen H, Bruinsma T, Hart AA, van't Veer LJ and Wessels LFA:
+\newblock Cross-validated Cox regression on microarray gene expression data.
+\newblock \textit{tatistics in Medicine}, \textbf{25}, 3201-3216. 2006.
+
+\bibitem{Harrel1996}
+Harrel Jr, F. E. and Lee, K. L. and Mark, D. B.:
+\newblock Tutorial in biostatistics: multivariable prognostic models: issues in developing models, evaluating assumptions and adequacy, and measuring and reducing errors.
+\newblock \textit{Statistics in Medicine}, \textbf{15}, 361-387. 1996.
+
+\bibitem{Pencina2004}
+Pencina, M. J. and D'Agostino, R. B.:
+\newblock Overall C as a measure of discrimination in survival analysis: model specific population value and confidence interval estimation.
+\newblock \textit{Statistics in Medicine}, \textbf{23}, 2109-2123. 2004.
+
+\bibitem{Royston2004}
+Royston, P. and Sauerbrei, W.:
+\newblock A new measure of prognostic separation in survival data.
+\newblock \textit{Statistics in Medicine}, \textbf{23}, 723-748. 2004.
+  
+%\bibitem{}
+%
+%\newblock 
+%\newblock \textit{}, \textbf{}, . .
+
+\end{thebibliography}
+
+\end{document}

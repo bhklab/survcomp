@@ -1,0 +1,2 @@
+useDynLib(survcomp)
+export(censor.time,combine.test,dindex.comp,hazard.ratio,iauc.comp,no.at.risk,td.sens.spec,cindex.comp.meta,concordance.index,D.index,hr.comp2,ibsc.comp,sbrier.score2proba,test.hetero.est,cindex.comp,cvpl,fisherz,forestplot.surv,hr.comp.meta,km.coxph.plot,score2proba,test.hetero.test,combine.est,dindex.comp.meta,getsurv2,hr.comp,logpl,tdrocc)
