@@ -16,9 +16,10 @@ cindex.comp(cindex1, cindex2)
 \details{
   The two concordance indices must be computed from the same samples (and corresponding survival data). The function uses a Student t test for dependent samples.
 }
-\note{
-Since the comparison between the two concordance indices is done with a paired t-test that relies on the computation of the Pearson correlation coefficient between the original predictors \code{x}, any non-linear transformation of these predictors will affect the computation of the p-value.
-}
+%%\note{
+%%Since the comparison between the two concordance indices is done with a paired t-test that relies on the computation of the Pearson correlation coefficient between the original predictors \code{x}, any non-linear transformation of these predictors will affect the computation of the p-value.
+%%We are now using spearman correlation to circumvent this difficulty.
+%%}
 \value{
   \item{p.value }{p-value from the Student t test for the comparison cindex1 > cindex2.}
   \item{cindex1 }{value of the first concordance index.}

@@ -6,7 +6,7 @@ function(cindex1, cindex2) {
 	eps <- 1E-15
 	
 	n <- cindex1$n
-	r <- cor(cindex1$data$x, cindex2$data$x, use="complete.obs")
+	r <- cor(cindex1$data$x, cindex2$data$x, use="complete.obs", method="spearman")
 	if((1 - abs(r)) > eps) {
 		t.stat <- (cindex1$c.index - cindex2$c.index) / sqrt(cindex1$se^2 + cindex2$se^2 - 2 * r * cindex1$se * cindex2$se)
 		diff.ci.p <- pt(q=t.stat, df=n - 1, lower.tail=FALSE)
