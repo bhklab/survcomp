@@ -13,8 +13,9 @@
 \usepackage[numbers]{natbib}
 \usepackage[american]{babel}
 \usepackage{authblk}
+%\renewcommand\Authfont{\scshape
+\renewcommand\Affilfont{\itshape\small}
 \usepackage{Sweave}
-
 \renewcommand{\topfraction}{0.85}
 \renewcommand{\textfraction}{0.1}
 
@@ -52,11 +53,13 @@
 \author[4]{Christine Desmedt}
 \author[4]{Christos Sotiriou}
 \author[3]{Gianluca Bontempi}
+
+
 \affil[1]{Computational Biology and Functional Genomics Laboratory, Dana-Farber Cancer Institute, Harvard School of Public Health}
 \affil[2]{Center for Cancer Computational Biology, Dana-Farber Cancer Institute}
 \affil[3]{Machine Learning Group, Universit\'{e} Libre de Bruxelles}
-\affil[4]{Functional Genomics Unit, Universit\'{e} Libre de Bruxelles}
-\affil[5]{BRF, Center for Biotechnology (CeBiTec), Bielefeld University, Germany}
+\affil[4]{Breast Cancer Translational Research Laboratory, Institut Jules Bordet, Universit\'{e} Libre de Bruxelles}
+\affil[5]{Bioinformatics Resource Facility, Center for Biotechnology, Bielefeld University, Germany}
 
 
 \maketitle
