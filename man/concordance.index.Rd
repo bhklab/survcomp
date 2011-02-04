@@ -21,8 +21,10 @@ concordance.index(x, surv.time, surv.event, cl, weights, strat, alpha = 0.05, ou
   \item{method}{can take the value \code{conservative}, \code{noether} or \code{name} (see paper Pencina et al. for details).}
   \item{na.rm}{\code{TRUE} if missing values should be removed.}
 }
-\details{
-  Method \code{name} is not implemented yet.
+%%\details{
+%%}
+\note{
+The "direction" of the concordance index (< 0.5 or > 0.5) is the opposite than the \link[Hmisc]{rcorr.cens} function in the \code{Hmisc} package. So you can easily get the same results than \link[Hmisc]{rcorr.cens} by  changing the sign of \code{x}.
 }
 \value{
   \item{c.index }{concordance index estimate.}
