@@ -6,9 +6,7 @@
 Draw a forest plot together with a table of text.
 }
 \usage{
-forestplot(labeltext, mean, lower, upper, align = NULL, is.summary =
-FALSE, clip = c(-Inf, Inf), xlab = "", zero = 0, graphwidth = unit(2,
-"inches"), col = meta.colors(), xlog = FALSE, box.size=NULL, x.ticks=NULL...)
+forestplot.surv(labeltext, mean, lower, upper, align = NULL, is.summary = FALSE, clip = c(-Inf, Inf), xlab = "", zero = 0, graphwidth = unit(2, "inches"), col = meta.colors(), xlog = FALSE, box.size = NULL, x.ticks = NULL, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -22,14 +20,14 @@ FALSE, clip = c(-Inf, Inf), xlab = "", zero = 0, graphwidth = unit(2,
   \item{xlab}{x-axis label }
   \item{zero}{x-axis coordinate for zero line }
   \item{graphwidth}{Width of confidence interval graph }
-  \item{col}{See \code{\link{meta.colors}}}
+  \item{col}{See \code{\link[rmeta]{meta.colors}}}
   \item{xlog}{If \code{TRUE}, x-axis tick marks are exponentiated}
-  \item{boxsize}{Override the default box size based on precision}
+  \item{box.size}{Override the default box size based on precision}
   \item{x.ticks}{Optional user-specified x-axis tick marks. Specify \code{NULL} to use the defaults, \code{numeric(0)} to omit the x-axis.}
   \item{\dots}{Not used.}
 }
 \details{
-This function is more flexible than \code{\link{metaplot}} and the
+This function is more flexible than \code{\link[rmeta]{metaplot}} and the
 \code{plot} methods for meta-analysis objects, but requires more work by
 the user.
 
@@ -44,7 +42,7 @@ rmeta package, CRAN, Thomas Lumley <tlumley@u.washington.edu>. Functions for sim
 }
 \seealso{\code{metaplot}, \code{forestplot}}
 \examples{
-[...]
+##
 }
 \keyword{hplot}% at least one, from doc/KEYWORDS
 

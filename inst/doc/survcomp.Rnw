@@ -1,5 +1,5 @@
-%\VignetteIndexEntry{SurvComp An Introduction (HowTo)}
-%\VignetteDepends{survival, ipred, prodlim, survivalROC, SuppDists, bootstrap}
+%\VignetteIndexEntry{survcomp An Introduction (HowTo)}
+%\VignetteDepends{survcomp}
 %\VignetteSuggests{Hmisc}
 %\VignetteKeywords{Breast Cancer, Survival Analysis}
 %\VignettePackage{survcomp}
@@ -69,7 +69,7 @@
 \section{Introduction}
 %------------------------------------------------------------ 
 
-The \Rpackage{survcomp} package is providing functions to assess and to compare the performance of risk prediction (survival) models. This package has been primarily used in gene expression studies and the corresponding results have been published in high impact journals (Bioinformatics, Clinical Cancer Research, Journal of Clinical Oncology, ...). We plan to extend its use to other -omics high-throughput data in a close future.
+The \Rpackage{survcomp} package is providing functions to assess and to compare the performance of risk prediction (survival) models. This package has been primarily used in gene expression studies and the corresponding results have been published in high impact journals (Bioinformatics, Clinical Cancer Research, Journal of Clinical Oncology, ...). We plan to extend its use to other omics high-throughput data in a close future.
 
 %------------------------------------------------------------
 \subsection{Installation}
