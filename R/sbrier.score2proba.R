@@ -6,10 +6,11 @@ function(data.tr, data.ts, method=c("cox", "prodlim")) {
 	cc.ix <- complete.cases(data.ts)
 	ot <- order(data.ts$time)[1:(length(cc.ix)-sum(!cc.ix))]
 	data.ts <- data.ts[ot, ,drop=FALSE]
-	surv.time <- data.ts$time
-	surv.event <- data.ts$event
-	btime <- surv.time[surv.time >= 0 & surv.time <= max(surv.time, na.rm=TRUE)]
-	utime <- unique(surv.time[surv.event == 1])
+	surv.time.ts <- data.ts$time
+	surv.event.ts <- data.ts$event
+	score.ts <- data.ts$score
+	btime <- surv.time.ts[surv.time.ts >= 0 & surv.time.ts <= max(surv.time.ts, na.rm=TRUE)]
+	utime <- unique(surv.time.ts[surv.event.ts == 1])
 	bsc <- rep(NA, length(btime))
 	switch(method,
 	"cox"={
@@ -17,10 +18,12 @@ function(data.tr, data.ts, method=c("cox", "prodlim")) {
 		#fit the cox model for the training set
 		coxm <- coxph(Surv(time, event) ~ score, data=data.tr)
 		#compute survival probabilities using the cox model fitted on the training set and the score from the test set
-		sf <- survfit(coxm, newdata=data.ts)
+		#sf <- survfit(coxm, newdata=data.ts)
+		dd <- data.frame("score"=score.ts)
+		sf <- survfit(coxm, newdata=dd)
 		for(i in 1:length(utime)) {
 			mypred <- getsurv2(sf=sf, time=utime[i])
-			bsc[is.na(bsc) & btime <= utime[i]] <- sbrier(obj=Surv(surv.time, surv.event), pred=mypred, btime=utime[i])
+			bsc[is.na(bsc) & btime <= utime[i]] <- sbrier(obj=Surv(surv.time.ts, surv.event.ts), pred=mypred, btime=utime[i])
 		}	
 	},
 	"prodlim"={
@@ -31,7 +34,7 @@ function(data.tr, data.ts, method=c("cox", "prodlim")) {
 		bsc <- rep(NA, length(btime))
 		for(i in 1:length(utime)) {
 			mypred <- unlist(lapply(lpred, function(x, ix) { return(x[[ix]]) }, ix=i))
-			bsc[is.na(bsc) & btime <= utime[i]] <- sbrier(obj=Surv(surv.time, surv.event), pred=mypred, btime=utime[i])
+			bsc[is.na(bsc) & btime <= utime[i]] <- sbrier(obj=Surv(surv.time.ts, surv.event.ts), pred=mypred, btime=utime[i])
 		}
 	})
 	if(sum(is.na(bsc)) > 0) { bsc[is.na(bsc)] <- bsc[ min(which(is.na(bsc)))-1] } 

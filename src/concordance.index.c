@@ -127,4 +127,3 @@ void concordanceIndexC(int *msurv, int *ustrat, double *x2, int *cl2,
         }
     }
 }
-
