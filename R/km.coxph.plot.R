@@ -2,16 +2,17 @@
 function(formula.s, data.s, sub.s="all", x.label, y.label, main.title, sub.title, leg.text, leg.pos="bottomright", leg.inset=0.05, o.text, v.line, h.line, .col=1:4, .lty=1, .lwd=1, show.n.risk=FALSE, n.risk.step, n.risk.cex=0.85, verbose=TRUE, ...) {
 
     require(survival)
-
+	
     if( length(sub.s) == 1 && sub.s=="all" ) sub.s <- rep(TRUE, nrow(data.s))
     assign("sub.s", sub.s, envir=.GlobalEnv)
 	if(missing(sub.title)) { sub.title <- NULL }
+	if(missing(leg.text)) { leg.text <- NULL }
 	
+	ng <- length(leg.text)
     old.mar <- par("mar")
     on.exit( par( mar = old.mar ) )
     .xaxt="s"
     .xlab=x.label
-    ng <- length(leg.text)
     if( show.n.risk ) {
         par(mar = old.mar + c(ng,8,3,0))
         .xaxt="n"
@@ -23,7 +24,7 @@ function(formula.s, data.s, sub.s="all", x.label, y.label, main.title, sub.title
     if(!missing(v.line)) abline(v=v.line, lty=3, col="purple")
     if(!missing(h.line)) abline(h=h.line, lty=3, col="purple")
 
-    legend(x=leg.pos, xjust=0, yjust=1, legend=leg.text, col=.col, lty=.lty, lwd=.lwd, cex=0.9, bg="white", inset=leg.inset)
+    if(!is.null(leg.text)) { legend(x=leg.pos, xjust=0, yjust=1, legend=leg.text, col=.col, lty=.lty, lwd=.lwd, cex=0.9, bg="white", inset=leg.inset) }
     mtext(sub.title, line=-4, outer=TRUE)
     if(missing(o.text) ) {
 		sdf <- survdiff(formula.s, data=data.s, subset=sub.s)
