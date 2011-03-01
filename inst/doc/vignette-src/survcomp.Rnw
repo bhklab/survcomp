@@ -1,0 +1,666 @@
+%\VignetteIndexEntry{survcomp An Introduction (HowTo)}
+%\VignetteDepends{survcomp}
+%\VignetteSuggests{Hmisc}
+%\VignetteKeywords{Breast Cancer, Survival Analysis}
+%\VignettePackage{survcomp}
+
+%documentclass[12pt, a4paper]{article}
+\documentclass[12pt]{article}
+
+\usepackage{amsmath}
+\usepackage{times}
+\usepackage{hyperref}
+\usepackage[numbers]{natbib}
+\usepackage[american]{babel}
+\usepackage{authblk}
+%\renewcommand\Authfont{\scshape
+\renewcommand\Affilfont{\itshape\small}
+\usepackage{Sweave}
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\textfraction}{0.1}
+\usepackage{tikz}
+
+
+\textwidth=6.2in
+\textheight=8.5in
+%\parskip=.3cm
+\oddsidemargin=.1in
+\evensidemargin=.1in
+\headheight=-.3in
+
+%------------------------------------------------------------
+% newcommand
+%------------------------------------------------------------
+\newcommand{\scscst}{\scriptscriptstyle}
+\newcommand{\scst}{\scriptstyle}
+\newcommand{\Robject}[1]{{\texttt{#1}}}
+\newcommand{\Rfunction}[1]{{\texttt{#1}}}
+\newcommand{\Rclass}[1]{\textit{#1}}
+\newcommand{\Rpackage}[1]{\textit{#1}}
+\newcommand{\Rexpression}[1]{\texttt{#1}}
+\newcommand{\Rmethod}[1]{{\texttt{#1}}}
+\newcommand{\Rfunarg}[1]{{\texttt{#1}}}
+
+
+
+\begin{document}
+
+%------------------------------------------------------------
+\title{\Rpackage{survcomp}: a package for performance assessment and comparison for survival analysis}
+%------------------------------------------------------------
+\author[1,2,3]{Benjamin Haibe-Kains}
+\author[1,5]{Markus Schr\"{o}der}
+\author[1,2]{John Quackenbush}
+%\author[4]{Christine Desmedt}
+\author[4]{Christos Sotiriou}
+\author[3]{Gianluca Bontempi}
+
+
+\affil[1]{Computational Biology and Functional Genomics Laboratory, Dana-Farber Cancer Institute, Harvard School of Public Health}
+\affil[2]{Center for Cancer Computational Biology, Dana-Farber Cancer Institute}
+\affil[3]{Machine Learning Group, Universit\'{e} Libre de Bruxelles}
+\affil[4]{Breast Cancer Translational Research Laboratory, Institut Jules Bordet, Universit\'{e} Libre de Bruxelles}
+\affil[5]{Bioinformatics Resource Facility, Center for Biotechnology, Bielefeld University, Germany}
+
+
+\SweaveOpts{highlight=TRUE, tidy=TRUE, keep.space=TRUE, keep.blank.space=FALSE, keep.comment=TRUE}
+
+<<setup,echo=FALSE>>=
+library(pgfSweave)
+setCacheDir("cache")
+options(keep.source=TRUE)
+@
+
+
+\maketitle
+\tableofcontents
+
+%------------------------------------------------------------
+\section{Introduction}
+%------------------------------------------------------------ 
+
+The \Rpackage{survcomp} package is providing functions to assess and to compare the performance of risk prediction (survival) models. Whilst there are several risk prediction models published, the task to assess the performance This package has been primarily used in gene expression studies and the corresponding results have been published in high impact journals (Bioinformatics, Clinical Cancer Research, Journal of Clinical Oncology, ...). We plan to extend its use to other omics high-throughput data in a close future.
+
+%------------------------------------------------------------
+\subsection{Installation}
+%------------------------------------------------------------ 
+
+\Rpackage{survcomp} requires that \Rpackage{survival}, \Rpackage{ipred},  \Rpackage{prodlim}, \Rpackage{survivalROC}, \Rpackage{SuppDists}, \Rpackage{bootstrap} and \Rpackage{R} (>= 2.3.0) are installed. These should be installed automatically when you install \Rpackage{survcomp}. To install \Rpackage{survcomp}, source biocLite from bioconductor
+
+<<install-pkg, eval=false>>=
+source("http://bioconductor.org/biocLite.R")
+biocLite("survcomp")
+@
+
+<<loadlib,echo=FALSE,results=hide>>==
+library(survcomp)
+@ 
+
+%------------------------------------------------------------
+\subsection{Further help}
+%------------------------------------------------------------ 
+To view the \Rpackage{survcomp} description and a summary of all the functions within \Rpackage{survcomp}, type the following:\\ \\
+\Rfunction{> library(help=survcomp)}
+
+%<<survcomphelp,echo=FALSE,results=hide>>==
+%library(help=survcomp)
+%@
+
+%------------------------------------------------------------
+\subsection{Citing}
+%------------------------------------------------------------ 
+We are delighted if you use this package. Please do email us if you find a bug or have a suggestion.  We would be very grateful if you could cite:
+
+B. Haibe-Kains, C. Desmedt, C. Sotiriou and G. Bontempi (2008) A comparative study of survival models for breast cancer prognostication based on microarray data: does a single gene beat them all? \textit{Bioinformatics} \textbf{24(19):}2200-2208.
+
+\newpage
+
+%------------------------------------------------------------
+\section{Functional demonstration}
+%------------------------------------------------------------ 
+We will very briefly demonstrate some of the functions in \Rpackage{survcomp}. We use the \Robject{sampleData} datafile for demonstration purposes, it includes subsets of the datasets \Rpackage{breastCancerMAINZ}, \Rpackage{breastCancerTRANSBIG}, \Rpackage{breastCancerUPP}, \Rpackage{breastCancerUNT}, \Rpackage{breastCancerVDX} and \Rpackage{breastCancerNKI}, available as experimental datapackages on Bioconductor. The six datasets in \Robject{sampleData} contain the genes AURKA (also known as STK6, STK7, or STK15), PLAU (also known as uPA), STAT1, VEGF, CASP3, ESR1, and ERBB2, as introduced by Desmedt et al. 2008. The seven genes represent the proliferation, tumor invasion/metastasis, immune response, angiogenesis, apoptosis phenotypes, and the ER and HER2 signaling, respectively.
+
+
+%------------------------------------------------------------
+\subsection{Overview}
+%------------------------------------------------------------ 
+To use the \Robject{ExpressionSet} object we have to load the \Rpackage{Biobase} package.
+
+<<loadDepends, results=hide>>==
+library(genefu)
+library(Biobase)
+@
+
+Loading the \Robject{sampleData} object will results in 6 new object. If you execute \Rmethod{ls()} you will see \Robject{mainzSample},\Robject{transbigSample}, \Robject{uppSample}, \Robject{untSample}, \Robject{vdxSample} and \Robject{nkiSample}. More details about these objects is available in the \Robject{sampleData} manpage (\Rmethod{?sampleData}).
+
+<<loadSampleData>>==
+data(sampleData)
+@
+
+Before we can start the analysis, we have to define the annotation for the mentioned seven genes, the datasets we use and a few help-variables. We define the gene symbol list (\Robject{gsList}), the entrez-gene ID list (\Robject{gidList}), the probe names for the used Agilent microarray (\Robject{probesNKI}), the proben name for the used Affymetrix microarray (\Robject{probesAffy}), a list containing the used dataset names (\Robject{datasetList}), spaces for displaying the text in the forestplot at the right place (\Robject{myspace} and \Robject{mybigspace}) and \Robject{tc} for setting the censored time to 10 years.
+
+<<createVars,results=hide>>==
+gsList <- c("ESR1", "ERBB2", "AURKA", "PLAU", "VEGF", "STAT1", "CASP3")
+gidList <- c(2099, 2064, 6790, 5328, 7422, 6772, 836)
+probesNKI <- c("NM_000125", "NM_004448", "NM_003600", "NM_002658", "NM_003376", "NM_007315", "NM_004346")
+probesAffy <- c("205225_at", "216836_s_at", "208079_s_at", "211668_s_at", "211527_x_at", "209969_s_at", "202763_at")
+datasetList <- c("MAINZ","TRANSBIG","UPP","UNT","VDX","NKI","ALL")
+myspace <- " "
+mybigspace <- "    "
+tc <- 10 * 365
+@
+
+For computing the concordance index for each gene in each dataset, we have to call the \Rmethod{concordance.index()}) function. See \Rmethod{?concordance.index} for details.
+
+<<computeCindexSample>>==
+cindexall.mainz.small <- t(apply(X=exprs(mainzSample), MARGIN=1, function(x, y, z) { tt <- concordance.index(x=x, surv.time=y, surv.event=z, method="noether", na.rm=TRUE); return(c("cindex"=tt$c.index, "cindex.se"=tt$se, "lower"=tt$lower, "upper"=tt$upper)); }, y=pData(mainzSample)[ ,"t.dmfs"], z=pData(mainzSample)[ ,"e.dmfs"]))
+@
+
+<<computeCindex,echo=FALSE,results=hide>>==
+cindexall.transbig.small <- t(apply(X=exprs(transbigSample), MARGIN=1, function(x, y, z) { tt <- concordance.index(x=x, surv.time=y, surv.event=z, method="noether", na.rm=TRUE); return(c("cindex"=tt$c.index, "cindex.se"=tt$se, "lower"=tt$lower, "upper"=tt$upper)); }, y=pData(transbigSample)[ ,"t.dmfs"], z=pData(transbigSample)[ ,"e.dmfs"]))
+
+cindexall.vdx.small <- t(apply(X=exprs(vdxSample), MARGIN=1, function(x, y, z) { tt <- concordance.index(x=x, surv.time=y, surv.event=z, method="noether", na.rm=TRUE); return(c("cindex"=tt$c.index, "cindex.se"=tt$se, "lower"=tt$lower, "upper"=tt$upper)); }, y=pData(vdxSample)[ ,"t.dmfs"], z=pData(vdxSample)[ ,"e.dmfs"])) 
+
+cindexall.upp.small <- t(apply(X=exprs(uppSample), MARGIN=1, function(x, y, z) { tt <- concordance.index(x=x, surv.time=y, surv.event=z, method="noether", na.rm=TRUE); return(c("cindex"=tt$c.index, "cindex.se"=tt$se, "lower"=tt$lower, "upper"=tt$upper)); }, y=pData(uppSample)[ ,"t.rfs"], z=pData(uppSample)[ ,"e.rfs"]))
+
+cindexall.unt.small <- t(apply(X=exprs(untSample), MARGIN=1, function(x, y, z) { tt <- concordance.index(x=x, surv.time=y, surv.event=z, method="noether", na.rm=TRUE); return(c("cindex"=tt$c.index, "cindex.se"=tt$se, "lower"=tt$lower, "upper"=tt$upper)); }, y=pData(untSample)[ ,"t.dmfs"], z=pData(untSample)[ ,"e.dmfs"]))
+
+cindexall.nki.small <- t(apply(X=exprs(nkiSample), MARGIN=1, function(x, y, z) { tt <- concordance.index(x=x, surv.time=y, surv.event=z, method="noether", na.rm=TRUE); return(c("cindex"=tt$c.index, "cindex.se"=tt$se, "lower"=tt$lower, "upper"=tt$upper)); }, y=pData(nkiSample)[ ,"t.dmfs"], z=pData(nkiSample)[ ,"e.dmfs"]))
+@
+
+For computing the D index for each gene in each dataset, we have to call the \Rmethod{D.index()}) function. See \Rmethod{?D.index} for details.
+
+
+<<dindexSample>>==
+dindexall.mainz.small <- t(apply(X=exprs(mainzSample), MARGIN=1, function(x, y, z) { tt <- D.index(x=x, surv.time=y, surv.event=z, na.rm=TRUE); return(c("dindex"=tt$d.index, "dindex.se"=tt$se, "lower"=tt$lower, "upper"=tt$upper)); }, y=pData(mainzSample)[ ,"t.dmfs"], z=pData(mainzSample)[ ,"e.dmfs"]))
+@
+
+<<dindex,echo=FALSE,results=hide>>==
+dindexall.transbig.small <- t(apply(X=exprs(transbigSample), MARGIN=1, function(x, y, z) { tt <- D.index(x=x, surv.time=y, surv.event=z, na.rm=TRUE); return(c("dindex"=tt$d.index, "dindex.se"=tt$se, "lower"=tt$lower, "upper"=tt$upper)); }, y=pData(transbigSample)[ ,"t.dmfs"], z=pData(transbigSample)[ ,"e.dmfs"]))
+
+dindexall.upp.small <- t(apply(X=exprs(uppSample), MARGIN=1, function(x, y, z) { tt <- D.index(x=x, surv.time=y, surv.event=z, na.rm=TRUE); return(c("dindex"=tt$d.index, "dindex.se"=tt$se, "lower"=tt$lower, "upper"=tt$upper)); }, y=pData(uppSample)[ ,"t.rfs"], z=pData(uppSample)[ ,"e.rfs"]))
+
+dindexall.unt.small <- t(apply(X=exprs(untSample), MARGIN=1, function(x, y, z) { tt <- D.index(x=x, surv.time=y, surv.event=z, na.rm=TRUE); return(c("dindex"=tt$d.index, "dindex.se"=tt$se, "lower"=tt$lower, "upper"=tt$upper)); }, y=pData(untSample)[ ,"t.dmfs"], z=pData(untSample)[ ,"e.dmfs"]))
+
+dindexall.vdx.small <- t(apply(X=exprs(vdxSample), MARGIN=1, function(x, y, z) { tt <- D.index(x=x, surv.time=y, surv.event=z, na.rm=TRUE); return(c("dindex"=tt$d.index, "dindex.se"=tt$se, "lower"=tt$lower, "upper"=tt$upper)); }, y=pData(vdxSample)[ ,"t.dmfs"], z=pData(vdxSample)[ ,"e.dmfs"]))
+
+dindexall.nki.small <- t(apply(X=exprs(nkiSample), MARGIN=1, function(x, y, z) { tt <- D.index(x=x, surv.time=y, surv.event=z, na.rm=TRUE); return(c("dindex"=tt$d.index, "dindex.se"=tt$se, "lower"=tt$lower, "upper"=tt$upper)); }, y=pData(nkiSample)[ ,"t.dmfs"], z=pData(nkiSample)[ ,"e.dmfs"]))
+@
+
+For computing the hazard ratio for each gene in each dataset, we have to call the \Rmethod{hazard.ratio()}) function. See \Rmethod{?hazard.ratio} for details. Before computing the hazard ratio, we have to rescale the gene expression data for each dataset to a comparable range. Therefor we use the following function with \Rfunarg{q=0.05}.
+
+<<rescaleExpressoion>>==
+`rescale` <- function(x, na.rm=FALSE, q=0) {
+    if(q == 0) {
+        ma <- max(x, na.rm=na.rm)
+        mi <- min(x, na.rm=na.rm)
+    } else {
+        ma <- quantile(x, probs=1-(q/2), na.rm=na.rm)
+        mi <- quantile(x, probs=q/2, na.rm=na.rm)
+    }
+    x <- (x - mi) / (ma - mi)
+    return(x)
+}
+@
+
+<<hratioSample>>==
+hratio.mainz.small <- t(apply(X=exprs(mainzSample), MARGIN=1, function(x, y, z) { tt <- hazard.ratio(x=x, surv.time=y, surv.event=z, na.rm=TRUE); return(c("hratio"=tt$hazard.ratio, "hratio.se"=tt$se, "lower"=tt$lower, "upper"=tt$upper)); }, y=pData(mainzSample)[ ,"t.dmfs"], z=pData(mainzSample)[ ,"e.dmfs"]))
+@
+
+<<hratio,echo=FALSE,results=hide>>==
+hratio.transbig.small <- t(apply(X=exprs(transbigSample), MARGIN=1, function(x, y, z) { tt <- hazard.ratio(x=x, surv.time=y, surv.event=z, na.rm=TRUE); return(c("hratio"=tt$hazard.ratio, "hratio.se"=tt$se, "lower"=tt$lower, "upper"=tt$upper)); }, y=pData(transbigSample)[ ,"t.dmfs"], z=pData(transbigSample)[ ,"e.dmfs"]))
+
+hratio.upp.small <- t(apply(X=exprs(uppSample), MARGIN=1, function(x, y, z) { tt <- hazard.ratio(x=x, surv.time=y, surv.event=z, na.rm=TRUE); return(c("hratio"=tt$hazard.ratio, "hratio.se"=tt$se, "lower"=tt$lower, "upper"=tt$upper)); }, y=pData(uppSample)[ ,"t.rfs"], z=pData(uppSample)[ ,"e.rfs"]))
+
+hratio.unt.small <- t(apply(X=exprs(untSample), MARGIN=1, function(x, y, z) { tt <- hazard.ratio(x=x, surv.time=y, surv.event=z, na.rm=TRUE); return(c("hratio"=tt$hazard.ratio, "hratio.se"=tt$se, "lower"=tt$lower, "upper"=tt$upper)); }, y=pData(untSample)[ ,"t.dmfs"], z=pData(untSample)[ ,"e.dmfs"]))
+
+hratio.vdx.small <- t(apply(X=exprs(vdxSample), MARGIN=1, function(x, y, z) { tt <- hazard.ratio(x=x, surv.time=y, surv.event=z, na.rm=TRUE); return(c("hratio"=tt$hazard.ratio, "hratio.se"=tt$se, "lower"=tt$lower, "upper"=tt$upper)); }, y=pData(vdxSample)[ ,"t.dmfs"], z=pData(vdxSample)[ ,"e.dmfs"]))
+
+hratio.nki.small <- t(apply(X=exprs(nkiSample), MARGIN=1, function(x, y, z) { tt <- hazard.ratio(x=x, surv.time=y, surv.event=z, na.rm=TRUE); return(c("hratio"=tt$hazard.ratio, "hratio.se"=tt$se, "lower"=tt$lower, "upper"=tt$upper)); }, y=pData(nkiSample)[ ,"t.dmfs"], z=pData(nkiSample)[ ,"e.dmfs"]))
+@
+
+To get an overall estimate over all datasets for the concordance index from each gene, we iterate over all the concordance indices of all datasets and combine them with the \Rmethod{combine.est} function from the \Rpackage{genefu} package and recalculate the lower- and upper border accordingly. We do that for the D indices and the hazard ratios in the same way.
+
+The resulting combined concordance indices are:
+
+<<combineCindices>>==
+tt <- as.data.frame(NULL)
+for(i in 1:7){
+  tt <- rbind(
+    tt,combine.est(x=cbind(   cindexall.mainz.small[i,"cindex"],
+                              cindexall.transbig.small[i,"cindex"],
+                              cindexall.upp.small[i,"cindex"],
+                              cindexall.unt.small[i,"cindex"],
+                              cindexall.vdx.small[i,"cindex"],
+                              cindexall.nki.small[i,"cindex"]),
+                   x.se=cbind(cindexall.mainz.small[i,"cindex.se"],
+                              cindexall.transbig.small[i,"cindex.se"],
+                              cindexall.upp.small[i,"cindex.se"],
+                              cindexall.unt.small[i,"cindex.se"],
+                              cindexall.vdx.small[i,"cindex.se"],
+                              cindexall.nki.small[i,"cindex.se"]),)
+              )
+}
+tt$lower <- tt$estimate + qnorm(0.025, lower.tail=TRUE) * tt$se
+tt$upper <- tt$estimate + qnorm(0.025, lower.tail=FALSE) * tt$se
+rownames(tt) <- gsList
+colnames(tt) <- c("cindex","cindex.se","lower","upper")
+ccindex <- tt
+ccindex
+@
+
+The resulting combined D indices are:
+
+
+<<combineDindices,echo=FALSE>>==
+tt <- as.data.frame(NULL)
+for(i in 1:7){
+  tt <- rbind(
+    tt,combine.est(x=cbind(   dindexall.mainz.small[i,"dindex"],
+                              dindexall.transbig.small[i,"dindex"],
+                              dindexall.upp.small[i,"dindex"],
+                              dindexall.unt.small[i,"dindex"],
+                              dindexall.vdx.small[i,"dindex"],
+                              dindexall.nki.small[i,"dindex"]),
+                   x.se=cbind(dindexall.mainz.small[i,"dindex.se"],
+                              dindexall.transbig.small[i,"dindex.se"],
+                              dindexall.upp.small[i,"dindex.se"],
+                              dindexall.unt.small[i,"dindex.se"],
+                              dindexall.vdx.small[i,"dindex.se"],
+                              dindexall.nki.small[i,"dindex.se"]),)
+              )
+}
+tt$lower <- tt$estimate + qnorm(0.025, lower.tail=TRUE) * tt$se
+tt$upper <- tt$estimate + qnorm(0.025, lower.tail=FALSE) * tt$se
+rownames(tt) <- gsList
+colnames(tt) <- c("dindex","dindex.se","lower","upper")
+cdindex <- tt
+cdindex
+@
+
+The resulting combined hazard ratios are:
+
+<<combineHratio,echo=FALSE>>==
+tt <- as.data.frame(NULL)
+for(i in 1:7){
+  tt <- rbind(
+    tt,combine.est(x=cbind(   hratio.mainz.small[i,"hratio"],
+                              hratio.transbig.small[i,"hratio"],
+                              hratio.upp.small[i,"hratio"],
+                              hratio.unt.small[i,"hratio"],
+                              hratio.vdx.small[i,"hratio"],
+                              hratio.nki.small[i,"hratio"]),
+                   x.se=cbind(hratio.mainz.small[i,"hratio.se"],
+                              hratio.transbig.small[i,"hratio.se"],
+                              hratio.upp.small[i,"hratio.se"],
+                              hratio.unt.small[i,"hratio.se"],
+                              hratio.vdx.small[i,"hratio.se"],
+                              hratio.nki.small[i,"hratio.se"]),)
+              )
+}
+tt$lower <- tt$estimate + qnorm(0.025, lower.tail=TRUE) * tt$se
+tt$upper <- tt$estimate + qnorm(0.025, lower.tail=FALSE) * tt$se
+rownames(tt) <- gsList
+colnames(tt) <- c("hratio","hratio.se","lower","upper")
+chratio <- tt
+chratio
+@
+
+For displaying the combined concordance indices for each genes over all datasets, we use the \Rmethod{forestplot()} function. The resulting forestplot for all concordance indices is:
+
+<<allDatasetsForestPlotCindex,fig=TRUE>>==
+labeltext <- cbind(c("Gene Symbol",gsList),c(rep(myspace,8)))
+bs <- rep(0.5, nrow(labeltext))                              
+r.mean <- c(NA,ccindex$cindex)
+r.lower <- c(NA,ccindex$lower)
+r.upper <- c(NA,ccindex$upper)
+
+forestplot.surv(labeltext=labeltext, mean=r.mean, lower=r.lower, upper=r.upper, zero=0.5, align=c("l"), graphwidth=unit(2, "inches"), x.ticks=seq(0.4,0.7,0.05), xlab=paste("Concordance Index", myspace, sep=""), col=meta.colors(box="royalblue",line="darkblue",zero="darkred"), box.size=bs, clip=c(0.4,1))
+@
+
+The resulting forestplot for all D indices is:
+
+<<allDatasetsForestPlotDindex,fig=TRUE>>==
+labeltext <- cbind(c("Gene Symbol",gsList),c(rep(myspace,8)))
+bs <- rep(0.5, nrow(labeltext))                              
+tt <- log2(cdindex)
+
+forestplot.surv(labeltext=labeltext, mean=c(NA,tt$dindex), lower=c(NA,tt$lower), upper=c(NA,tt$upper), zero=0, align=c("l"), graphwidth=unit(2, "inches"), x.ticks=seq(-0.5,1.3,0.1), xlab=paste("log2 D.index", myspace, sep=""), col=meta.colors(box="royalblue",line="darkblue",zero="darkred"), box.size=bs, clip=c(-0.5,1.3))
+@
+
+The resulting forestplot for all hazard ratios is:
+
+<<allDatasetsForestPlotHratio,fig=TRUE>>==
+labeltext <- cbind(c("Gene Symbol",gsList),c(rep(myspace,8)))
+bs <- rep(0.5, nrow(labeltext))                              
+tt <- log2(chratio)
+
+forestplot.surv(labeltext=labeltext, mean=c(NA,tt$hratio), lower=c(NA,tt$lower), upper=c(NA,tt$upper), zero=0, align=c("l"), graphwidth=unit(2, "inches"), x.ticks=seq(-0.2,0.8,0.1), xlab=paste("log2 Hazard Ratio", myspace, sep=""), col=meta.colors(box="royalblue",line="darkblue",zero="darkred"), box.size=bs, clip=c(-0.2,0.8))
+@
+
+Taking a more specific look, e.g. at the gene AURKA, we create the forestplot the same was as before, showing the concordance indices for the gene AURKA in each dataset and the combined estimation over all datasets.
+
+<<AURKAForestPlotCindices,fig=TRUE>>==
+tt <- rbind(cindexall.mainz.small[3,],
+            cindexall.transbig.small[3,],
+            cindexall.upp.small[3,],
+            cindexall.unt.small[3,],
+            cindexall.vdx.small[3,],
+            cindexall.nki.small[3,],
+            as.numeric(ccindex[3,]))
+
+rownames(tt) <- datasetList
+tt <- as.data.frame(tt)
+labeltext <- cbind(c("Dataset",datasetList),c(rep(mybigspace,8)))
+bs <- rep(0.5, nrow(labeltext))                              
+
+forestplot.surv(labeltext=labeltext, mean=c(NA,tt$cindex), lower=c(NA,tt$lower), upper=c(NA,tt$upper), zero=0.5, align=c("l"), graphwidth=unit(2, "inches"), x.ticks=seq(0.4,0.8,0.05), xlab=paste("AURKA Concordance Index", myspace, sep=""), col=meta.colors(box="royalblue",line="darkblue",zero="darkred"), box.size=bs, clip=c(0.5,1), is.summary=(c(rep(FALSE,7),TRUE)))
+@
+
+And the same with the D indices for the gene AURKA in each dataset and the combined estimation over all datasets.
+
+<<AURKAForestPlotDindices,fig=TRUE>>==
+tt <- rbind(dindexall.mainz.small[3,],
+            dindexall.transbig.small[3,],
+            dindexall.upp.small[3,],
+            dindexall.unt.small[3,],
+            dindexall.vdx.small[3,],
+            dindexall.nki.small[3,],
+            as.numeric(cdindex[3,]))
+
+rownames(tt) <- datasetList
+tt <- as.data.frame(tt)
+tt <- log2(tt)
+labeltext <- cbind(c("Dataset",datasetList),c(rep(mybigspace,8)))
+bs <- rep(0.5, nrow(labeltext))                              
+
+forestplot.surv(labeltext=labeltext, mean=c(NA,tt$dindex), lower=c(NA,tt$lower), upper=c(NA,tt$upper), zero=0, align=c("l"), graphwidth=unit(2, "inches"), x.ticks=seq(-0.5,2,0.5), xlab=paste("AURKA log2 D.index", myspace, sep=""), col=meta.colors(box="royalblue",line="darkblue",zero="darkred"), box.size=bs, clip=c(-0.25,2.5), is.summary=(c(rep(FALSE,7),TRUE)))
+@
+
+And at last the hazard ratio for the gene AURKA in each dataset and the combined estimation over all datasets.
+
+<<AURKAForestPlotHratio,fig=TRUE>>==
+tt <- rbind(hratio.mainz.small[3,],
+            hratio.transbig.small[3,],
+            hratio.upp.small[3,],
+            hratio.unt.small[3,],
+            hratio.vdx.small[3,],
+            hratio.nki.small[3,],
+            as.numeric(chratio[3,]))
+
+rownames(tt) <- datasetList
+tt <- as.data.frame(tt)
+tt <- log2(tt)
+labeltext <- cbind(c("Dataset",datasetList),c(rep(myspace,8)))
+bs <- rep(0.5, nrow(labeltext))
+   
+forestplot.surv(labeltext=labeltext, mean=c(NA,tt$hratio), lower=c(NA,tt$lower), upper=c(NA,tt$upper), zero=0, align=c("l"), graphwidth=unit(2, "inches"), x.ticks=seq(-0.5,3.5,0.5), xlab=paste("AURKA log2 Hazard Ratio", myspace, sep=""), col=meta.colors(box="royalblue",line="darkblue",zero="darkred"), box.size=bs, clip=c(-0.5,3.5),is.summary=(c(rep(FALSE,7),TRUE)))
+@
+
+The following small loop shows an easy way for creating forestplots showing the concordance indices for a single gene for all datasets and the combined estimation over all datasets. The same can be done for the D indices and hazard ratios.
+
+<<singleGenesForestplotCindex,fig=TRUE>>==
+for(i in 1:length(gsList)) {
+##  par(mfrow=c(3,3))
+  myspace <- " "
+  tt <- rbind(cindexall.mainz.small[i,],
+              cindexall.transbig.small[i,],
+              cindexall.upp.small[i,],
+              cindexall.unt.small[i,],
+              cindexall.vdx.small[i,],
+              cindexall.nki.small[i,],
+              as.numeric(ccindex[i,]))
+
+  rownames(tt) <- datasetList
+  tt <- as.data.frame(tt)
+  labeltext <- cbind(c("Dataset",datasetList),c(rep(myspace,8)))
+  bs <- rep(0.5, nrow(labeltext))
+
+  r.mean <- c(NA,tt$cindex)
+  r.lower <- c(NA,tt$cindex + qnorm(0.025, lower.tail=TRUE) * tt$cindex.se)
+  r.upper <- c(NA,tt$cindex + qnorm(0.025, lower.tail=FALSE) * tt$cindex.se)
+  
+  x.ticks.lower <- (floor((min(r.mean,na.rm=TRUE) - 0.1) * 10)/10)
+  x.ticks.upper <- (floor((max(r.mean,na.rm=TRUE) + 0.2) * 10)/10)
+   
+  forestplot.surv(labeltext=labeltext, mean=c(NA,tt$cindex), lower=c(NA,tt$lower), upper=c(NA,tt$upper), zero=0.5, align=c("l"), graphwidth=unit(2, "inches"), x.ticks=seq(x.ticks.lower,x.ticks.upper,0.05), xlab=paste(gsList[i], myspace, sep=""), col=meta.colors(box="royalblue",line="darkblue",zero="darkred"), box.size=bs, clip=c(0.3,0.8),is.summary=(c(rep(FALSE,7),TRUE)))
+##  title(paste("cindex forestplot, ", gsList[i]))
+}
+@
+
+
+
+%<<survivalCurveAllDatasets,fig=TRUE>>==
+%surv.data <- censor.time(surv.time=c(pData(mainzSample)[ ,"t.dmfs"], pData(transbigSample)[ ,"t.dmfs"], pData(untSample)[ ,"t.dmfs"], pData(vdxSample)[ ,"t.dmfs"], pData(uppSample)[ ,"t.rfs"], pData(nkiSample)[ ,"t.dmfs"]) / 365, surv.event=c(pData(mainzSample)[ ,"e.dmfs"], pData(transbigSample)[ ,"e.dmfs"], pData(untSample)[ ,"e.dmfs"], pData(vdxSample)[ ,"e.dmfs"], pData(uppSample)[ ,"e.rfs"], pData(nkiSample)[ ,"e.dmfs"]), time.cens=tc / 365)
+%gg <- factor(c(rep("mainz", nrow(pData(mainzSample))), rep("transbig", nrow(pData(transbigSample))), rep("unt", nrow(pData(untSample))), rep("vdx", nrow(pData(vdxSample))), rep("upp", nrow(pData(uppSample))), rep("nki", nrow(pData(nkiSample)))), levels=c("mainz", "transbig", "unt", "vdx", "upp", "nki"))
+%dd <- data.frame("time"=surv.data[[1]], "event"=surv.data[[2]], "group"=gg)
+%km.coxph.plot(formula.s=formula(Surv(time, event) ~ group), data.s=dd, sub.s="all", x.label="Time (years)", y.label="Probability of DMFS/RFS", main.title="", sub.title=NULL, leg.pos="bottomright", leg.inset=0.05, o.text=NULL, v.line=NULL, h.line=NULL, .lty=rep(1, length(levels(gg))), show.n.risk=TRUE, n.risk.step=1, n.risk.cex=0.85, .col=c("darkorange", "red", "darkblue", "darkgreen", "black", "brown"), leg.text=paste(levels(gg), myspace, sep=""), verbose=FALSE)
+%@
+
+%
+%<<survivalCurveEachDatasets,echo=FALSE,fig=TRUE>>==
+%surv.data <- censor.time(surv.time=c(pData(mainzSample)[ ,"t.dmfs"]) / 365, surv.event=c(pData(mainzSample)[ ,"e.dmfs"]), time.cens=tc / 365)
+%gg <- factor(c(rep("mainz", nrow(pData(mainzSample)))), levels=c("mainz"))
+%dd <- data.frame("time"=surv.data[[1]], "event"=surv.data[[2]], "group"=gg)
+%km.coxph.plot(formula.s=formula(Surv(time, event) ~ group), data.s=dd, sub.s="all", x.label="Time (years)", y.label="Probability of DMFS", main.title="", sub.title=NULL, leg.pos="bottomright", leg.inset=0.05, o.text=NULL, v.line=NULL, h.line=NULL, .lty=rep(1, length(levels(gg))), show.n.risk=TRUE, n.risk.step=1, n.risk.cex=0.85, .col=c("darkorange"), leg.text=paste(levels(gg), myspace, sep=""), verbose=FALSE)
+%##title(paste("km survival curve, MAINZ"))
+%
+%surv.data <- censor.time(surv.time=c(pData(transbigSample)[ ,"t.dmfs"]) / 365, surv.event=c(pData(transbigSample)[ ,"e.dmfs"]), time.cens=tc / 365)
+%gg <- factor(c(rep("transbig", nrow(pData(transbigSample)))), levels=c("transbig"))
+%dd <- data.frame("time"=surv.data[[1]], "event"=surv.data[[2]], "group"=gg)
+%km.coxph.plot(formula.s=formula(Surv(time, event) ~ group), data.s=dd, sub.s="all", x.label="Time (years)", y.label="Probability of DMFS", main.title="", sub.title=NULL, leg.pos="bottomright", leg.inset=0.05, o.text=NULL, v.line=NULL, h.line=NULL, .lty=rep(1, length(levels(gg))), show.n.risk=TRUE, n.risk.step=1, n.risk.cex=0.85, .col=c("red"), leg.text=paste(levels(gg), myspace, sep=""), verbose=FALSE)
+%##title(paste("km survival curve, TRANSBIG"))
+%
+%surv.data <- censor.time(surv.time=c(pData(uppSample)[ ,"t.rfs"]) / 365, surv.event=c(pData(uppSample)[ ,"e.rfs"]), time.cens=tc / 365)
+%gg <- factor(c(rep("upp", nrow(pData(uppSample)))), levels=c("upp"))
+%dd <- data.frame("time"=surv.data[[1]], "event"=surv.data[[2]], "group"=gg)
+%km.coxph.plot(formula.s=formula(Surv(time, event) ~ group), data.s=dd, sub.s="all", x.label="Time (years)", y.label="Probability of RFS", main.title="", sub.title=NULL, leg.pos="bottomright", leg.inset=0.05, o.text=NULL, v.line=NULL, h.line=NULL, .lty=rep(1, length(levels(gg))), show.n.risk=TRUE, n.risk.step=1, n.risk.cex=0.85, .col=c("brown"), leg.text=paste(levels(gg), myspace, sep=""), verbose=FALSE) 
+%##title(paste("km survival curve, UPP"))
+%
+%surv.data <- censor.time(surv.time=c(pData(untSample)[ ,"t.dmfs"]) / 365, surv.event=c(pData(untSample)[ ,"e.dmfs"]), time.cens=tc / 365)
+%gg <- factor(c(rep("unt", nrow(pData(untSample)))), levels=c("unt"))
+%dd <- data.frame("time"=surv.data[[1]], "event"=surv.data[[2]], "group"=gg)
+%km.coxph.plot(formula.s=formula(Surv(time, event) ~ group), data.s=dd, sub.s="all", x.label="Time (years)", y.label="Probability of DMFS", main.title="", sub.title=NULL, leg.pos="bottomright", leg.inset=0.05, o.text=NULL, v.line=NULL, h.line=NULL, .lty=rep(1, length(levels(gg))), show.n.risk=TRUE, n.risk.step=1, n.risk.cex=0.85, .col=c("black"), leg.text=paste(levels(gg), myspace, sep=""), verbose=FALSE)
+%##title(paste("km survival curve, UNT"))
+%
+%surv.data <- censor.time(surv.time=c(pData(vdxSample)[ ,"t.dmfs"]) / 365, surv.event=c(pData(vdxSample)[ ,"e.dmfs"]), time.cens=tc / 365)
+%gg <- factor(c(rep("vdx", nrow(pData(vdxSample)))), levels=c("vdx"))
+%dd <- data.frame("time"=surv.data[[1]], "event"=surv.data[[2]], "group"=gg)
+%km.coxph.plot(formula.s=formula(Surv(time, event) ~ group), data.s=dd, sub.s="all", x.label="Time (years)", y.label="Probability of DMFS", main.title="", sub.title=NULL, leg.pos="bottomright", leg.inset=0.05, o.text=NULL, v.line=NULL, h.line=NULL, .lty=rep(1, length(levels(gg))), show.n.risk=TRUE, n.risk.step=1, n.risk.cex=0.85, .col=c("darkblue"), leg.text=paste(levels(gg), myspace, sep=""), verbose=FALSE)
+%##title(paste("km survival curve, VDX"))
+%
+%surv.data <- censor.time(surv.time=c(pData(nkiSample)[ ,"t.dmfs"]) / 365, surv.event=c(pData(nkiSample)[ ,"e.dmfs"]), time.cens=tc / 365)
+%gg <- factor(c(rep("nki", nrow(pData(nkiSample)))), levels=c("nki"))
+%dd <- data.frame("time"=surv.data[[1]], "event"=surv.data[[2]], "group"=gg)
+%km.coxph.plot(formula.s=formula(Surv(time, event) ~ group), data.s=dd, sub.s="all", x.label="Time (years)", y.label="Probability of DMFS", main.title="", sub.title=NULL, leg.pos="bottomright", leg.inset=0.05, o.text=NULL, v.line=NULL, h.line=NULL, .lty=rep(1, length(levels(gg))), show.n.risk=TRUE, n.risk.step=1, n.risk.cex=0.85, .col=c("darkgreen"), leg.text=paste(levels(gg), myspace, sep=""), verbose=FALSE)      
+%##title(paste("km survival curve, NKI"))
+%@
+
+
+
+%<<survivalCurveAURKA,fig=TRUE,pdf=TRUE>>==
+%aurkaGs <- "AURKA"
+%aurkaGid <- 6790
+%aurkaPaf <- "208079_s_at"
+%aurkaPagi <- "NM_003600"
+%
+%surv.time.all <- c(pData(mainzSample)[ ,"t.dmfs"], pData(transbigSample)[ ,"t.dmfs"], pData(untSample)[ ,"t.dmfs"], pData(uppSample)[ ,"t.rfs"], pData(vdxSample)[ ,"t.dmfs"], pData(nkiSample)[ ,"t.dmfs"])             
+%surv.event.all <- c(pData(mainzSample)[ ,"e.dmfs"], pData(transbigSample)[ ,"e.dmfs"], pData(untSample)[ ,"e.dmfs"], pData(uppSample)[ ,"e.rfs"], pData(vdxSample)[ ,"e.dmfs"], pData(nkiSample)[ ,"e.dmfs"])            
+%aurka.exprs <- c(exprs(mainzSample)[aurkaPaf,], exprs(transbigSample)[aurkaPaf,], exprs(untSample)[aurkaPaf,], exprs(uppSample)[aurkaPaf,], exprs(vdxSample)[aurkaPaf,], exprs(nkiSample)[aurkaPagi,])
+%aurka.exprs.length <- c(length(exprs(mainzSample)[aurkaPaf,]), length(exprs(transbigSample)[aurkaPaf,]), length(exprs(untSample)[aurkaPaf,]), length(exprs(uppSample)[aurkaPaf,]), length(exprs(vdxSample)[aurkaPaf,]), length(exprs(nkiSample)[aurkaPagi,]))
+%
+%pos <- 0
+%mygroup <- NULL
+%for(i in aurka.exprs.length){
+%  qq <- aurka.exprs[(pos+1):(pos+i)]
+%  myq <- quantile(qq, probs=c(0.33, 0.66), na.rm=TRUE)
+%  qq[aurka.exprs[(pos+1):(pos+i)] < myq[1]] <- 1
+%  qq[aurka.exprs[(pos+1):(pos+i)] >= myq[1] & aurka.exprs[(pos+1):(pos+i)] < myq[2]] <- 2
+%  qq[aurka.exprs[(pos+1):(pos+i)] > myq[2]] <- 3
+%  qq <- factor(x=qq, levels=1:3)
+%  mygroup <- c(mygroup,qq)
+%  pos <- pos + i
+%}
+%
+%surv.data <- censor.time(surv.time=surv.time.all / 365, surv.event=surv.event.all, time.cens=tc / 365)
+%dd <- data.frame("time"=surv.data[[1]], "event"=surv.data[[2]], "gg"=mygroup)
+%gg <- factor(c(rep("mainz", nrow(pData(mainzSample))), rep("transbig", nrow(pData(transbigSample))), rep("unt", nrow(pData(untSample))), rep("upp", nrow(pData(uppSample))), rep("vdx", nrow(pData(vdxSample))), rep("nki", nrow(pData(nkiSample)))), levels=c("mainz", "transbig", "unt", "upp", "vdx", "nki"))
+%km.coxph.plot(formula.s=formula(Surv(time, event) ~ gg), data.s=dd, sub.s="all", x.label="Time (years)", y.label="Probability of DMFS/RFS", main.title="", sub.title=NULL, leg.text=c("Low   ", "Intermediate   ", "High   "), leg.pos="bottomright", leg.inset=0.05, o.text=NULL, v.line=NULL, h.line=NULL, .col=c("darkblue", "darkgreen", "darkred"), .lty=1, show.n.risk=TRUE, n.risk.step=1, n.risk.cex=0.85, verbose=FALSE)
+%@
+
+
+
+
+%\begin{figure}[htbp]
+%\begin{center}
+%<<overviewKhan2, fig=TRUE>>=
+%overview(k.data, classvec=k.class, labels=k.class)
+%@
+%\caption{Overview of Khan data. A) dendrogram showing results of average linkage clustering, B) boxplot and C) histrogram. In this case we have added %a vector of class (classvec) to color the overview by class membership}
+%\label{figure 1} 
+%\end{center}
+%\end{figure}
+
+\newpage
+
+%------------------------------------------------------------
+\section{Functions in survcomp}
+%------------------------------------------------------------ 
+
+\begin{table}[h]
+\begin{tabular}{p{3.5cm} p{12cm}}
+\noindent \textsc{Function} & \noindent \textsc{Description}\\
+D.index & Function to compute the D index\\
+censor.time & Function to artificially censor survival data\\
+cindex.comp & Function to compare two concordance indices\\
+cindex.comp.meta & Function to compare two concordance indices\\
+combine.est & Function to combine estimates\\
+combine.test & Function to combine probabilities\\
+concordance.index & Function to compute the concordance index for survival or binary class prediction\\
+cvpl & Function to compute the CVPL\\
+dindex.comp & Function to compare two D indices\\
+dindex.comp.meta & Function to compare two concordance indices\\
+fisherz & Function to compute Fisher z transformation\\
+forestplot.surv & Function to create a Forest Plot\\
+getsurv2 & Function to retrieve the survival probabilities at a specific point in time\\
+hazard.ratio & Function to estimate the hazard ratio through Cox regression\\
+hr.comp & Function to statistically compare two hazard ratios\\
+hr.comp.meta & Function to compare two concordance indices\\
+hr.comp2 & Function to statistically compare two hazard ratios (alternative interface)\\
+iauc.comp & Function to compare two IAUCs through time-dependent ROC curves\\
+ibsc.comp & Function to compare two IBSCs\\
+km.coxph.plot & Function to plot several Kaplan-Meier survival curves\\
+logpl & Function to compute the log partial likelihood of a Cox model\\
+no.at.risk & Function to compute the number of individuals at risk\\
+sbrier.score2proba & Function to compute the BSCs from a risk score, for all the times of event occurrence\\
+score2proba & Function to compute the survival probabilities from a risk score\\
+survcomp-package & Performance Assessment and Comparison for Survival Analysis\\
+td.sens.spec & Function to compute sensitivity and specificity for a binary classification of survival data\\
+tdrocc & Function to compute time-dependent ROC curves\\
+test.hetero.est & Function to test the heterogeneity of set of probabilities\\
+test.hetero.test & Function to test the heterogeneity of set of probabilities\\
+\end{tabular}
+\end{table}
+
+
+\newpage
+\begin{thebibliography}{10}
+
+\bibitem{Cochrane1954}
+Cochrane, W. G.:
+\newblock The combination of estimates from different experiments.
+\newblock \textit{Biometrics}, \textbf{10}, 101-129. 1954.
+
+\bibitem{Whitlock2005}
+Whitlock, M. C.:
+\newblock Combining probability from independent tests: the weighted Z-method is superior to Fisher's approach.
+\newblock \textit{J. Evol. Biol.}, \textbf{18}, 1368-1373. 2005.
+
+\bibitem{Heagerty2000}
+Heagerty, P. J. and Lumley, T. L. and Pepe, M. S.:
+\newblock Time-Dependent ROC Curves for Censored Survival Data and a Diagnostic Marker.
+\newblock \textit{Biometrics}, \textbf{56}, 337-344. 2000.    
+
+\bibitem{Efron1986}
+Efron, B. and Tibshirani, R.:
+\newblock The Bootstrap Method for standard errors, confidence intervals, and other measures of statistical accuracy.
+\newblock \textit{Statistical Science}, \textbf{1}, 1-35. 1986.
+
+\bibitem{Becker1988}
+Becker, R. A., Chambers, J. M. and Wilks, A. R.:
+\newblock The New S Language.
+\newblock \textit{Wadsworth \& Brooks/Cole}, 1988.
+
+\bibitem{Cox1972}
+Cox, D. R.:
+\newblock Regression Models and Life Tables.
+\newblock \textit{Journal of the Royal Statistical Society Series B}, \textbf{34}, 187-220. 1972.
+
+\bibitem{Andersen1993}
+Andersen, P. K. and Borgan, O. and Gill, R. D. and Keiding, N.:
+\newblock Statistical Models Based on Counting Processes
+\newblock \textit{Springer}, 1993.
+
+\bibitem{Brier1950}
+Brier, G. W.:
+\newblock Verification of forecasts expressed in terms of probabilities.
+\newblock \textit{Monthly Weather Review}, \textbf{78}, 1-3. 1950.
+
+\bibitem{Graf1999}
+Graf, E. and Schmoor, C. and Sauerbrei, W. and Schumacher, M.:
+\newblock Assessment and comparison of prognostic classification schemes for survival data.
+\newblock \textit{Statistics in Medicine}, \textbf{18}, 2529-2545. 1999.
+
+\bibitem{Wilcoxon1945}
+Wilcoxon, F.:
+\newblock Individual comparisons by ranking methods.
+\newblock \textit{Biometrics Bulletin}, \textbf{1}, 80-83. 1945.
+
+\bibitem{Haibe-Kains2008}
+Haibe-Kains, B. and Desmedt, C. and Sotiriou, C. and Bontempi, G.:
+\newblock A comparative study of survival models for breast cancer prognostication based on microarray data: does a single gene beat them all?
+\newblock \textit{Bioinformatics}, \textbf{24}:19, 2200-2208. 2008.
+
+\bibitem{Student1908}
+Student:
+\newblock The Probable Error of a Mean.
+\newblock \textit{Biometrika}, \textbf{6}, 1-25. 1908.
+
+\bibitem{Fisher1915}
+R. A. Fisher:
+\newblock Frequency distribution of the values of the correlation coefficient in samples of an indefinitely large population.
+\newblock \textit{Biometrika}, \textbf{10}, 507-521. 1915.
+
+\bibitem{Verweij1993}
+Verweij PJM. and van Houwelingen H:
+\newblock Cross-validation in survival analysis.
+\newblock \textit{Statistics in Medicine}, \textbf{12}, 2305-2314. 1993.
+
+\bibitem{Houwelingen2006}
+van Houwelingen H, Bruinsma T, Hart AA, van't Veer LJ and Wessels LFA:
+\newblock Cross-validated Cox regression on microarray gene expression data.
+\newblock \textit{tatistics in Medicine}, \textbf{25}, 3201-3216. 2006.
+
+\bibitem{Harrel1996}
+Harrel Jr, F. E. and Lee, K. L. and Mark, D. B.:
+\newblock Tutorial in biostatistics: multivariable prognostic models: issues in developing models, evaluating assumptions and adequacy, and measuring and reducing errors.
+\newblock \textit{Statistics in Medicine}, \textbf{15}, 361-387. 1996.
+
+\bibitem{Pencina2004}
+Pencina, M. J. and D'Agostino, R. B.:
+\newblock Overall C as a measure of discrimination in survival analysis: model specific population value and confidence interval estimation.
+\newblock \textit{Statistics in Medicine}, \textbf{23}, 2109-2123. 2004.
+
+\bibitem{Royston2004}
+Royston, P. and Sauerbrei, W.:
+\newblock A new measure of prognostic separation in survival data.
+\newblock \textit{Statistics in Medicine}, \textbf{23}, 723-748. 2004.
+  
+%\bibitem{}
+%
+%\newblock 
+%\newblock \textit{}, \textbf{}, . .
+
+\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,7 @@
+\documentclass[10pt]{article}
+%\VignetteIndexEntry{survcomp}
+%\VignetteDepends{survcomp}
+%\VignetteKeywords{survcomp}
+%\VignettePackage{survcomp}
+\begin{document}
+\end{document}
