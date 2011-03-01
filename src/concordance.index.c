@@ -2,7 +2,22 @@
 #include <math.h>
 #include <stdlib.h>
 #include <R.h>
+#include <Rinternals.h>
+#include <R_ext/Rdynload.h>
 #include "survcomp.h"
+
+R_CMethodDef cMethods[] = {
+    {"concordanceIndexC", (DL_FUNC)&concordanceIndexC, 16},
+    {NULL, NULL, 0}
+};
+
+//{INTSXP,INTSXP,REALSXP,INTSXP,REALSXP,INTSXP,INTSXP,INTSXP,INTSXP,INTSXP,INTSXP,INTSXP,INTSXP,INTSXP,INTSXP,INTSXP}
+
+void R_init_concordanceIndexC(DllInfo *info) {
+    R_registerRoutines(info,cMethods,NULL,NULL,NULL);
+}
+
+void R_unload_concordanceIndexC(DllInfo *info) { }
 
 void concordanceIndexC(int *msurv, int *ustrat, double *x2, int *cl2,
 		double *st, int *se, int *weights, int *strat, int *N, int *outx,

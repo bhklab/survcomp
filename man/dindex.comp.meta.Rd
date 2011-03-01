@@ -1,7 +1,7 @@
 \name{dindex.comp.meta}
 \alias{dindex.comp.meta}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{Function to compare two concordance indices}
+\title{Function to compare two D indices}
 \description{
 This function compares two lists of D indices computed from the same survival data by using the function \code{D.index}. The statistical test is a Student t test for dependent samples.
 }

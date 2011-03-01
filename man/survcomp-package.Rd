@@ -12,9 +12,9 @@ Functions to perform the performance assessment and comparison of risk predictio
 \tabular{ll}{
 Package: \tab survcomp\cr
 Type: \tab Package\cr
-Version: \tab 1.1.7\cr
-Date: \tab 2011-01-20\cr
-License: \tab GPL-3\cr
+Version: \tab 1.1.8\cr
+Date: \tab 2011-02-25\cr
+License: \tab Artistic-2.0\cr
 }
 }
 
@@ -49,11 +49,17 @@ Markus Schroeder
 
 \url{http://www.cebitec.uni-bielefeld.de/brf/main/brf.html}
 
-\bold{Maintainer}: Benjamin Haibe-Kains
+\bold{Maintainer}:
 
-\email{bhaibeka@jimmy.harvard.edu}
+Benjamin Haibe-Kains
 
-\email{bhaibeka@ulb.ac.be}
+\tab \email{bhaibeka@jimmy.harvard.edu}
+
+\tab \email{bhaibeka@ulb.ac.be}
+
+Markus Schroeder
+
+\tab \email{mschroed@jimmy.harvard.edu}
 }
 %\references{}
 \keyword{ survival }
