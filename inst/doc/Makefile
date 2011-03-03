@@ -24,7 +24,6 @@ survcomp.pdf: vignette-src/survcomp.Rnw
 	Rscript --vanilla -e "library(pgfSweave); pgfSweave('survcomp.Rnw');"
 	pdflatex survcomp
 	pdflatex survcomp
-	pdflatex survcomp
 	if test -d cache; then rm -fr cache; fi
 	rm -f *.tex *.bbl *.blg *.aux *.out *.log *.tikz *.toc *.map *.sh *.dvi
 	rm -f survcomp-*.pdf

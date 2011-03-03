@@ -13,7 +13,7 @@ Functions to perform the performance assessment and comparison of risk predictio
 Package: \tab survcomp\cr
 Type: \tab Package\cr
 Version: \tab 1.1.8\cr
-Date: \tab 2011-02-25\cr
+Date: \tab 2011-03-02\cr
 License: \tab Artistic-2.0\cr
 }
 }
@@ -53,18 +53,18 @@ Markus Schroeder
 
 Benjamin Haibe-Kains
 
-\tab \email{bhaibeka@jimmy.harvard.edu}
+\email{bhaibeka@jimmy.harvard.edu}
 
-\tab \email{bhaibeka@ulb.ac.be}
+\email{bhaibeka@ulb.ac.be}
 
 Markus Schroeder
 
-\tab \email{mschroed@jimmy.harvard.edu}
+\email{mschroed@jimmy.harvard.edu}
 }
 %\references{}
 \keyword{ survival }
 \keyword{ htest }
 \seealso{
-\code{survival}, \code{Hmisc}, \code{Design}, \code{prodlim}, \code{survivalROC}, \code{ipred}, \code{bootstrap}
+\code{survival}, \code{Hmisc}, \code{Design}, \code{prodlim}, \code{survivalROC}, \code{ipred}, \code{bootstrap}, \code{CPE}, \code{clinfun}
 }
 %\examples{}
