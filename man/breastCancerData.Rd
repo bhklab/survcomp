@@ -3,7 +3,7 @@
 \docType{data}
 \title{Sample data containing six datasets for gene expression, annotations and clinical data.}
 \description{
-This dataset contains a subset of the gene expression, annotations and clinical data from 6 different datasets (see section details). The subsets contain the seven gene signature introduced by Desmedt et al. 2008/}
+This dataset contains a subset of the gene expression, annotations and clinical data from 6 different datasets (see section details). The subsets contain the seven gene signature introduced by Desmedt et al. 2008.}
 \usage{data(breastCancerData)}
 \format{
   Six ExpressionSets. Example for 'mainz7g': eSet with 7 features and 200 samples, containing:

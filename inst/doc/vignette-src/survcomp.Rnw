@@ -47,7 +47,7 @@
 \begin{document}
 
 %------------------------------------------------------------
-\title{\Rpackage{SurvComp}: a package for performance assessment and comparison for survival analysis}
+\title{\vspace{-2cm}\Rpackage{SurvComp}: a package for performance assessment and comparison for survival analysis}
 %------------------------------------------------------------
 \author[1,2,3]{Benjamin Haibe-Kains}
 \author[1,5]{Markus Schr\"{o}der}
@@ -78,6 +78,7 @@ options(keep.source=TRUE)
 
 
 %------------------------------------------------------------
+\clearpage
 \section{Introduction}
 %------------------------------------------------------------ 
 
@@ -88,13 +89,14 @@ The \Rpackage{SurvComp} package is providing functions to assess and to statisti
 \subsection{Installation}
 %------------------------------------------------------------ 
 
-\Rpackage{SurvComp} requires that \Rpackage{survival}, \Rpackage{ipred},  \Rpackage{prodlim}, \Rpackage{survivalROC}, \Rpackage{SuppDists}, \Rpackage{bootstrap} and \Rpackage{R} (>= 2.3.0) are installed. These should be installed automatically when you install \Rpackage{SurvComp}. To install \Rpackage{SurvComp}, source biocLite from bioconductor and load it into your current workspace.
+\Rpackage{SurvComp} requires that \Rpackage{survival}, \Rpackage{ipred},  \Rpackage{prodlim}, \Rpackage{survivalROC}, \Rpackage{SuppDists}, \Rpackage{bootstrap} and \Rpackage{R} (>= 2.3.0) are installed. These should be installed automatically when you install \Rpackage{SurvComp}. To install \Rpackage{SurvComp}, source biocLite from bioconductor:
 
 <<install-pkg, eval=false>>=
 source("http://bioconductor.org/biocLite.R")
 biocLite("survcomp")
 @
 
+Load the \Rpackage{SurvComp}, into your current workspace:
 <<loadlib,results=hide>>==
 library(survcomp)
 @ 
@@ -241,51 +243,51 @@ dataRange <- as.data.frame(dataRange)
 rownames(dataRange) <- ttNames
 @
 <<dataRangeTable,results=tex,echo=FALSE>>==
-xtable(dataRange)
+print(xtable(dataRange), floating=FALSE)
 @
 
-Therefor we use the following function with \Rfunarg{q=0.05}.
+Therefore we use the following function to rescale the gene expression values to lie approximately in [-1,1], robust to extreme values (possibly outliers).
 
 <<rescaleExpressionData>>==
-rescale <- function(x, na.rm=FALSE, q=0) {
+rescale <- function(x, na.rm=FALSE, q=0.05) {
   ma <- quantile(x, probs=1-(q/2), na.rm=na.rm)
   mi <- quantile(x, probs=q/2, na.rm=na.rm)
   x <- (x - mi) / (ma - mi)
-  return(x)
+  return((x - 0.5) * 2)
 }
 @
 
 The following command shows the rescaling and the computation of the hazard ratio for each gene in the \Robject{mainz7g} dataset.
 
 <<hratioSample>>==
-hratio.mainz.small <- t(apply(X=((rescale(exprs(mainz7g) , q=0.05, na.rm=TRUE) - 0.5) * 2), MARGIN=1, function(x, y, z) {
+hratio.mainz.small <- t(apply(X=rescale(exprs(mainz7g) , q=0.05, na.rm=TRUE), MARGIN=1, function(x, y, z) {
     tt <- hazard.ratio(x=x, surv.time=y, surv.event=z, na.rm=TRUE);
     return(c("hratio"=tt$hazard.ratio, "hratio.se"=tt$se, "lower"=tt$lower, "upper"=tt$upper)); },
     y=pData(mainz7g)[ ,"t.dmfs"], z=pData(mainz7g)[ ,"e.dmfs"]))
 @
 
 <<hratio,echo=FALSE,results=hide>>==
-hratio.transbig.small <- t(apply(X=((rescale(exprs(transbig7g), q=0.05, na.rm=TRUE) - 0.5) * 2), MARGIN=1, function(x, y, z) {
+hratio.transbig.small <- t(apply(X=rescale(exprs(transbig7g), q=0.05, na.rm=TRUE), MARGIN=1, function(x, y, z) {
     tt <- hazard.ratio(x=x, surv.time=y, surv.event=z, na.rm=TRUE);
     return(c("hratio"=tt$hazard.ratio, "hratio.se"=tt$se, "lower"=tt$lower, "upper"=tt$upper)); },
     y=pData(transbig7g)[ ,"t.dmfs"], z=pData(transbig7g)[ ,"e.dmfs"]))
 
-hratio.upp.small <- t(apply(X=((rescale(exprs(upp7g), q=0.05, na.rm=TRUE) - 0.5) * 2), MARGIN=1, function(x, y, z) {
+hratio.upp.small <- t(apply(X=rescale(exprs(upp7g), q=0.05, na.rm=TRUE), MARGIN=1, function(x, y, z) {
     tt <- hazard.ratio(x=x, surv.time=y, surv.event=z, na.rm=TRUE);
     return(c("hratio"=tt$hazard.ratio, "hratio.se"=tt$se, "lower"=tt$lower, "upper"=tt$upper)); },
     y=pData(upp7g)[ ,"t.rfs"], z=pData(upp7g)[ ,"e.rfs"]))
 
-hratio.unt.small <- t(apply(X=((rescale(exprs(unt7g), q=0.05, na.rm=TRUE) - 0.5) * 2), MARGIN=1, function(x, y, z) {
+hratio.unt.small <- t(apply(X=rescale(exprs(unt7g), q=0.05, na.rm=TRUE), MARGIN=1, function(x, y, z) {
     tt <- hazard.ratio(x=x, surv.time=y, surv.event=z, na.rm=TRUE);
     return(c("hratio"=tt$hazard.ratio, "hratio.se"=tt$se, "lower"=tt$lower, "upper"=tt$upper)); },
     y=pData(unt7g)[ ,"t.dmfs"], z=pData(unt7g)[ ,"e.dmfs"]))
 
-hratio.vdx.small <- t(apply(X=((rescale(exprs(vdx7g), q=0.05, na.rm=TRUE) - 0.5) * 2), MARGIN=1, function(x, y, z) {
+hratio.vdx.small <- t(apply(X=rescale(exprs(vdx7g), q=0.05, na.rm=TRUE), MARGIN=1, function(x, y, z) {
     tt <- hazard.ratio(x=x, surv.time=y, surv.event=z, na.rm=TRUE);
     return(c("hratio"=tt$hazard.ratio, "hratio.se"=tt$se, "lower"=tt$lower, "upper"=tt$upper)); },
     y=pData(vdx7g)[ ,"t.dmfs"], z=pData(vdx7g)[ ,"e.dmfs"]))
 
-hratio.nki.small <- t(apply(X=((rescale(exprs(nki7g), q=0.05, na.rm=TRUE) - 0.5) * 2), MARGIN=1, function(x, y, z) {
+hratio.nki.small <- t(apply(X=rescale(exprs(nki7g), q=0.05, na.rm=TRUE), MARGIN=1, function(x, y, z) {
     tt <- hazard.ratio(x=x, surv.time=y, surv.event=z, na.rm=TRUE);
     return(c("hratio"=tt$hazard.ratio, "hratio.se"=tt$se, "lower"=tt$lower, "upper"=tt$upper)); },
     y=pData(nki7g)[ ,"t.dmfs"], z=pData(nki7g)[ ,"e.dmfs"]))
@@ -325,7 +327,7 @@ ccindex <- tt
 The combined concordance indices for the six datasets are:
 
 <<combineCindicesOutput,results=tex>>==
-xtable(ccindex)
+print(xtable(ccindex), floating=FALSE)
 @
 
 The combined log2 D indices for the six datasets are:
@@ -354,7 +356,7 @@ tt$upper <- tt$estimate + qnorm(0.025, lower.tail=FALSE) * tt$se
 rownames(tt) <- gsList
 colnames(tt) <- c("dindex","dindex.se","lower","upper")
 cdindex <- tt
-xtable(log2(cdindex))
+print(xtable(log2(cdindex)), floating=FALSE)
 @
 
 The combined log2 hazard ratios for the six datasets are:
@@ -383,7 +385,7 @@ tt$upper <- tt$estimate + qnorm(0.025, lower.tail=FALSE) * tt$se
 rownames(tt) <- gsList
 colnames(tt) <- c("hratio","hratio.se","lower","upper")
 chratio <- tt
-xtable(log2(chratio))
+print(xtable(log2(chratio)), floating=FALSE)
 @
 
 %------------------------------------------------------------
@@ -724,7 +726,7 @@ for(i in 1:7){
 ccmData <- as.data.frame(ccmData)
 colnames(ccmData) <- gsList
 rownames(ccmData) <- gsList
-xtable(ccmData, digits=4)
+print(xtable(ccmData, digits=4), floating=FALSE)
 @
 
 %\begin{figure}[htbp]
@@ -739,7 +741,7 @@ xtable(ccmData, digits=4)
 %------------------------------------------------------------
 \section{Session Info}
 %------------------------------------------------------------ 
-<<sessionInfo,results=tex>>==
+<<sessionInfo,echo=FALSE,results=tex>>==
 toLatex(sessionInfo())
 @
 
