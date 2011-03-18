@@ -25,7 +25,7 @@ function(formula.s, data.s, sub.s="all", x.label, y.label, main.title, sub.title
     if(!missing(h.line)) abline(h=h.line, lty=3, col="purple")
 
     if(!is.null(leg.text)) { legend(x=leg.pos, xjust=0, yjust=1, legend=leg.text, col=.col, lty=.lty, lwd=.lwd, cex=0.9, bg="white", inset=leg.inset) }
-    mtext(sub.title, line=-4, outer=TRUE)
+    if(!is.null(sub.title)) { mtext(sub.title, line=-4, outer=TRUE) }
     if(missing(o.text) ) {
 		sdf <- survdiff(formula.s, data=data.s, subset=sub.s)
 	    if(verbose) { print(sdf) }
