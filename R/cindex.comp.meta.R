@@ -16,7 +16,7 @@ function(list.cindex1, list.cindex2, hetero=FALSE) {
 			x2 <- c(x2, list.cindex2[[i]]$c.index)
 			x2.se <- c(x2.se, list.cindex2[[i]]$se)
 			cort <- cor(list.cindex1[[i]]$data$x, list.cindex2[[i]]$data$x, method="spearman", use="complete.obs")
-			## since r is the spearman correlation coefficient and noy the Prarson's one, we should apply a correction factor (see http://en.wikipedia.org/wiki/Spearman's_rank_correlation_coefficient for details)
+			## since r is the spearman correlation coefficient and not the Pearson's one, we should apply a correction factor (see http://en.wikipedia.org/wiki/Spearman's_rank_correlation_coefficient for details)
 			corz <- c(corz, sqrt((nn - 3) / 1.06) * fisherz(cort, inv=FALSE))
 			corz.se <- c(corz.se, 1 / sqrt(nn - 3))
 		} else {
@@ -27,7 +27,7 @@ function(list.cindex1, list.cindex2, hetero=FALSE) {
 	x1.meta <- combine.est(x=x1, x.se=x1.se, hetero=hetero, na.rm=TRUE)
 	x2.meta <- combine.est(x=x2, x.se=x2.se, hetero=hetero, na.rm=TRUE) 
 	rz <- combine.est(x=corz, x.se=corz.se, na.rm=TRUE, hetero=hetero)$estimate
-	## since r is the spearman correlation coefficient and noy the Prarson's one, we should apply a correction factor (see http://en.wikipedia.org/wiki/Spearman's_rank_correlation_coefficient for details)
+	## since r is the spearman correlation coefficient and not the Pearson's one, we should apply a correction factor (see http://en.wikipedia.org/wiki/Spearman's_rank_correlation_coefficient for details)
 	rz <- rz / (sqrt((n - 3) / 1.06))
 	r <- fisherz(rz, inv=TRUE)
 	if((1 - abs(r)) > eps) {
