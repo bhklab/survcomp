@@ -35,16 +35,16 @@ function(x, surv.time, surv.event, strata, nfold=1, setseed, na.rm=FALSE, verbos
 		#index of samples to hold out
 		if(i == nfold) { s.ix <- smpl[c(((i - 1) * k + 1):nr)] } else { s.ix <- smpl[c(((i - 1) * k + 1):(i * k))] }
 		## convergence ?
-		lwa <- options("warn")$warn
-		options("warn"=2)
+		#lwa <- options("warn")$warn
+		#options("warn"=2)
 		ff <- sprintf("Surv(stime, sevent) ~ strata(strat) + %s", paste(dimnames(dd)[[2]][4:ncol(dd)], collapse=" + "))
 		try(m <- coxph(formula=formula(ff), data=dd[-s.ix, , drop=FALSE]))
-		options("warn"=lwa)
+		#options("warn"=lwa)
 		if (class(m) != "try-error") {
 			conv <- c(conv, TRUE)
 			li <- m$loglik[2]
-			beta <- m$coefficients
-			l <- logpl(surv.time=surv.time, surv.event=surv.event, x=x, beta=beta, strata=strata)[1]
+			mypred <- predict(object=m, newdata=dd)
+			l <- logpl(surv.time=surv.time, surv.event=surv.event, pred=mypred, strata=strata)[1]
 		} else {
 			conv <- c(conv, FALSE)
 			l <- NA

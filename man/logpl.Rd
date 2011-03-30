@@ -6,14 +6,13 @@
   The function computes the log partial likelihood of a set of coefficients given some survival data.
 }
 \usage{
-logpl(x, surv.time, surv.event, strata, beta, na.rm = FALSE, verbose = FALSE)
+logpl(pred, surv.time, surv.event, strata, na.rm = FALSE, verbose = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{surv.time}{ vector of times to event occurrence }
   \item{surv.event}{ vector of indicators for event occurrence }
-  \item{beta}{ vector of coefficients fitted by a Cox model for instance }
-  \item{x}{ data matrix }
+  \item{pred}{ linear predictors computed using the Cox model }
   \item{strata}{ stratification variable }
   \item{na.rm}{ \code{TRUE} if the missing values should be removed from the data, \code{FALSE} otherwise }
   \item{verbose}{ verbosity of the function }
@@ -34,12 +33,13 @@ stime <- rexp(100)
 cens <- runif(100,.5,2)
 sevent <- as.numeric(stime <= cens)
 stime <- pmin(stime, cens)
+dd <- data.frame("stime"=stime, "sevent"=sevent, "age"=age)
 ##Cox model
-coxm <- coxph(Surv(stime, sevent) ~ age)
+coxm <- coxph(Surv(stime, sevent) ~ age, data=dd)
 ##log partial likelihood of the null model
-logpl(surv.time=stime, surv.event=sevent, beta=0, x=age)
+logpl(pred=rep(0, nrow(dd)), surv.time=stime, surv.event=sevent)
 ##log partial likelihood of the Cox model
-logpl(surv.time=stime, surv.event=sevent, beta=coxm$coefficients, x=age)
+logpl(pred=predict(object=coxm, newdata=dd), surv.time=stime, surv.event=sevent)
 ##equivalent to
 coxm$loglik
 }

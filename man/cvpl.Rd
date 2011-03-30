@@ -22,7 +22,7 @@ cvpl(x, surv.time, surv.event, strata, nfold = 1, setseed, na.rm = FALSE, verbos
 %%\details{
 %%}
 \value{
-  \item{cvpl }{mean cross-validated partial likelihood}
+  \item{cvpl }{mean cross-validated partial likelihood (lower is better)}
   \item{pl }{vector of cross-validated partial likelihoods}
   \item{convergence }{vector of booleans reporting the convergence of the Cox model in each fold}
   \item{n }{number of observations used to estimate the cross-validated partial likelihood}

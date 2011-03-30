@@ -1,19 +1,17 @@
 `logpl` <-
-function(x, surv.time, surv.event, strata, beta, na.rm=FALSE, verbose=FALSE) {
+function(pred, surv.time, surv.event, strata, na.rm=FALSE, verbose=FALSE) {
 
 	##############
 	#internal function
 	##############
 	
-	logpl1 <- function(x, surv.time, surv.event, beta, verbose=FALSE) {	
+	logpl1 <- function(pred, surv.time, surv.event, verbose=FALSE) {	
 	
-		x <- as.matrix(x)
-		nm <- dim(x)
+		nm <- length(pred)
 		n <- nm[1]
 		m <- nm[2]
 		r <- rank(surv.time)
-		beta <- as.matrix(beta)
-		ita <- x %*% beta
+		ita <- pred
 		epita <- exp(ita)
 		d <- rep(0, n)
 		dono <- rep(0, n)
@@ -37,13 +35,11 @@ function(x, surv.time, surv.event, strata, beta, na.rm=FALSE, verbose=FALSE) {
 	##############
 	
 	## remove NA values
-	x <- as.matrix(x)
-	if(missing(strata)) { strata <- rep(1, nrow(x)) } 
-	beta <- as.matrix(beta)
-	cc.ix <- complete.cases(surv.time, surv.event, x, strata)
+	if(missing(strata)) { strata <- rep(1, length(pred)) } 
+	cc.ix <- complete.cases(surv.time, surv.event, pred, strata)
 	surv.time <- surv.time[cc.ix]
 	surv.event <- surv.event[cc.ix]
-	x <- x[cc.ix, ,drop=FALSE]
+	pred <- pred[cc.ix]
 	strata <- strata[cc.ix]
     n <- sum(cc.ix)
     if (!all(cc.ix) && !na.rm) { stop("NA values are present!") }
@@ -51,14 +47,14 @@ function(x, surv.time, surv.event, strata, beta, na.rm=FALSE, verbose=FALSE) {
     
     ss <- unique(strata)
     if(length(ss) < 2) {
-    	res <- logpl1(surv.time=surv.time, surv.event=surv.event, beta=beta, x=x, verbose=verbose)
+    	res <- logpl1(surv.time=surv.time, surv.event=surv.event, pred=pred, verbose=verbose)
     }
     else {
     	res1 <- 0
     	res2 <- 0
     	for(i in 1:length(ss)) {
     		myx <- strata == ss[i]
-    		rr <- logpl1(surv.time=surv.time[myx], surv.event=surv.event[myx], beta=beta, x=x[myx, ], verbose=verbose)
+    		rr <- logpl1(surv.time=surv.time[myx], surv.event=surv.event[myx], pred=pred[myx], verbose=verbose)
     		res1 <- res1 + rr[1]
     		res2 <- res2 + rr[2]
     	}
@@ -67,4 +63,3 @@ function(x, surv.time, surv.event, strata, beta, na.rm=FALSE, verbose=FALSE) {
     }
     return(res)
 }
-
