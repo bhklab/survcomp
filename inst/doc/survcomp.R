@@ -1,10 +1,10 @@
 ###################################################
 ### chunk number 1: setup
 ###################################################
-#line 72 "survcomp.Rnw"
-library(pgfSweave)
-setCacheDir("cache")
-options(keep.source=TRUE)
+## #line 72 "survcomp.Rnw"
+## library(pgfSweave)
+## setCacheDir("cache")
+## options(keep.source=TRUE)
 
 
 ###################################################

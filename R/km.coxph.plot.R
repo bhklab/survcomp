@@ -7,6 +7,9 @@ function(formula.s, data.s, sub.s="all", x.label, y.label, main.title, sub.title
     assign("sub.s", sub.s, envir=.GlobalEnv)
 	if(missing(sub.title)) { sub.title <- NULL }
 	if(missing(leg.text)) { leg.text <- NULL }
+	if(is.null(o.text)) { o.text <- FALSE }
+	if(is.null(v.line)) { v.line <- FALSE }
+	if(is.null(h.line)) { h.line <- FALSE }
 	
 	ng <- length(leg.text)
     old.mar <- par("mar")
