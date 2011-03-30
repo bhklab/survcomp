@@ -7,9 +7,6 @@ function(formula.s, data.s, sub.s="all", x.label, y.label, main.title, sub.title
     assign("sub.s", sub.s, envir=.GlobalEnv)
 	if(missing(sub.title)) { sub.title <- NULL }
 	if(missing(leg.text)) { leg.text <- NULL }
-	if(is.null(o.text)) { o.text <- FALSE }
-	if(is.null(v.line)) { v.line <- FALSE }
-	if(is.null(h.line)) { h.line <- FALSE }
 	
 	ng <- length(leg.text)
     old.mar <- par("mar")
@@ -24,7 +21,11 @@ function(formula.s, data.s, sub.s="all", x.label, y.label, main.title, sub.title
 
     plot(survfit(formula.s, data=data.s, subset=sub.s), xaxt=.xaxt, col=.col, lty=.lty, lwd=.lwd, xlab=.xlab, ylab=y.label, ... )
     title(main.title)
+
+    if(!missing(v.line) && is.null(v.line)) { v.line <- FALSE }
     if(!missing(v.line)) abline(v=v.line, lty=3, col="purple")
+
+ 	  if(!missing(h.line) && is.null(h.line)) { h.line <- FALSE }
     if(!missing(h.line)) abline(h=h.line, lty=3, col="purple")
 
     if(!is.null(leg.text)) { legend(x=leg.pos, xjust=0, yjust=1, legend=leg.text, col=.col, lty=.lty, lwd=.lwd, cex=0.9, bg="white", inset=leg.inset) }
@@ -36,6 +37,7 @@ function(formula.s, data.s, sub.s="all", x.label, y.label, main.title, sub.title
         #if( p.val < 0.001 ) o.text <- "P < 0.001" else o.text <- paste("P =", signif(p.val,3)) #, "(log-rank test)")
         o.text <- sprintf("P = %.1E", p.val)
     }
+    if(is.null(o.text)) { o.text <- FALSE }
     text(0,0, o.text, cex=0.85, pos=4)
 
     if( show.n.risk ) {
