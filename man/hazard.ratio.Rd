@@ -44,7 +44,8 @@ cens   <- runif(100,.5,2)
 sevent  <- as.numeric(stime <= cens)
 stime <- pmin(stime, cens)
 strat <- sample(1:3, 100, replace=TRUE)
-hazard.ratio(x=age, surv.time=stime, surv.event=sevent, strat=strat)
+weight <- runif(100, min=0, max=1)
+hazard.ratio(x=age, surv.time=stime, surv.event=sevent, weights=weight, strat=strat)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
