@@ -11,7 +11,7 @@ R_CMethodDef cMethods[] = {
     {NULL, NULL, 0}
 };
 
-//{INTSXP,INTSXP,REALSXP,INTSXP,REALSXP,INTSXP,INTSXP,INTSXP,INTSXP,INTSXP,INTSXP,INTSXP,INTSXP,INTSXP,INTSXP,INTSXP}
+//{INTSXP,INTSXP,REALSXP,INTSXP,REALSXP,INTSXP,REALSXP,INTSXP,INTSXP,INTSXP,INTSXP,INTSXP,INTSXP,INTSXP,INTSXP,INTSXP}
 
 void R_init_concordanceIndexC(DllInfo *info) {
     R_registerRoutines(info,cMethods,NULL,NULL,NULL);
@@ -20,7 +20,7 @@ void R_init_concordanceIndexC(DllInfo *info) {
 void R_unload_concordanceIndexC(DllInfo *info) { }
 
 void concordanceIndexC(int *msurv, int *ustrat, double *x2, int *cl2,
-		double *st, int *se, int *weights, int *strat, int *N, int *outx,
+		double *st, int *se, double *weights, int *strat, int *N, int *outx,
 		int *ch, int *dh, int *uh, int *rph, int *lenS, int *lenU) {
 	
 	int lenUstrat = *lenU;
@@ -76,7 +76,7 @@ void concordanceIndexC(int *msurv, int *ustrat, double *x2, int *cl2,
         		c++;
         	}
         }
-        int weightss[Ns];
+        double weightss[Ns];
         c = 0;
         for(int i=0; i < lenStrat; i++){
         	if(ixs[i] == 1){
@@ -84,14 +84,14 @@ void concordanceIndexC(int *msurv, int *ustrat, double *x2, int *cl2,
         		c++;
         	}
         }
-        int chs[Ns];
-        int dhs[Ns];
-        int uhs[Ns];
-        int rphs[Ns];
+        double chs[Ns];
+        double dhs[Ns];
+        double uhs[Ns];
+        double rphs[Ns];
         for (int h=0; h < Ns; h++) {       	
-        	int chsj, dhsj, uhsj, rphsj = 0;
+        	double chsj, dhsj, uhsj, rphsj = 0;
             for (int j=0; j < Ns; j++) {
-                int whj = weightss[h] * weightss[j];
+                double whj = weightss[h] * weightss[j];
                 if ((*msurv == 1 && (sts[h] < sts[j] && ses[h] == 1)) || (*msurv == 0 && cls[h] > cls[j])) {
                   rphsj = rphsj + whj;
                   if (xs[h] > xs[j]) {  

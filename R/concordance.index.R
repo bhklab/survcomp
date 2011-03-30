@@ -38,7 +38,7 @@ function(x, surv.time, surv.event, cl, weights, strat, alpha=0.05, outx=TRUE, me
 	lenS <- length(strat)
 	lenU <- length(ustrat)
 	out <- .C("concordanceIndexC", as.integer(as.logical(msurv)), as.integer(ustrat), as.double(x2),
-			as.integer(cl2), as.double(st), as.integer(se), as.integer(weights), as.integer(strat),
+			as.integer(cl2), as.double(st), as.integer(se), as.double(weights), as.integer(strat),
 			as.integer(N), as.integer(as.logical(outx)), ch = as.integer(ch),dh = as.integer(dh),
 			uh = as.integer(uh), rph = as.integer(rph), as.integer(lenS), as.integer(lenU), PACKAGE="survcomp")
      ch <- out$ch
