@@ -666,7 +666,7 @@ for(i in 1:length(gsList)) {
 %------------------------------------------------------------ 
 To display a Kaplan Meier curve \cite{Kaplan1958} for all datasets you can use:
 
-<<survivalCurveAllDatasets,fig=TRUE,pdf=FALSE,eps=TRUE>>==
+<<survivalCurveAllDatasets,fig=TRUE>>==
 surv.data <- censor.time(surv.time=c(pData(mainz7g)[ ,"t.dmfs"], pData(transbig7g)[ ,"t.dmfs"], pData(unt7g)[ ,"t.dmfs"], pData(vdx7g)[ ,"t.dmfs"], pData(upp7g)[ ,"t.rfs"], pData(nki7g)[ ,"t.dmfs"]) / 365, surv.event=c(pData(mainz7g)[ ,"e.dmfs"], pData(transbig7g)[ ,"e.dmfs"], pData(unt7g)[ ,"e.dmfs"], pData(vdx7g)[ ,"e.dmfs"], pData(upp7g)[ ,"e.rfs"], pData(nki7g)[ ,"e.dmfs"]), time.cens=tc / 365)
 gg <- factor(c(rep("mainz", nrow(pData(mainz7g))), rep("transbig", nrow(pData(transbig7g))), rep("unt", nrow(pData(unt7g))), rep("vdx", nrow(pData(vdx7g))), rep("upp", nrow(pData(upp7g))), rep("nki", nrow(pData(nki7g)))), levels=c("mainz", "transbig", "unt", "vdx", "upp", "nki"))
 dd <- data.frame("time"=surv.data[[1]], "event"=surv.data[[2]], "group"=gg)
@@ -675,7 +675,7 @@ km.coxph.plot(formula.s=formula(Surv(time, event) ~ group), data.s=dd, sub.s="al
 
 If you want do display the survival curve for a single gene using the data of all six datasets, we have to concatenate the survival and expression data of all datasets (see \Robject{surv.time.all}, \Robject{surv.event.all} and \Robject{aurka.exprs} below). After that we split the patients in each dataset into three parts acording to their gene expression. We use the function \Rfunction{quantile()} for that. In the end we have three groups, representing the low gene expression group (lowest 33\% of the gene expression), intermediate gene expression group (gene expression between 33\% and 66\%) and high gene expression group (over 66\%).
 
-<<survivalCurveAURKA,fig=TRUE,pdf=FALSE,eps=TRUE>>==
+<<survivalCurveAURKA,fig=TRUE>>==
 aurkaGs <- "AURKA"
 aurkaGid <- 6790
 aurkaPaf <- "208079_s_at"

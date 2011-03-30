@@ -13,13 +13,13 @@ Functions to perform the performance assessment and comparison of risk predictio
 Package: \tab survcomp\cr
 Type: \tab Package\cr
 Version: \tab 1.1.8\cr
-Date: \tab 2011-03-02\cr
+Date: \tab 2011-03-30\cr
 License: \tab Artistic-2.0\cr
 }
 }
 
 \author{
-Benjamin Haibe-Kains
+\bold{Benjamin Haibe-Kains}
 
 - Computational Biology and Functional Genomics Laboratory, Dana-Farber Cancer Institute, Boston, MA, USA
 
@@ -39,15 +39,15 @@ Former labs:
 
 \url{http://www.bordet.be/en/services/medical/array/practical.htm}
 
-Markus Schroeder
+\bold{Markus Schroeder}
 
 - Computational Biology and Functional Genomics Laboratory, Dana-Farber Cancer Institute, Boston, MA, USA
 
 \url{http://compbio.dfci.harvard.edu/}
 
-- BRF, Center for Biotechnology (CeBiTec), Bielefeld University, Germany
+- Computational Genomics, Center for Biotechnology (CeBiTec), Bielefeld University, Germany
 
-\url{http://www.cebitec.uni-bielefeld.de/brf/main/brf.html}
+\url{http://www.cebitec.uni-bielefeld.de/cebitec/computational-genomics/home.html}
 
 \bold{Maintainer}:
 
