@@ -1,0 +1,15 @@
+citHeader("To cite survcomp in publications use:")
+
+citEntry(entry="article",
+  title  ="A comparative study of survival models for breast cancer prognostication on microarray data: does a single gene beat them all?",
+  author = "Haibe-Kains B, Desmedt C, Sotiriou C, Bontempi G",
+  journal = "Bioinformatics",
+  year = "2008",
+  volume = "24(19)",
+  pages = "2200-2208.",
+  textVersion = paste("Haibe-Kains B, Desmedt C, Sotiriou C, Bontempi G",
+    "A comparative study of survival models for breast cancer prognostication on microarray data: does a single gene beat them all?",
+    "Bioinformatics 24(19): 2200-2208. (2008)."))
+
+citFooter("We have invested our time and effort in creating survcomp,",
+          "we'd be grateful if you could please cite it when using it for survival analysis.")

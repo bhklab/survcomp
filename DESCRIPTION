@@ -1,0 +1,13 @@
+Package: survcomp
+Type: Package
+Title: Performance Assessment and Comparison for Survival Analysis
+Version: 0.99.9
+Date: 2011-03-30
+Description: R package providing functions to assess and to compare the performance of risk prediction (survival) models.
+biocViews: GeneExpression, DifferentialExpression
+Author: Benjamin Haibe-Kains, Markus Schroeder, John Quackenbush, Christos Sotiriou, Gianluca Bontempi
+Maintainer: Benjamin Haibe-Kains <bhaibeka@jimmy.harvard.edu>, Markus Schroeder <mschroed@jimmy.harvard.edu>
+Depends: survival, ipred, prodlim, survivalROC, SuppDists, grid, rmeta, bootstrap
+Suggests: Hmisc, CPE, clinfun, survJamda, Biobase
+License: Artistic-2.0
+Packaged: 2011-03-31 21:16:32 UTC; cwon2
