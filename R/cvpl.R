@@ -44,7 +44,7 @@ function(x, surv.time, surv.event, strata, nfold=1, setseed, na.rm=FALSE, verbos
 			conv <- c(conv, TRUE)
 			li <- m$loglik[2]
 			mypred <- predict(object=m, newdata=dd)
-			l <- logpl(surv.time=surv.time, surv.event=surv.event, pred=mypred, strata=strata)[1]
+			l <- logpl(surv.time=dd[ , "stime"], surv.event=dd[ , "sevent"], pred=mypred, strata=dd[ , "strat"])[1]
 		} else {
 			conv <- c(conv, FALSE)
 			l <- NA
