@@ -14,7 +14,7 @@ function(x, surv.time, surv.event, strata, nfold=1, setseed, na.rm=FALSE, verbos
 	strata <- strata[cc.ix]
 	nr <- sum(cc.ix)
 	if (!all(cc.ix) && !na.rm) { stop("NA values are present!") }
-	if(verbose) { cat(sprintf("%i cases (%i cases are removed due to NA values)\n", nr, sum(!cc.ix))) }
+	if(verbose) { message(sprintf("%i cases (%i cases are removed due to NA values)", nr, sum(!cc.ix))) }
 
 	## k-fold cross-validation
 	if(nfold == 1) {
