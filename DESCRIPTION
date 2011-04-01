@@ -1,7 +1,7 @@
 Package: survcomp
 Type: Package
 Title: Performance Assessment and Comparison for Survival Analysis
-Version: 0.99.9
+Version: 1.1.9
 Date: 2011-03-30
 Description: R package providing functions to assess and to compare the performance of risk prediction (survival) models.
 biocViews: GeneExpression, DifferentialExpression
