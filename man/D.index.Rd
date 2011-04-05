@@ -6,7 +6,8 @@
 Function to compute the D index for a risk prediction, i.e. an estimate of the log hazard ratio comparing two equal-sized prognostic groups. This is a natural measure of separation between two independent survival distributions under the proportional hazards assumption.
 }
 \usage{
-D.index(x, surv.time, surv.event, weights, strat, alpha = 0.05, na.rm = FALSE, ...)
+D.index(x, surv.time, surv.event, weights, strat, alpha = 0.05,
+  na.rm = FALSE, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

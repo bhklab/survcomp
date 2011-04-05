@@ -49,7 +49,8 @@ sevent <- as.numeric(stime <= cens)
 stime <- pmin(stime, cens)
 d1.2 <- D.index(x=age, surv.time=stime, surv.event=sevent)
 d2.2 <- D.index(x=size, surv.time=stime, surv.event=sevent)
-dindex.comp.meta(list.dindex1=list("dindex.age1"=d1.1, "dindex.age2"=d1.2), list.dindex2=list("dindex.size1"=d2.1, "dindex.size2"=d2.2))
+dindex.comp.meta(list.dindex1=list("dindex.age1"=d1.1, "dindex.age2"=d1.2),
+  list.dindex2=list("dindex.size1"=d2.1, "dindex.size2"=d2.2))
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

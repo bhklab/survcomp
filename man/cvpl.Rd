@@ -6,7 +6,8 @@
   The function computes the cross-validated partial likelihood (CVPL) for the Cox model.
 }
 \usage{
-cvpl(x, surv.time, surv.event, strata, nfold = 1, setseed, na.rm = FALSE, verbose = FALSE)
+cvpl(x, surv.time, surv.event, strata, nfold = 1, setseed,
+  na.rm = FALSE, verbose = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -43,7 +44,8 @@ cens   <- runif(100,.5,2)
 sevent  <- as.numeric(stime <= cens)
 stime <- pmin(stime, cens)
 strat <- sample(1:3, 100, replace=TRUE)
-cvpl(x=age, surv.time=stime, surv.event=sevent, strata=strat, nfold=10, setseed=54321)
+cvpl(x=age, surv.time=stime, surv.event=sevent, strata=strat,
+  nfold=10, setseed=54321)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

@@ -6,7 +6,8 @@
   The function combines several p-value estimated from the same null hypothesis in different studies involving independent data.
 }
 \usage{
-combine.test(p, weight, method = c("fisher", "z.transform", "logit"), hetero = FALSE, na.rm = FALSE)
+combine.test(p, weight, method = c("fisher", "z.transform", "logit"),
+  hetero = FALSE, na.rm = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

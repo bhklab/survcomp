@@ -35,7 +35,8 @@ sevent  <- as.numeric(stime <= cens)
 stime <- pmin(stime, cens)
 strat <- sample(1:3, 100, replace=TRUE)
 dd <- data.frame("surv.time"=stime, "surv.event"=sevent, "strat"=strat)
-no.at.risk(formula.s=Surv(surv.time,surv.event) ~ strat, data.s=dd, sub.s="all", t.step=0.05, t.end=1)
+no.at.risk(formula.s=Surv(surv.time,surv.event) ~ strat, data.s=dd,
+  sub.s="all", t.step=0.05, t.end=1)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

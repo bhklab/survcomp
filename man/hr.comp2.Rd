@@ -43,7 +43,8 @@ sevent <- as.numeric(stime <= cens)
 stime <- pmin(stime, cens)
 coxm1 <- coxph(Surv(stime, sevent) ~ age)
 coxm2 <- coxph(Surv(stime, sevent) ~ size)
-hr.comp2(x1=age, beta1=coxm1$coefficients, se1=drop(sqrt(coxm1$var)), x2=size, beta2=coxm2$coefficients, se2=drop(sqrt(coxm2$var)), n=100)
+hr.comp2(x1=age, beta1=coxm1$coefficients, se1=drop(sqrt(coxm1$var)),
+  x2=size, beta2=coxm2$coefficients, se2=drop(sqrt(coxm2$var)), n=100)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

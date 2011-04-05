@@ -62,7 +62,7 @@
 \affil[2]{Center for Cancer Computational Biology, Dana-Farber Cancer Institute}
 \affil[3]{Machine Learning Group, Universit\'{e} Libre de Bruxelles}
 \affil[4]{Breast Cancer Translational Research Laboratory, Institut Jules Bordet, Universit\'{e} Libre de Bruxelles}
-\affil[5]{Bioinformatics Resource Facility, Center for Biotechnology, Bielefeld University, Germany}
+\affil[5]{Computational Genomics, Center for Biotechnology, Bielefeld University, Germany}
 
 
 \SweaveOpts{highlight=TRUE, tidy=TRUE, keep.space=TRUE, keep.blank.space=FALSE, keep.comment=TRUE}

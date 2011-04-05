@@ -49,7 +49,8 @@ sevent <- as.numeric(stime <= cens)
 stime <- pmin(stime, cens)
 h1.2 <- hazard.ratio(x=age, surv.time=stime, surv.event=sevent)
 h2.2 <- hazard.ratio(x=size, surv.time=stime, surv.event=sevent)
-hr.comp.meta(list.hr1=list("hr.age1"=h1.1, "hr.age2"=h1.2), list.hr2=list("hr.size1"=h2.1, "hr.size2"=h2.2))
+hr.comp.meta(list.hr1=list("hr.age1"=h1.1, "hr.age2"=h1.2),
+  list.hr2=list("hr.size1"=h2.1, "hr.size2"=h2.2))
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

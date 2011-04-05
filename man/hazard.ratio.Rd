@@ -6,7 +6,8 @@
 Function to compute the hazard ratio for a risk prediction.
 }
 \usage{
-hazard.ratio(x, surv.time, surv.event, weights, strat, alpha = 0.05, na.rm = FALSE, ...)
+hazard.ratio(x, surv.time, surv.event, weights, strat, alpha = 0.05,
+  na.rm = FALSE, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -45,7 +46,8 @@ sevent  <- as.numeric(stime <= cens)
 stime <- pmin(stime, cens)
 strat <- sample(1:3, 100, replace=TRUE)
 weight <- runif(100, min=0, max=1)
-hazard.ratio(x=age, surv.time=stime, surv.event=sevent, weights=weight, strat=strat)
+hazard.ratio(x=age, surv.time=stime, surv.event=sevent, weights=weight,
+  strat=strat)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

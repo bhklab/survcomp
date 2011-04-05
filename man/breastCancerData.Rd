@@ -66,7 +66,7 @@ data(breastCancerData)
 ########
 ## Example for the mainz7g dataset
 ########
-## show the first 5 rows and columns of the expression data
+## show the first 5 columns of the expression data
 exprs(mainz7g)[ ,1:5]
 ## show the first 6 rows of the phenotype data
 head(pData(mainz7g))
