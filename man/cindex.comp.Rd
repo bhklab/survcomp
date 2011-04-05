@@ -37,8 +37,10 @@ stime <- rexp(100)
 cens <- runif(100,.5,2)
 sevent <- as.numeric(stime <= cens)
 stime <- pmin(stime, cens)
-c1 <- concordance.index(x=age, surv.time=stime, surv.event=sevent, method="noether")
-c2 <- concordance.index(x=size, surv.time=stime, surv.event=sevent, method="noether")
+c1 <- concordance.index(x=age, surv.time=stime, surv.event=sevent,
+  method="noether")
+c2 <- concordance.index(x=size, surv.time=stime, surv.event=sevent,
+  method="noether")
 cindex.comp(c1, c2)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

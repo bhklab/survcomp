@@ -6,7 +6,8 @@
   The function is a wrapper for the \code{\link[survivalROC]{survivalROC}} function in order to compute the time-dependent ROC curves.
 }
 \usage{
-tdrocc(x, surv.time, surv.event, surv.entry = NULL, time, cutpts = NA, na.rm = FALSE, verbose = FALSE, span = 0, lambda = 0, ...)
+tdrocc(x, surv.time, surv.event, surv.entry = NULL, time, cutpts = NA,
+  na.rm = FALSE, verbose = FALSE, span = 0, lambda = 0, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -44,9 +45,11 @@ stime <- rexp(100)
 cens <- runif(100,.5,2)
 sevent <- as.numeric(stime <= cens)
 stime <- pmin(stime, cens)
-tdroc <- tdrocc(x=age, surv.time=stime, surv.event=sevent, time=1, na.rm=TRUE, verbose=FALSE)
+tdroc <- tdrocc(x=age, surv.time=stime, surv.event=sevent, time=1,
+  na.rm=TRUE, verbose=FALSE)
 ##plot the time-dependent ROC curve
-plot(x=1-tdroc$spec, y=tdroc$sens, type="l", xlab="1 - specificity", ylab="sensitivity", xlim=c(0, 1), ylim=c(0, 1))
+plot(x=1-tdroc$spec, y=tdroc$sens, type="l", xlab="1 - specificity",
+  ylab="sensitivity", xlim=c(0, 1), ylim=c(0, 1))
 lines(x=c(0,1), y=c(0,1), lty=3, col="red")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

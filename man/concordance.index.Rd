@@ -6,7 +6,9 @@
 Function to compute the concordance index for a risk prediction, i.e. the probability that, for a pair of randomly chosen comparable samples, the sample with the higher risk prediction will experience an event before the other sample or belongs to a higher binary class.
 }
 \usage{
-concordance.index(x, surv.time, surv.event, cl, weights, strat, alpha = 0.05, outx = TRUE, method = c("conservative", "noether", "nam"), na.rm = FALSE)
+concordance.index(x, surv.time, surv.event, cl, weights, strat,
+  alpha = 0.05, outx = TRUE, method = c("conservative", "noether", "nam"),
+  na.rm = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -52,7 +54,8 @@ stime <- pmin(stime, cens)
 strat <- sample(1:3, 100, replace=TRUE)
 weight <- runif(100, min=0, max=1)
 cat("survival prediction:\n")
-concordance.index(x=age, surv.time=stime, surv.event=sevent, strat=strat, weights=weight, method="noether")
+concordance.index(x=age, surv.time=stime, surv.event=sevent, strat=strat,
+  weights=weight, method="noether")
 cat("binary class prediction:\n")
 concordance.index(x=age, cl=sex, strat=strat, method="noether")
 }

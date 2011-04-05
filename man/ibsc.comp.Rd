@@ -43,7 +43,8 @@ bsc1 <- sbrier.score2proba(data.tr=dd, data.ts=dd, method="cox")
 ##size
 dd <- data.frame("time"=stime, "event"=sevent, "score"=age)
 bsc2 <- sbrier.score2proba(data.tr=dd, data.ts=dd, method="cox")
-if(!all(bsc1$time == bsc2$time)) { stop("the two vector of BSCs must be computed for the same points in time!") }
+if(!all(bsc1$time == bsc2$time)) {
+  stop("the two vector of BSCs must be computed for the same points in time!") }
 ibsc.comp(bsc1=bsc1$bsc, bsc2=bsc2$bsc, time=bsc1$time)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

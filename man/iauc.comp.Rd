@@ -41,14 +41,16 @@ tt <- unique(sort(stime[sevent == 1]))
 ##size
 mytdroc1 <- NULL
 for(i in 1:length(tt)) {
-	rr <- tdrocc(x=size, surv.time=stime, surv.event=sevent, time=tt[i], na.rm=TRUE, verbose=FALSE)
+	rr <- tdrocc(x=size, surv.time=stime, surv.event=sevent, time=tt[i],
+    na.rm=TRUE, verbose=FALSE)
 	mytdroc1 <- c(mytdroc1, list(rr))
 }
 auc1 <- unlist(lapply(mytdroc1, function(x) { return(x$AUC) }))
 ##age
 mytdroc2 <- NULL
 for(i in 1:length(tt)) {
-	rr <- tdrocc(x=age, surv.time=stime, surv.event=sevent, time=tt[i], na.rm=TRUE, verbose=FALSE)
+	rr <- tdrocc(x=age, surv.time=stime, surv.event=sevent, time=tt[i],
+    na.rm=TRUE, verbose=FALSE)
 	mytdroc2 <- c(mytdroc2, list(rr))
 }
 auc2 <- unlist(lapply(mytdroc2, function(x) { return(x$AUC) }))

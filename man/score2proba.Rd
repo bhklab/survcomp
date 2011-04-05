@@ -6,7 +6,8 @@
   the function uses either a Cox model or the product-limit estimator to compute the survival probabilities from a risk score for a specific point in time.
 }
 \usage{
-score2proba(data.tr, score, yr, method = c("cox", "prodlim"), conf.int = 0.95, which.est= c ("point", "lower", "upper"))
+score2proba(data.tr, score, yr, method = c("cox", "prodlim"),
+  conf.int = 0.95, which.est= c ("point", "lower", "upper"))
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

@@ -6,7 +6,10 @@
 Function to plot several Kaplan-Meier survival curves with number of individuals at risk at some time points.
 }
 \usage{
-km.coxph.plot(formula.s, data.s, sub.s = "all", x.label, y.label, main.title, sub.title, leg.text, leg.pos = "bottomright", leg.inset = 0.05, o.text, v.line, h.line, .col = 1:4, .lty = 1, .lwd = 1, show.n.risk = FALSE, n.risk.step, n.risk.cex = 0.85, verbose = TRUE, ...)
+km.coxph.plot(formula.s, data.s, sub.s = "all", x.label, y.label,
+  main.title, sub.title, leg.text, leg.pos = "bottomright", leg.inset = 0.05,
+  o.text, v.line, h.line, .col = 1:4, .lty = 1, .lwd = 1, show.n.risk = FALSE,
+  n.risk.step, n.risk.cex = 0.85, verbose = TRUE, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -50,7 +53,11 @@ stime <- pmin(stime, cens)
 strat <- sample(1:3, 100, replace=TRUE)
 dd <- data.frame("surv.time"=stime, "surv.event"=sevent, "strat"=strat)
 
-km.coxph.plot(formula.s=Surv(surv.time, surv.event) ~ strat, data.s=dd, sub.s="all", x.label="Time (years)", y.label="Probability of survival", main.title="", leg.text=paste(c("Low", "Intermediate", "High"), "   ", sep=""), leg.pos="topright", leg.inset=0, .col=c("darkblue", "darkgreen", "darkred"), .lty=c(1,1,1), show.n.risk=TRUE, n.risk.step=2, n.risk.cex=0.85, verbose=FALSE)
+km.coxph.plot(formula.s=Surv(surv.time, surv.event) ~ strat, data.s=dd,
+  sub.s="all", x.label="Time (years)", y.label="Probability of survival",
+  main.title="", leg.text=paste(c("Low", "Intermediate", "High"), "   ", sep=""),
+  leg.pos="topright", leg.inset=0, .col=c("darkblue", "darkgreen", "darkred"),
+  .lty=c(1,1,1), show.n.risk=TRUE, n.risk.step=2, n.risk.cex=0.85, verbose=FALSE)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

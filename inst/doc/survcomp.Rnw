@@ -1,4 +1,4 @@
-%\VignetteIndexEntry{SurvComp:  a package for performance assessment and comparison for survival analysis} 
+%\VignetteIndexEntry{SurvComp:  a package for performance assessment and comparison for survival analysis}
 %\VignetteDepends{survival, ipred, prodlim, survivalROC, SuppDists, grid, rmeta, bootstrap}
 %\VignetteSuggests{Hmisc, CPE, clinfun, survJamda, Biobase}
 %\VignetteKeywords{Breast Cancer, Survival Analysis, GeneExpression, DifferentialExpression}
@@ -44,7 +44,6 @@
 \newcommand{\Rmethod}[1]{{\texttt{#1}}}
 \newcommand{\Rfunarg}[1]{{\texttt{#1}}}
 
-\SweaveOpts{highlight=TRUE, tidy=TRUE, keep.space=TRUE, keep.blank.space=FALSE, keep.comment=TRUE}
 
 
 \begin{document}
@@ -54,18 +53,19 @@
 %------------------------------------------------------------
 \author[1,2,3]{Benjamin Haibe-Kains}
 \author[1,5]{Markus Schr\"{o}der}
-\author[1,2]{John Quackenbush}
-%\author[4]{Christine Desmedt}
 \author[4]{Christos Sotiriou}
 \author[3]{Gianluca Bontempi}
+\author[1,2]{John Quackenbush}
 
 
 \affil[1]{Computational Biology and Functional Genomics Laboratory, Dana-Farber Cancer Institute, Harvard School of Public Health}
 \affil[2]{Center for Cancer Computational Biology, Dana-Farber Cancer Institute}
 \affil[3]{Machine Learning Group, Universit\'{e} Libre de Bruxelles}
 \affil[4]{Breast Cancer Translational Research Laboratory, Institut Jules Bordet, Universit\'{e} Libre de Bruxelles}
-\affil[5]{Bioinformatics Resource Facility, Center for Biotechnology, Bielefeld University, Germany}
+\affil[5]{Computational Genomics, Center for Biotechnology, Bielefeld University, Germany}
 
+
+\SweaveOpts{highlight=TRUE, tidy=TRUE, keep.space=TRUE, keep.blank.space=FALSE, keep.comment=TRUE}
 
 %<<setup,echo=FALSE>>=
 %library(pgfSweave)
@@ -665,8 +665,8 @@ for(i in 1:length(gsList)) {
 %------------------------------------------------------------ 
 To display a Kaplan Meier curve \cite{Kaplan1958} for all datasets you can use:
 
-<<survivalCurveAllDatasets, fig=TRUE>>=
-surv.data <- censor.time(surv.time=c(pData(mainz7g)[ ,"t.dmfs"], pData(transbig7g)[ ,"t.dmfs"], pData(unt7g)[ ,"t.dmfs"], pData(vdx7g)[ ,"t.dmfs"], pData(upp7g)[ ,"t.rfs"], pData(nki7g)[ ,"t.dmfs"]) / 365, surv.event=c(pData(mainz7g)[ ,"e.dmfs"], pData(transbig7g)[ ,"e.dmfs"], pData(unt7g)[ ,"e.dmfs"], pData(vdx7g)[ ,"e.dmfs"], pData(upp7g)[ ,"e.rfs"], pData(nki7g)[ ,"e.dmfs"]), time.cens=tc / 365)   
+<<survivalCurveAllDatasets,fig=TRUE>>==
+surv.data <- censor.time(surv.time=c(pData(mainz7g)[ ,"t.dmfs"], pData(transbig7g)[ ,"t.dmfs"], pData(unt7g)[ ,"t.dmfs"], pData(vdx7g)[ ,"t.dmfs"], pData(upp7g)[ ,"t.rfs"], pData(nki7g)[ ,"t.dmfs"]) / 365, surv.event=c(pData(mainz7g)[ ,"e.dmfs"], pData(transbig7g)[ ,"e.dmfs"], pData(unt7g)[ ,"e.dmfs"], pData(vdx7g)[ ,"e.dmfs"], pData(upp7g)[ ,"e.rfs"], pData(nki7g)[ ,"e.dmfs"]), time.cens=tc / 365)
 gg <- factor(c(rep("mainz", nrow(pData(mainz7g))), rep("transbig", nrow(pData(transbig7g))), rep("unt", nrow(pData(unt7g))), rep("vdx", nrow(pData(vdx7g))), rep("upp", nrow(pData(upp7g))), rep("nki", nrow(pData(nki7g)))), levels=c("mainz", "transbig", "unt", "vdx", "upp", "nki"))
 dd <- data.frame("time"=surv.data[[1]], "event"=surv.data[[2]], "group"=gg)
 km.coxph.plot(formula.s=formula(Surv(time, event) ~ group), data.s=dd, sub.s="all", x.label="Time (years)", y.label="Probability of DMFS/RFS", main.title="", sub.title="", leg.pos="bottomright", leg.inset=0.05, o.text=FALSE, v.line=FALSE, h.line=FALSE, .lty=rep(1, length(levels(gg))), show.n.risk=TRUE, n.risk.step=1, n.risk.cex=0.85, .col=c("darkorange", "red", "darkblue", "darkgreen", "black", "brown"), leg.text=paste(levels(gg), myspace, sep=""), verbose=FALSE, ylim=c(0.1,1))
@@ -674,7 +674,7 @@ km.coxph.plot(formula.s=formula(Surv(time, event) ~ group), data.s=dd, sub.s="al
 
 If you want do display the survival curve for a single gene using the data of all six datasets, we have to concatenate the survival and expression data of all datasets (see \Robject{surv.time.all}, \Robject{surv.event.all} and \Robject{aurka.exprs} below). After that we split the patients in each dataset into three parts acording to their gene expression. We use the function \Rfunction{quantile()} for that. In the end we have three groups, representing the low gene expression group (lowest 33\% of the gene expression), intermediate gene expression group (gene expression between 33\% and 66\%) and high gene expression group (over 66\%).
 
-<<survivalCurveAURKA,fig=TRUE>>=
+<<survivalCurveAURKA,fig=TRUE>>==
 aurkaGs <- "AURKA"
 aurkaGid <- 6790
 aurkaPaf <- "208079_s_at"

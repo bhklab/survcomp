@@ -6,7 +6,10 @@
 Draw a forest plot together with a table of text.
 }
 \usage{
-forestplot.surv(labeltext, mean, lower, upper, align = NULL, is.summary = FALSE, clip = c(-Inf, Inf), xlab = "", zero = 0, graphwidth = unit(2, "inches"), col = meta.colors(), xlog = FALSE, box.size = NULL, x.ticks = NULL, ...)
+forestplot.surv(labeltext, mean, lower, upper, align = NULL,
+  is.summary = FALSE, clip = c(-Inf, Inf), xlab = "", zero = 0,
+  graphwidth = unit(2, "inches"), col = meta.colors(), xlog = FALSE,
+  box.size = NULL, x.ticks = NULL, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

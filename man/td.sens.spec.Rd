@@ -6,7 +6,8 @@
   The function is a wrapper for the \code{\link[survivalROC]{survivalROC.C}} function in order  to compute sensitivity and specificity for a binary classification of survival data.
 }
 \usage{
-td.sens.spec(cl, surv.time, surv.event, time, span = 0, sampling = FALSE, na.rm = FALSE, ...)
+td.sens.spec(cl, surv.time, surv.event, time, span = 0, sampling = FALSE,
+  na.rm = FALSE, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -40,7 +41,8 @@ stime <- rexp(100)
 cens <- runif(100,.5,2)
 sevent <- as.numeric(stime <= cens)
 stime <- pmin(stime, cens)
-mysenspec <- td.sens.spec(cl=gender, surv.time=stime, surv.event=sevent, time=1, span=0, na.rm=FALSE)
+mysenspec <- td.sens.spec(cl=gender, surv.time=stime, surv.event=sevent,
+  time=1, span=0, na.rm=FALSE)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

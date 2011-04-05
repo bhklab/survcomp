@@ -41,8 +41,10 @@ stime <- rexp(100)
 cens <- runif(100,.5,2)
 sevent <- as.numeric(stime <= cens)
 stime <- pmin(stime, cens)
-c1.1 <- concordance.index(x=age, surv.time=stime, surv.event=sevent, method="noether")
-c2.1 <- concordance.index(x=size, surv.time=stime, surv.event=sevent, method="noether")
+c1.1 <- concordance.index(x=age, surv.time=stime, surv.event=sevent,
+  method="noether")
+c2.1 <- concordance.index(x=size, surv.time=stime, surv.event=sevent,
+  method="noether")
 #second dataset
 set.seed(54321)
 age <- rnorm(110, 53, 10)
@@ -51,9 +53,12 @@ stime <- rexp(110)
 cens <- runif(110,.55,2)
 sevent <- as.numeric(stime <= cens)
 stime <- pmin(stime, cens)
-c1.2 <- concordance.index(x=age, surv.time=stime, surv.event=sevent, method="noether")
-c2.2 <- concordance.index(x=size, surv.time=stime, surv.event=sevent, method="noether")
-cindex.comp.meta(list.cindex1=list("cindex.age1"=c1.1, "cindex.age2"=c1.2), list.cindex2=list("cindex.size1"=c2.1, "cindex.size2"=c2.2))
+c1.2 <- concordance.index(x=age, surv.time=stime, surv.event=sevent,
+  method="noether")
+c2.2 <- concordance.index(x=size, surv.time=stime, surv.event=sevent,
+  method="noether")
+cindex.comp.meta(list.cindex1=list("cindex.age1"=c1.1, "cindex.age2"=c1.2),
+  list.cindex2=list("cindex.size1"=c2.1, "cindex.size2"=c2.2))
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
