@@ -70,10 +70,14 @@ function(x, surv.time, surv.event, cl, weights, strat, alpha=0.05, outx=TRUE, me
 	pdd <- (1 / (N * (N - 1) * (N - 2))) * sum(dh * (dh - 1),na.rm=TRUE)
 	pcd <- (1 / (N * (N - 1) * (N - 2))) * sum(ch * dh,na.rm=TRUE)
 	varp <- (4 / (pc + pd)^4) * (pd^2 * pcc - 2 * pc * pd * pcd + pc^2 * pdd)
-	ci <- qnorm(p=alpha / 2, lower.tail=FALSE) * sqrt(varp / N)
-	lower <- cindex - ci
-	upper <- cindex + ci
-	p <- pnorm((cindex - 0.5) / sqrt(varp / N), lower.tail=cindex < 0.5)
+  if((varp / N) > 0){
+  	ci <- qnorm(p=alpha / 2, lower.tail=FALSE) * sqrt(varp / N)
+  	lower <- cindex - ci
+  	upper <- cindex + ci
+  	p <- pnorm((cindex - 0.5) / sqrt(varp / N), lower.tail=cindex < 0.5)
+ 	} else {
+ 	  ci <- lower <- upper <- p <- NA
+  }
 	},
 	"conservative"={
 	C <- cindex
@@ -99,5 +103,6 @@ function(x, surv.time, surv.event, cl, weights, strat, alpha=0.05, outx=TRUE, me
 	upper <- ifelse(upper < 0, 0, upper)
 	upper <- ifelse(upper > 1, 1, upper)
 	if(msurv) { data <- list("x"=x, "surv.time"=surv.time, "surv.event"=surv.event) } else { data  <- list("x"=x, "cl"=cl) }
-	return(list("c.index"=cindex, "se"=sqrt(varp / N), "lower"=lower, "upper"=upper, "p.value"=p, "n"=N, "data"=data))
+	if((varp / N) > 0) {se <- sqrt(varp / N)} else {se <- NA}
+	return(list("c.index"=cindex, "se"=se, "lower"=lower, "upper"=upper, "p.value"=p, "n"=N, "data"=data))
 }
