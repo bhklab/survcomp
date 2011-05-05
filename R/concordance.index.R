@@ -47,23 +47,19 @@ function(x, surv.time, surv.event, cl, weights, strat, alpha=0.05, outx=TRUE, me
 			as.integer(cl2), as.double(st), as.integer(se), as.double(weights), as.integer(strat),
 			as.integer(N), as.integer(as.logical(outx)), ch = as.integer(ch),dh = as.integer(dh),
 			uh = as.integer(uh), rph = as.integer(rph), as.integer(lenS), as.integer(lenU), PACKAGE="survcomp")
-     ch <- out$ch
-     dh <- out$dh
-     uh <- out$uh
-     rph <- out$rph
+  ch <- out$ch
+  dh <- out$dh
+  uh <- out$uh
+  rph <- out$rph
 
-  if((length(ch[ch==0]) + length(dh[dh==0])) > (N - 10) * 2){
+  if(sum(ch)==0 || sum(dh)==0 || sum(ch * (ch - 1))==0 || sum(dh * (dh - 1))==0 || sum(ch * dh)==0){
+    if(msurv) { data <- list("x"=x, "surv.time"=surv.time, "surv.event"=surv.event) } else { data  <- list("x"=x, "cl"=cl) }
     return(list("c.index"=NA, "se"=NA, "lower"=NA, "upper"=NA, "p.value"=NA, "n"=0, "data"=data))
   }
   
 	pc <- (1 / (N * (N - 1))) * sum(ch)
 	pd  <- (1 / (N * (N - 1))) * sum(dh)
-	if(pc != 0 && pd != 0){
-    cindex <- pc / (pc + pd)
-  } else {
-    if(msurv) { data <- list("x"=x, "surv.time"=surv.time, "surv.event"=surv.event) } else { data  <- list("x"=x, "cl"=cl) }
-    return(list("c.index"=NA, "se"=NA, "lower"=NA, "upper"=NA, "p.value"=NA, "n"=0, "data"=data))
-  }
+  cindex <- pc / (pc + pd)
 	
 	switch(method,
 	"noether"={
