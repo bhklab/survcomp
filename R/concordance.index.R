@@ -28,6 +28,12 @@ function(x, surv.time, surv.event, cl, weights, strat, alpha=0.05, outx=TRUE, me
 	cl2 <- cl[cc.ix]
 	st <- surv.time[cc.ix]
 	se <- surv.event[cc.ix]
+	seThreshold <- se[se == 1]
+	if(length(seThreshold[!is.na(seThreshold)]) < 5){
+	 warning("\nNot enough events to compute a reliable concordance index!")
+	 if(msurv) { data <- list("x"=x, "surv.time"=surv.time, "surv.event"=surv.event) } else { data  <- list("x"=x, "cl"=cl) }
+   return(list("c.index"=NA, "se"=NA, "lower"=NA, "upper"=NA, "p.value"=NA, "n"=0, "data"=data))
+  }
 	weights <- weights[cc.ix]
 	strat <- strat[cc.ix]
 	strat <- as.numeric(as.factor(strat))
@@ -45,15 +51,24 @@ function(x, surv.time, surv.event, cl, weights, strat, alpha=0.05, outx=TRUE, me
      dh <- out$dh
      uh <- out$uh
      rph <- out$rph
-	pc <- (1 / (N * (N - 1))) * sum(ch)
-	pd  <- (1 / (N * (N - 1))) * sum(dh)
-	cindex <- pc / (pc + pd)
+  ch[ch == -1] <- NA
+  dh[dh == -1] <- NA
+  uh[uh == -1] <- NA
+  rph[rph == -1] <- NA
+	pc <- (1 / (N * (N - 1))) * sum(ch,na.rm=TRUE)
+	pd  <- (1 / (N * (N - 1))) * sum(dh,na.rm=TRUE)
+	if(pc != 0 && pd != 0){
+    cindex <- pc / (pc + pd)
+  } else {
+    if(msurv) { data <- list("x"=x, "surv.time"=surv.time, "surv.event"=surv.event) } else { data  <- list("x"=x, "cl"=cl) }
+    return(list("c.index"=NA, "se"=NA, "lower"=NA, "upper"=NA, "p.value"=NA, "n"=0, "data"=data))
+  }
 	
 	switch(method,
 	"noether"={
-	pcc <- (1 / (N * (N - 1) * (N - 2))) * sum(ch * (ch - 1))
-	pdd <- (1 / (N * (N - 1) * (N - 2))) * sum(dh * (dh - 1))
-	pcd <- (1 / (N * (N - 1) * (N - 2))) * sum(ch * dh)
+	pcc <- (1 / (N * (N - 1) * (N - 2))) * sum(ch * (ch - 1),na.rm=TRUE)
+	pdd <- (1 / (N * (N - 1) * (N - 2))) * sum(dh * (dh - 1),na.rm=TRUE)
+	pcd <- (1 / (N * (N - 1) * (N - 2))) * sum(ch * dh,na.rm=TRUE)
 	varp <- (4 / (pc + pd)^4) * (pd^2 * pcc - 2 * pc * pd * pcd + pc^2 * pdd)
 	ci <- qnorm(p=alpha / 2, lower.tail=FALSE) * sqrt(varp / N)
 	lower <- cindex - ci
@@ -62,8 +77,8 @@ function(x, surv.time, surv.event, cl, weights, strat, alpha=0.05, outx=TRUE, me
 	},
 	"conservative"={
 	C <- cindex
-	sum.ch <- sum(ch)
-	sum.dh <- sum(dh)
+	sum.ch <- sum(ch,na.rm=TRUE)
+	sum.dh <- sum(dh,na.rm=TRUE)
 	pc <- (1 / (N * (N - 1))) * sum.ch
 	pd  <- (1 / (N * (N - 1))) * sum.dh
 	w <- (2 * qnorm(p=alpha / 2, lower.tail=FALSE)^2) / (N * (pc + pd))
