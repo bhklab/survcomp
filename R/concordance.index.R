@@ -29,7 +29,7 @@ function(x, surv.time, surv.event, cl, weights, strat, alpha=0.05, outx=TRUE, me
 	st <- surv.time[cc.ix]
 	se <- surv.event[cc.ix]
 	seThreshold <- se[se == 1]
-	if(length(seThreshold[!is.na(seThreshold)]) < 5){
+	if(length(seThreshold[!is.na(seThreshold)]) == 0){
 	 warning("\nNot enough events to compute a reliable concordance index!")
 	 if(msurv) { data <- list("x"=x, "surv.time"=surv.time, "surv.event"=surv.event) } else { data  <- list("x"=x, "cl"=cl) }
    return(list("c.index"=NA, "se"=NA, "lower"=NA, "upper"=NA, "p.value"=NA, "n"=0, "data"=data))
