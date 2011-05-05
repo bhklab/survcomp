@@ -51,12 +51,13 @@ function(x, surv.time, surv.event, cl, weights, strat, alpha=0.05, outx=TRUE, me
      dh <- out$dh
      uh <- out$uh
      rph <- out$rph
-  ch[ch == -1] <- NA
-  dh[dh == -1] <- NA
-  uh[uh == -1] <- NA
-  rph[rph == -1] <- NA
-	pc <- (1 / (N * (N - 1))) * sum(ch,na.rm=TRUE)
-	pd  <- (1 / (N * (N - 1))) * sum(dh,na.rm=TRUE)
+
+  if((length(ch[ch==0]) + length(dh[dh==0])) > (N - 10) * 2){
+    return(list("c.index"=NA, "se"=NA, "lower"=NA, "upper"=NA, "p.value"=NA, "n"=0, "data"=data))
+  }
+  
+	pc <- (1 / (N * (N - 1))) * sum(ch)
+	pd  <- (1 / (N * (N - 1))) * sum(dh)
 	if(pc != 0 && pd != 0){
     cindex <- pc / (pc + pd)
   } else {
@@ -66,9 +67,9 @@ function(x, surv.time, surv.event, cl, weights, strat, alpha=0.05, outx=TRUE, me
 	
 	switch(method,
 	"noether"={
-	pcc <- (1 / (N * (N - 1) * (N - 2))) * sum(ch * (ch - 1),na.rm=TRUE)
-	pdd <- (1 / (N * (N - 1) * (N - 2))) * sum(dh * (dh - 1),na.rm=TRUE)
-	pcd <- (1 / (N * (N - 1) * (N - 2))) * sum(ch * dh,na.rm=TRUE)
+	pcc <- (1 / (N * (N - 1) * (N - 2))) * sum(ch * (ch - 1))
+	pdd <- (1 / (N * (N - 1) * (N - 2))) * sum(dh * (dh - 1))
+	pcd <- (1 / (N * (N - 1) * (N - 2))) * sum(ch * dh)
 	varp <- (4 / (pc + pd)^4) * (pd^2 * pcc - 2 * pc * pd * pcd + pc^2 * pdd)
   if((varp / N) > 0){
   	ci <- qnorm(p=alpha / 2, lower.tail=FALSE) * sqrt(varp / N)

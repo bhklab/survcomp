@@ -89,8 +89,6 @@ void concordanceIndexC(int *msurv, int *ustrat, double *x2, int *cl2,
         double uhs[Ns];
         double rphs[Ns];
         for (int h=0; h < Ns; h++) {       	
-          int countPairs = 0;
-          int compAble = 0;
         	double chsj, dhsj, uhsj, rphsj = 0;
             for (int j=0; j < Ns; j++) {
                 double whj = weightss[h] * weightss[j];
@@ -108,7 +106,6 @@ void concordanceIndexC(int *msurv, int *ustrat, double *x2, int *cl2,
                       dhsj = dhsj + whj;
                     }
                   }
-                  compAble = 1;
                 }    
                 if((*msurv == 1 && (sts[h] > sts[j] && ses[j] == 1)) || (*msurv == 0 && cls[h] < cls[j])){
                   rphsj = rphsj + whj;
@@ -125,27 +122,17 @@ void concordanceIndexC(int *msurv, int *ustrat, double *x2, int *cl2,
                       dhsj = dhsj + whj;
                     }
                   }
-                  compAble = 1;
                 }
-                if(compAble == 1) {countPairs = countPairs + 1;}
             }
-            if(countPairs < 10){
-              chs[h] = -1;
-              dhs[h] = -1;
-              uhs[h] = -1;
-              rphs[h] = -1;
-            }
-            else {
-              chs[h] = chsj;
-              dhs[h] = dhsj;
-              uhs[h] = uhsj;
-              rphs[h] = rphsj;
-            }
+            chs[h] = chsj;
+            dhs[h] = dhsj;
+            uhs[h] = uhsj;
+            rphs[h] = rphsj;
+
             chsj = 0;
             dhsj = 0;
             uhsj = 0;
             rphsj = 0;
-            countPairs = 0;
         }
         for(int i = 0; i < Ns; i++){
         	int pos = i + Ns_old;
