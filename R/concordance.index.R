@@ -3,6 +3,7 @@ function(x, surv.time, surv.event, cl, weights, strat, alpha=0.05, outx=TRUE, me
 	method <- match.arg(method)
 	if(!missing(weights)) {
 		if(length(weights) != length(x)) { stop("bad length for parameter weights!") }
+		if(min(weights) < 0 && max(weights) > 1) { stop("weights must be a number between 0 and 1!") }
 	} else { weights <- rep(1, length(x)) }
 	if(!missing(strat)) {
 		if(length(strat) != length(x)) { stop("bad length for parameter strat!") }
@@ -28,9 +29,8 @@ function(x, surv.time, surv.event, cl, weights, strat, alpha=0.05, outx=TRUE, me
 	cl2 <- cl[cc.ix]
 	st <- surv.time[cc.ix]
 	se <- surv.event[cc.ix]
-	seThreshold <- se[se == 1]
-	if(length(seThreshold[!is.na(seThreshold)]) == 0){
-	 warning("\nNot enough events to compute a reliable concordance index!")
+	if(sum(se) == 0){
+	 warning("\nNo survival events present, can't compute the concordance index")
 	 if(msurv) { data <- list("x"=x, "surv.time"=surv.time, "surv.event"=surv.event) } else { data  <- list("x"=x, "cl"=cl) }
    return(list("c.index"=NA, "se"=NA, "lower"=NA, "upper"=NA, "p.value"=NA, "n"=0, "data"=data))
   }
@@ -38,7 +38,7 @@ function(x, surv.time, surv.event, cl, weights, strat, alpha=0.05, outx=TRUE, me
 	strat <- strat[cc.ix]
 	strat <- as.numeric(as.factor(strat))
 	ustrat <- sort(unique(strat)) ## to check later
-	N <- length(x2)
+	N <- sum(weights) ##length(x2)
 	
 	ch <- dh <- uh <- rph <- rep(0, times=length(strat))
 	lenS <- length(strat)
