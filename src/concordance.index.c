@@ -21,7 +21,7 @@ void R_unload_concordanceIndexC(DllInfo *info) { }
 
 void concordanceIndexC(int *msurv, int *ustrat, double *x2, int *cl2,
 		double *st, int *se, double *weights, int *strat, int *N, int *outx,
-		int *ch, int *dh, int *uh, int *rph, int *lenS, int *lenU) {
+		double *ch, double *dh, double *uh, double *rph, int *lenS, int *lenU) {
 	
 	int lenUstrat = *lenU;
 	int lenStrat = *lenS;
