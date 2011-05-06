@@ -3,7 +3,7 @@ function(x, surv.time, surv.event, cl, weights, strat, alpha=0.05, outx=TRUE, me
 	method <- match.arg(method)
 	if(!missing(weights)) {
 		if(length(weights) != length(x)) { stop("bad length for parameter weights!") }
-		if(min(weights) < 0 && max(weights) > 1) { stop("weights must be a number between 0 and 1!") }
+		if(min(weights, na.rm=TRUE) < 0 && max(weights, na.rm=TRUE) > 1) { stop("weights must be a number between 0 and 1!") }
 	} else { weights <- rep(1, length(x)) }
 	if(!missing(strat)) {
 		if(length(strat) != length(x)) { stop("bad length for parameter strat!") }
@@ -12,10 +12,10 @@ function(x, surv.time, surv.event, cl, weights, strat, alpha=0.05, outx=TRUE, me
 	if(missing(cl) && (missing(surv.time) || missing(surv.event))) { stop("binary classes and survival data are missing!") }
 	if(!missing(cl) && (!missing(surv.time) || !missing(surv.event))) { stop("choose binary classes or survival data but not both!") }
 	msurv <- FALSE
-	if(missing(cl)) { #survival data
+	if(missing(cl)) { ## survival data
 		msurv <- TRUE
 		cl <- rep(0, length(x))
-	} else { surv.time <- surv.event <- rep(0, length(x)) } #binary classes
+	} else { surv.time <- surv.event <- rep(0, length(x)) } ## binary classes
 	
 	cc.ix <- complete.cases(x, surv.time, surv.event, cl, weights, strat)
 	if(all(!cc.ix)) {
@@ -23,22 +23,27 @@ function(x, surv.time, surv.event, cl, weights, strat, alpha=0.05, outx=TRUE, me
 		return(list("c.index"=NA, "se"=NA, "lower"=NA, "upper"=NA, "p.value"=NA, "n"=0, "data"=data))	
 	}
 	if(any(!cc.ix) & !na.rm) { stop("NA values are present!") }
-	#remove samples whose the weight is equal to 0
+	## remove samples whose the weight is equal to 0 to speed up the computation of the concordance index
 	cc.ix <- cc.ix & weights != 0
 	x2 <- x[cc.ix]
 	cl2 <- cl[cc.ix]
 	st <- surv.time[cc.ix]
 	se <- surv.event[cc.ix]
-	if(sum(se) == 0){
-	 warning("\nNo survival events present, can't compute the concordance index")
+	if(sum(se) == 0) {
+	 warning("\nNo events, the concordance index cannot be conputed!")
 	 if(msurv) { data <- list("x"=x, "surv.time"=surv.time, "surv.event"=surv.event) } else { data  <- list("x"=x, "cl"=cl) }
-   return(list("c.index"=NA, "se"=NA, "lower"=NA, "upper"=NA, "p.value"=NA, "n"=0, "data"=data))
-  }
+	return(list("c.index"=NA, "se"=NA, "lower"=NA, "upper"=NA, "p.value"=NA, "n"=0, "data"=data))
+	}
 	weights <- weights[cc.ix]
 	strat <- strat[cc.ix]
 	strat <- as.numeric(as.factor(strat))
 	ustrat <- sort(unique(strat)) ## to check later
 	N <- sum(weights) ##length(x2)
+	if(N <= 1) {
+	 warning("\nWeights of observations are too small (sum should be > 1), the concordance index cannot be conputed!")
+	 if(msurv) { data <- list("x"=x, "surv.time"=surv.time, "surv.event"=surv.event) } else { data  <- list("x"=x, "cl"=cl) }
+	return(list("c.index"=NA, "se"=NA, "lower"=NA, "upper"=NA, "p.value"=NA, "n"=0, "data"=data))
+	}
 	
 	ch <- dh <- uh <- rph <- rep(0, times=length(strat))
 	lenS <- length(strat)
@@ -59,7 +64,7 @@ function(x, surv.time, surv.event, cl, weights, strat, alpha=0.05, outx=TRUE, me
   
 	pc <- (1 / (N * (N - 1))) * sum(ch)
 	pd  <- (1 / (N * (N - 1))) * sum(dh)
-  cindex <- pc / (pc + pd)
+	cindex <- pc / (pc + pd)
 	
 	switch(method,
 	"noether"={
@@ -67,14 +72,12 @@ function(x, surv.time, surv.event, cl, weights, strat, alpha=0.05, outx=TRUE, me
 	pdd <- (1 / (N * (N - 1) * (N - 2))) * sum(dh * (dh - 1))
 	pcd <- (1 / (N * (N - 1) * (N - 2))) * sum(ch * dh)
 	varp <- (4 / (pc + pd)^4) * (pd^2 * pcc - 2 * pc * pd * pcd + pc^2 * pdd)
-  if((varp / N) > 0){
-  	ci <- qnorm(p=alpha / 2, lower.tail=FALSE) * sqrt(varp / N)
-  	lower <- cindex - ci
-  	upper <- cindex + ci
-  	p <- pnorm((cindex - 0.5) / sqrt(varp / N), lower.tail=cindex < 0.5)
- 	} else {
- 	  ci <- lower <- upper <- p <- NA
-  }
+	if((varp / N) > 0) {
+		ci <- qnorm(p=alpha / 2, lower.tail=FALSE) * sqrt(varp / N)
+		lower <- cindex - ci
+		upper <- cindex + ci
+		p <- pnorm((cindex - 0.5) / sqrt(varp / N), lower.tail=cindex < 0.5)
+ 	} else { ci <- lower <- upper <- p <- NA }
 	},
 	"conservative"={
 	C <- cindex

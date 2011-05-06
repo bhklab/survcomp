@@ -4,10 +4,10 @@ function(p, weight, method=c("fisher", "z.transform", "logit"), hetero=FALSE, na
 	method <- match.arg(method)
 	na.ix <- is.na(p)
 	if(any(na.ix) && !na.rm) { stop("missing values are present!") }
-	if(all(na.ix)) { return(NA) } #all p-values are missing
+	if(all(na.ix)) { return(NA) } ## all p-values are missing
 	p <- p[!na.ix]
 	k <- length(p)
-	if(k < 2) { return(p) }
+	if(k == 1) { return(p) }
 	if(missing(weight)) { weight <- rep(1, k); }
 	switch(method,  
 	"fisher"={
