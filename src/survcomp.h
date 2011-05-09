@@ -1,1 +1,1 @@
-void concordanceIndexC(int *msurv, int *ustrat, double *x2, int *cl2, double *st, int *se, double *weights, int *strat, int *N, int *outx, double *ch, double *dh, double *uh, double *rph, int *lenS, int *lenU, int *cscount);
+void concordanceIndexC(int *msurv, int *ustrat, double *x2, int *cl2, double *st, int *se, double *weights, int *strat, int *N, int *outx, double *ch, double *dh, double *uh, double *rph, int *lenS, int *lenU);

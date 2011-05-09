@@ -21,15 +21,12 @@ void R_unload_concordanceIndexC(DllInfo *info) { }
 
 void concordanceIndexC(int *msurv, int *ustrat, double *x2, int *cl2,
 		double *st, int *se, double *weights, int *strat, int *N, int *outx,
-		double *ch, double *dh, double *uh, double *rph, int *lenS, int *lenU,
-    int *cscount) {
+		double *ch, double *dh, double *uh, double *rph, int *lenS, int *lenU) {
 	
 	int lenUstrat = *lenU;
 	int lenStrat = *lenS;
 	int Ns_old = 0;
 	int Ns = 0;
-	int compcount = *cscount;
-  int compared = 0;
   for(int s=0; s < lenUstrat; s++) {
   	int ixs[lenStrat];
   	for(int i =0; i < lenStrat; i++){
@@ -94,11 +91,9 @@ void concordanceIndexC(int *msurv, int *ustrat, double *x2, int *cl2,
     for (int h=0; h < Ns; h++) {       	
     	double chsj, dhsj, uhsj, rphsj = 0;
       for (int j=0; j < Ns; j++) {
-        compared = 0;
         double whj = weightss[h] * weightss[j];
         if((*msurv == 1 && (sts[h] < sts[j] && ses[h] == 1)) || (*msurv == 0 && cls[h] > cls[j])){
           rphsj = rphsj + whj;
-          compared = 1;
           if (xs[h] > xs[j]) {  
             chsj = chsj + whj;
           } else if (xs[h] < xs[j]) {
@@ -114,7 +109,6 @@ void concordanceIndexC(int *msurv, int *ustrat, double *x2, int *cl2,
         }    
         if((*msurv == 1 && (sts[h] > sts[j] && ses[j] == 1)) || (*msurv == 0 && cls[h] < cls[j])){
           rphsj = rphsj + whj;
-          compared = 1;
           if (xs[h] < xs[j]) {
             chsj = chsj + whj;
           }
@@ -128,9 +122,6 @@ void concordanceIndexC(int *msurv, int *ustrat, double *x2, int *cl2,
               dhsj = dhsj + whj;
             }
           }
-        }
-        if(compared == 1){
-          compcount = compcount + 1;
         }
       }
       chs[h] = chsj;
@@ -151,5 +142,4 @@ void concordanceIndexC(int *msurv, int *ustrat, double *x2, int *cl2,
     	rph[pos] = rphs[i];
     }
   }
-  *cscount = compcount;
 }

@@ -48,17 +48,15 @@ function(x, surv.time, surv.event, cl, weights, comppairs=10, strat, alpha=0.05,
 	ch <- dh <- uh <- rph <- rep(0, times=length(strat))
 	lenS <- length(strat)
 	lenU <- length(ustrat)
-	cscount <- 0
 	out <- .C("concordanceIndexC", as.integer(as.logical(msurv)), as.integer(ustrat), as.double(x2),
 			as.integer(cl2), as.double(st), as.integer(se), as.double(weights), as.integer(strat),
 			as.integer(N), as.integer(as.logical(outx)), ch = as.numeric(ch), dh = as.numeric(dh),
-			uh = as.numeric(uh), rph = as.numeric(rph), as.integer(lenS), as.integer(lenU),
-      cscount = as.integer(cscount), PACKAGE="survcomp")
+			uh = as.numeric(uh), rph = as.numeric(rph), as.integer(lenS), as.integer(lenU), PACKAGE="survcomp")
   ch <- out$ch
   dh <- out$dh
   uh <- out$uh
   rph <- out$rph
-  cscount <- out$cscount
+  cscount <- sum(ch + dh) ## comparable pairs
   if(sum(ch)==0 || sum(dh)==0 || sum(ch * (ch - 1))==0 || sum(dh * (dh - 1))==0 || sum(ch * dh)==0 || cscount < comppairs){
     if(msurv) { data <- list("x"=x, "surv.time"=surv.time, "surv.event"=surv.event) } else { data  <- list("x"=x, "cl"=cl) }
     return(list("c.index"=NA, "se"=NA, "lower"=NA, "upper"=NA, "p.value"=NA, "n"=length(x2), "data"=data, "comppairs"=cscount))
