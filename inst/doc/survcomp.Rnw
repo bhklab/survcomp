@@ -333,7 +333,7 @@ for(i in 1:7){
         cindexall.upp.small[i,"cindex.se"],
         cindexall.unt.small[i,"cindex.se"],
         cindexall.vdx.small[i,"cindex.se"],
-        cindexall.nki.small[i,"cindex.se"]),)
+        cindexall.nki.small[i,"cindex.se"]),na.rm=TRUE)
     )
 }
 tt$lower <- tt$estimate + qnorm(0.025, lower.tail=TRUE) * tt$se
@@ -375,7 +375,7 @@ for(i in 1:7){
         dindexall.upp.small[i,"dindex.se"],
         dindexall.unt.small[i,"dindex.se"],
         dindexall.vdx.small[i,"dindex.se"],
-        dindexall.nki.small[i,"dindex.se"]),)
+        dindexall.nki.small[i,"dindex.se"]),na.rm=TRUE)
     )
 }
 tt$lower <- tt$estimate + qnorm(0.025, lower.tail=TRUE) * tt$se
@@ -410,7 +410,7 @@ for(i in 1:7){
         hratio.upp.small[i,"hratio.se"],
         hratio.unt.small[i,"hratio.se"],
         hratio.vdx.small[i,"hratio.se"],
-        hratio.nki.small[i,"hratio.se"]),)
+        hratio.nki.small[i,"hratio.se"]),na.rm=TRUE)
     )
 }
 tt$lower <- tt$estimate + qnorm(0.025, lower.tail=TRUE) * tt$se

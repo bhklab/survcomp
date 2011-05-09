@@ -1,5 +1,5 @@
 `concordance.index` <-
-function(x, surv.time, surv.event, cl, weights, comppairs=10, strat, alpha=0.05, outx=TRUE, method=c("conservative", "noether", "nam"), na.rm=FALSE) {
+function(x, surv.time, surv.event, cl, weights, comppairs, strat, alpha=0.05, outx=TRUE, method=c("conservative", "noether", "nam"), na.rm=FALSE) {
 	method <- match.arg(method)
 	if(!missing(weights)) {
 		if(length(weights) != length(x)) { stop("bad length for parameter weights!") }
@@ -16,6 +16,9 @@ function(x, surv.time, surv.event, cl, weights, comppairs=10, strat, alpha=0.05,
 		msurv <- TRUE
 		cl <- rep(0, length(x))
 	} else { surv.time <- surv.event <- rep(0, length(x)) } ## binary classes
+	if(missing(comppairs)){
+    comppairs <- 10
+  }
 	
 	cc.ix <- complete.cases(x, surv.time, surv.event, cl, weights, strat)
 	if(all(!cc.ix)) {
@@ -42,24 +45,26 @@ function(x, surv.time, surv.event, cl, weights, comppairs=10, strat, alpha=0.05,
 	if(N <= 1) {
     warning("\nWeights of observations are too small (sum should be > 1), the concordance index cannot be computed!")
     if(msurv) { data <- list("x"=x, "surv.time"=surv.time, "surv.event"=surv.event) } else { data  <- list("x"=x, "cl"=cl) }
-    return(list("c.index"=NA, "se"=NA, "lower"=NA, "upper"=NA, "p.value"=NA, "n"=0, "data"=data, "comppairs"=NA))
+    return(list("c.index"=NA, "se"=NA, "lower"=NA, "upper"=NA, "p.value"=NA, "n"=length(x2), "data"=data, "comppairs"=NA))
   }	
 
 	ch <- dh <- uh <- rph <- rep(0, times=length(strat))
 	lenS <- length(strat)
 	lenU <- length(ustrat)
+	cscount <- 0
 	out <- .C("concordanceIndexC", as.integer(as.logical(msurv)), as.integer(ustrat), as.double(x2),
 			as.integer(cl2), as.double(st), as.integer(se), as.double(weights), as.integer(strat),
 			as.integer(N), as.integer(as.logical(outx)), ch = as.numeric(ch), dh = as.numeric(dh),
-			uh = as.numeric(uh), rph = as.numeric(rph), as.integer(lenS), as.integer(lenU), PACKAGE="survcomp")
+			uh = as.numeric(uh), rph = as.numeric(rph), as.integer(lenS), as.integer(lenU),
+      cscount = as.integer(cscount), PACKAGE="survcomp")
   ch <- out$ch
   dh <- out$dh
   uh <- out$uh
   rph <- out$rph
-  comppairsCount <- NA
-  if(sum(ch)==0 || sum(dh)==0 || sum(ch * (ch - 1))==0 || sum(dh * (dh - 1))==0 || sum(ch * dh)==0){
+  cscount <- out$cscount
+  if(sum(ch)==0 || sum(dh)==0 || sum(ch * (ch - 1))==0 || sum(dh * (dh - 1))==0 || sum(ch * dh)==0 || cscount < comppairs){
     if(msurv) { data <- list("x"=x, "surv.time"=surv.time, "surv.event"=surv.event) } else { data  <- list("x"=x, "cl"=cl) }
-    return(list("c.index"=NA, "se"=NA, "lower"=NA, "upper"=NA, "p.value"=NA, "n"=0, "data"=data, "comppairs"=comppairsCount))
+    return(list("c.index"=NA, "se"=NA, "lower"=NA, "upper"=NA, "p.value"=NA, "n"=length(x2), "data"=data, "comppairs"=cscount))
   }
   
   pc <- (1 / (N * (N - 1))) * sum(ch)
@@ -104,5 +109,5 @@ function(x, surv.time, surv.event, cl, weights, comppairs=10, strat, alpha=0.05,
   upper <- ifelse(upper > 1, 1, upper)
   if(msurv) { data <- list("x"=x, "surv.time"=surv.time, "surv.event"=surv.event) } else { data  <- list("x"=x, "cl"=cl) }
   if((varp / N) > 0) {se <- sqrt(varp / N)} else {se <- NA}
-  return(list("c.index"=cindex, "se"=se, "lower"=lower, "upper"=upper, "p.value"=p, "n"=N, "data"=data, "comppairs"=comppairsCount))
+  return(list("c.index"=cindex, "se"=se, "lower"=lower, "upper"=upper, "p.value"=p, "n"=length(x2), "data"=data, "comppairs"=cscount))
 }
