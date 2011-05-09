@@ -1,5 +1,5 @@
 `concordance.index` <-
-function(x, surv.time, surv.event, cl, weights, comppairs, strat, alpha=0.05, outx=TRUE, method=c("conservative", "noether", "nam"), na.rm=FALSE) {
+function(x, surv.time, surv.event, cl, weights, comppairs=10, strat, alpha=0.05, outx=TRUE, method=c("conservative", "noether", "nam"), na.rm=FALSE) {
 	method <- match.arg(method)
 	if(!missing(weights)) {
 		if(length(weights) != length(x)) { stop("bad length for parameter weights!") }
@@ -16,9 +16,6 @@ function(x, surv.time, surv.event, cl, weights, comppairs, strat, alpha=0.05, ou
 		msurv <- TRUE
 		cl <- rep(0, length(x))
 	} else { surv.time <- surv.event <- rep(0, length(x)) } ## binary classes
-	if(missing(comppairs)){
-    comppairs <- 10
-  }
 	
 	cc.ix <- complete.cases(x, surv.time, surv.event, cl, weights, strat)
 	if(all(!cc.ix)) {
