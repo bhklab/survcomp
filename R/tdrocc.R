@@ -6,7 +6,7 @@ function(x, surv.time, surv.event, surv.entry=NULL, time, cutpts=NA, na.rm=FALSE
 	data <- list("x"=x, "surv.time"=surv.time, "surv.event"=surv.event)
 	cc.ix <- complete.cases(x, surv.time, surv.event, surv.entry)
    if (!all(cc.ix) && !na.rm) { stop("NA values are present!") }
-   if(verbose) { cat(sprintf("%i cases are removed due to NA values\n",as.integer(sum(!cc.ix)))) }
+   if(verbose) { message(sprintf("%i cases are removed due to NA values",as.integer(sum(!cc.ix)))) }
     
    x2 <- x[cc.ix]
    surv.time2 <- surv.time[cc.ix]

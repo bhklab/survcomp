@@ -28,7 +28,7 @@ hazard.ratio(x, surv.time, surv.event, weights, strat, alpha = 0.05,
   \item{se }{standard error of the estimate.}
   \item{lower }{lower bound for the confidence interval.}
   \item{upper }{upper bound for the confidence interval.}
-  \item{p.value }{p-value for the statistical test if the estimate if different from 0.5.}
+  \item{p.value }{p-value computed using the likelihood ratio test whether the hazard ratio is different from 1.}
   \item{n }{number of samples used for the estimation.}
   \item{coxm }{\code{\link[survival]{coxph.object}} fitted on the survival data  and \code{x} (see below).}
   \item{data }{list of data used to compute the hazard ratio (\code{x}, \code{surv.time} and \code{surv.event}).}

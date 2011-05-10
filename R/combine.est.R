@@ -2,7 +2,7 @@
 function(x, x.se, hetero=FALSE, na.rm=FALSE) {
 	cc.ix <- complete.cases(x, x.se)
 	if(!all(cc.ix) && !na.rm) { stop("missing values are present!") }
-	if(all(!cc.ix)) { return(list("estimate"=NA, "se"=NA)) } #all p-values are missing
+	if(all(!cc.ix)) { return(list("estimate"=NA, "se"=NA)) } ## all estimates/standard errors are missing
 	x <- x[cc.ix]
 	x.se <- x.se[cc.ix]
 	k <- length(x)
@@ -10,7 +10,7 @@ function(x, x.se, hetero=FALSE, na.rm=FALSE) {
 		warning("standard deviation of zero is present!")
 		x.se[x.se == 0] <- 10^-16	
 	}
-	if(k < 2) { return(list("estimate"=x, "se"=x.se)) }
+	if(k == 1) { return(list("estimate"=x, "se"=x.se)) }
 	wi <- x.se^-2
 	if(hetero) {
 		w.bar <- sum(wi / k)

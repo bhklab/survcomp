@@ -21,12 +21,9 @@ function(formula.s, data.s, sub.s="all", x.label, y.label, main.title, sub.title
 
     plot(survfit(formula.s, data=data.s, subset=sub.s), xaxt=.xaxt, col=.col, lty=.lty, lwd=.lwd, xlab=.xlab, ylab=y.label, ... )
     title(main.title)
-
-    if(!missing(v.line) && is.null(v.line)) { v.line <- FALSE }
-    if(!missing(v.line)) abline(v=v.line, lty=3, col="purple")
-
- 	  if(!missing(h.line) && is.null(h.line)) { h.line <- FALSE }
-    if(!missing(h.line)) abline(h=h.line, lty=3, col="purple")
+	
+    if(!missing(v.line) && !is.null(v.line)) { abline(v=v.line, lty=3, col="purple") }
+	if(!missing(h.line) && !is.null(h.line)) { abline(h=h.line, lty=3, col="purple") }
 
     if(!is.null(leg.text)) { legend(x=leg.pos, xjust=0, yjust=1, legend=leg.text, col=.col, lty=.lty, lwd=.lwd, cex=0.9, bg="white", inset=leg.inset) }
     if(!is.null(sub.title)) { mtext(sub.title, line=-4, outer=TRUE) }

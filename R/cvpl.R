@@ -14,7 +14,7 @@ function(x, surv.time, surv.event, strata, nfold=1, setseed, na.rm=FALSE, verbos
 	strata <- strata[cc.ix]
 	nr <- sum(cc.ix)
 	if (!all(cc.ix) && !na.rm) { stop("NA values are present!") }
-	if(verbose) { cat(sprintf("%i cases (%i cases are removed due to NA values)\n", nr, sum(!cc.ix))) }
+	if(verbose) { message(sprintf("%i cases (%i cases are removed due to NA values)", nr, sum(!cc.ix))) }
 
 	## k-fold cross-validation
 	if(nfold == 1) {
@@ -44,7 +44,7 @@ function(x, surv.time, surv.event, strata, nfold=1, setseed, na.rm=FALSE, verbos
 			conv <- c(conv, TRUE)
 			li <- m$loglik[2]
 			mypred <- predict(object=m, newdata=dd)
-			l <- logpl(surv.time=surv.time, surv.event=surv.event, pred=mypred, strata=strata)[1]
+			l <- logpl(surv.time=dd[ , "stime"], surv.event=dd[ , "sevent"], pred=mypred, strata=dd[ , "strat"])[1]
 		} else {
 			conv <- c(conv, FALSE)
 			l <- NA

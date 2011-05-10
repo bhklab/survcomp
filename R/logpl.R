@@ -43,7 +43,7 @@ function(pred, surv.time, surv.event, strata, na.rm=FALSE, verbose=FALSE) {
 	strata <- strata[cc.ix]
     n <- sum(cc.ix)
     if (!all(cc.ix) && !na.rm) { stop("NA values are present!") }
-    if(verbose) { cat(sprintf("%i cases are removed due to NA values\n",as.integer(sum(!cc.ix)))) }
+    if(verbose) { message(sprintf("%i cases are removed due to NA values",as.integer(sum(!cc.ix)))) }
     
     ss <- unique(strata)
     if(length(ss) < 2) {
