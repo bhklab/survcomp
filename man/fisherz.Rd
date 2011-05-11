@@ -6,7 +6,7 @@
   The function computes the Fisher z transformation useful to calculate the confidence interval of Pearson's correlation coefficient.
 }
 \usage{
-fisherz(x, inv = FALSE, eps = 1e-10)
+fisherz(x, inv = FALSE, eps = 1e-16)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
