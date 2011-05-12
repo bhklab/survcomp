@@ -38,7 +38,7 @@ function(x, surv.time, surv.event, cl, weights, comppairs=10, strat, alpha=0.05,
 	strat <- strat[cc.ix]
 	strat <- as.numeric(as.factor(strat))
 	ustrat <- sort(unique(strat)) ## to check later
-	N <- sum(weights) ##length(x2)
+	N <- sum(weights) ## length(x2)
 	if(N <= 1) {
     warning("\nWeights of observations are too small (sum should be > 1), the concordance index cannot be computed!")
     if(msurv) { data <- list("x"=x, "surv.time"=surv.time, "surv.event"=surv.event) } else { data  <- list("x"=x, "cl"=cl) }
