@@ -56,7 +56,7 @@ function(x, surv.time, surv.event, cl, weights, comppairs=10, strat, alpha=0.05,
   dh <- out$dh
   uh <- out$uh
   rph <- out$rph
-  cscount <- sum(ch + dh) ## comparable pairs
+  cscount <- sum(ch + dh) ## comparable sample pairs
   if(sum(ch)==0 || sum(dh)==0 || sum(ch * (ch - 1))==0 || sum(dh * (dh - 1))==0 || sum(ch * dh)==0 || cscount < comppairs){
     if(msurv) { data <- list("x"=x, "surv.time"=surv.time, "surv.event"=surv.event) } else { data  <- list("x"=x, "cl"=cl) }
     return(list("c.index"=NA, "se"=NA, "lower"=NA, "upper"=NA, "p.value"=NA, "n"=length(x2), "data"=data, "comppairs"=cscount))

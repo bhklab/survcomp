@@ -28,7 +28,7 @@ function(x, surv.time, surv.event, weights, strat, alpha=0.05, na.rm=FALSE, ...)
 		hrse <- sqrt(drop(rr$var))
 		names(hrcoef) <- names(hrse) <- NULL
 		mypp <- pchisq(2 * (rr$loglik[2] - rr$loglik[1]), df=1, lower.tail=FALSE)
-		#mypp <- pchisq((hrcoef / hrse)^2, df=1, lower.tail=FALSE)
+		## mypp <- pchisq((hrcoef / hrse)^2, df=1, lower.tail=FALSE)
 		res <- list("hazard.ratio"=exp(hrcoef), "coef"=hrcoef, "se"=hrse, "lower"=exp(hrcoef - qnorm(alpha / 2, lower.tail=FALSE) * hrse), "upper"=exp(hrcoef + qnorm(alpha / 2, lower.tail=FALSE) * hrse), "p.value"=mypp, "n"=rr$n, "coxm"=rr, "data"=data)
 	}
 	

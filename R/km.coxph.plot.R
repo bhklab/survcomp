@@ -31,7 +31,7 @@ function(formula.s, data.s, sub.s="all", x.label, y.label, main.title, sub.title
 		sdf <- survdiff(formula.s, data=data.s, subset=sub.s)
 	    if(verbose) { print(sdf) }
         p.val <- 1-pchisq(sdf$chisq,length(sdf$n)-1)
-        #if( p.val < 0.001 ) o.text <- "P < 0.001" else o.text <- paste("P =", signif(p.val,3)) #, "(log-rank test)")
+        ## if( p.val < 0.001 ) o.text <- "P < 0.001" else o.text <- paste("P =", signif(p.val,3)) #, "(log-rank test)")
         o.text <- sprintf("P = %.1E", p.val)
     }
     if(is.null(o.text)) { o.text <- FALSE }
@@ -44,8 +44,8 @@ function(formula.s, data.s, sub.s="all", x.label, y.label, main.title, sub.title
         axis(1, at=at.loc)
         mtext(x.label, side=1, line=2)
         mtext("No. At Risk", side=1, line=3, at=-0.5*n.risk.step, adj=1, cex=n.risk.cex, font=2)
-        #nrsk.lbs <- sapply( strsplit(levels(nrisk[,1]),"="), FUN=function(x) x[2] )
-        #if( any(is.na(nrsk.lbs)) ) nrsk.lbs <- leg.text
+        ## nrsk.lbs <- sapply( strsplit(levels(nrisk[,1]),"="), FUN=function(x) x[2] )
+        ## if( any(is.na(nrsk.lbs)) ) nrsk.lbs <- leg.text
         for( i in 1:nrow(nrisk) ) {
             mtext(leg.text[i], side=1, line=3+i, at=-0.5*n.risk.step, adj=1, cex=n.risk.cex)
             mtext(nrisk[i,-1], side=1, at=at.loc, line=3+i, adj=1, cex=n.risk.cex)

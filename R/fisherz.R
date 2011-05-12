@@ -12,7 +12,7 @@ function(x, inv=FALSE, eps=1e-16) {
 			else { x <- (exp(2 * x) - 1) / (exp(2 * x) + 1) }
 		}
 		return(x)
-	}
+	} 
 	
 	if(is.matrix(x) || is.data.frame(x)) { return(apply(X=x, MARGIN=c(1, 2), FUN=myfoo, inv=inv, eps=eps)) }
 	if(is.vector(x)) { return(sapply(X=x, FUN=myfoo, inv=inv, eps=eps)) }

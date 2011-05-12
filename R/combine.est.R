@@ -2,7 +2,7 @@
 function(x, x.se, hetero=FALSE, na.rm=FALSE) {
 	cc.ix <- complete.cases(x, x.se)
 	if(!all(cc.ix) && !na.rm) { stop("missing values are present!") }
-	if(all(!cc.ix)) { return(list("estimate"=NA, "se"=NA)) } ## all estimates/standard errors are missing
+	if(all(!cc.ix)) { return(list("estimate"=NA, "se"=NA)) } ## all estimates / standard errors are missing
 	x <- x[cc.ix]
 	x.se <- x.se[cc.ix]
 	k <- length(x)
