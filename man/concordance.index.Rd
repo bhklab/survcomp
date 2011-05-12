@@ -7,7 +7,7 @@ Function to compute the concordance index for a risk prediction, i.e. the probab
 }
 \usage{
 concordance.index(x, surv.time, surv.event, cl, weights, comppairs=10, strat,
-  alpha = 0.05, outx = TRUE, method = c("conservative", "noether", "nam"),
+  alpha = 0.05, outx = TRUE, method = c("conservative", "noether", "name"),
   na.rm = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
