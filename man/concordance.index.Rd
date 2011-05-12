@@ -17,7 +17,7 @@ concordance.index(x, surv.time, surv.event, cl, weights, comppairs=10, strat,
   \item{surv.event}{a vector of event occurence indicators.}
   \item{cl}{a vector of binary class indicators.}
   \item{weights}{weight of each sample.}
-  \item{comppairs}{threshold for compairable patients.}
+  \item{comppairs}{threshold for compairable samples.}
   \item{strat}{stratification indicator.}
   \item{alpha}{apha level to compute confidence interval.}
   \item{outx}{set to \code{TRUE} to not count pairs of observations tied on \code{x} as a relevant pair. This results in a Goodman-Kruskal gamma type rank correlation.}
