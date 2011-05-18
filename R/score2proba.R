@@ -13,9 +13,9 @@ function(data.tr, score, yr, method=c("cox", "prodlim"), conf.int=0.95, which.es
 		pred[cc.ix] <- getsurv2(sf=sf, time=yr, which.est=which.est)
 	},
 	"prodlim"={
-		require(prodlim)
+		#require(prodlim)
 		if(which.est != "point") { stop("not implemented yet!") }
-		predm <- prodlim(Surv(time, event) ~ score, data=data.tr, conf.int=conf.int)
+		predm <- prodlim::prodlim(Surv(time, event) ~ score, data=data.tr, conf.int=conf.int)
 		pred[cc.ix] <- unlist(predict(predm, newdata=data.frame("score"=score2), times=yr))
 	})
 	return(pred)

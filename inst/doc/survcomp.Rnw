@@ -1,6 +1,6 @@
 %\VignetteIndexEntry{SurvComp:  a package for performance assessment and comparison for survival analysis}
-%\VignetteDepends{survival, ipred, prodlim, survivalROC, SuppDists, grid, rmeta, bootstrap}
-%\VignetteSuggests{Hmisc, CPE, clinfun, survJamda, Biobase}
+%\VignetteDepends{survival, survivalROC, bootstrap, grid, rmeta}
+%\VignetteSuggests{Hmisc, CPE, clinfun, survJamda, SuppDists, Biobase, xtable}
 %\VignetteKeywords{Breast Cancer, Survival Analysis, GeneExpression, DifferentialExpression}
 %\VignettePackage{survcomp}
 

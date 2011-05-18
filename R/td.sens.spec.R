@@ -55,8 +55,8 @@ function(cl, surv.time, surv.event, time, span=0, sampling=FALSE, na.rm=FALSE, .
 			return(xdata[-x])	
 		}
 		
-		sens.se <- jackknife(x=1:length(cl2), theta=theta.foo2, stat="sens", xdata=list("sens"=sens.values, "spec"=spec.values))$jack.se
-		spec.se <- jackknife(x=1:length(cl2), theta=theta.foo2, stat="spec", xdata=list("sens"=sens.values, "spec"=spec.values))$jack.se	
+		sens.se <- bootstrap::jackknife(x=1:length(cl2), theta=theta.foo2, stat="sens", xdata=list("sens"=sens.values, "spec"=spec.values))$jack.se
+		spec.se <- bootstrap::jackknife(x=1:length(cl2), theta=theta.foo2, stat="spec", xdata=list("sens"=sens.values, "spec"=spec.values))$jack.se	
 	}
 	
 	return(list("sens"=rr$TP[which(rr$cut.values == mycutoff)], "sens.se"=sens.se, "spec"=1-rr$FP[which(rr$cut.values == mycutoff)], "spec.se"=spec.se))	
