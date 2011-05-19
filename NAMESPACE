@@ -2,7 +2,7 @@ useDynLib(survcomp)
 
 importFrom(SuppDists, normOrder)
 importFrom(prodlim, prodlim)
-import(KernSmooth)
+importFrom(KernSmooth, dpik)
 importFrom(ipred, sbrier)
 
 

@@ -1,6 +1,6 @@
 `sbrier.score2proba` <-
 function(data.tr, data.ts, method=c("cox", "prodlim")) {
-	#require(ipred)
+	## require(ipred)
 	method <- match.arg(method)
 	## remove missing values and sort the data for the test set
 	cc.ix <- complete.cases(data.ts)
@@ -14,27 +14,27 @@ function(data.tr, data.ts, method=c("cox", "prodlim")) {
 	bsc <- rep(NA, length(btime))
 	switch(method,
 	"cox"={
-		require(survival)
+		##require(survival)
 		## fit the cox model for the training set
-		coxm <- coxph(Surv(time, event) ~ score, data=data.tr)
+		coxm <- survival::coxph(Surv(time, event) ~ score, data=data.tr)
 		## compute survival probabilities using the cox model fitted on the training set and the score from the test set
 		#sf <- survfit(coxm, newdata=data.ts)
 		dd <- data.frame("score"=score.ts)
 		sf <- survfit(coxm, newdata=dd)
 		for(i in 1:length(utime)) {
 			mypred <- getsurv2(sf=sf, time=utime[i])
-			bsc[is.na(bsc) & btime <= utime[i]] <- ipred:::sbrier(obj=Surv(surv.time.ts, surv.event.ts), pred=mypred, btime=utime[i])
+			bsc[is.na(bsc) & btime <= utime[i]] <- sbrier(obj=Surv(surv.time.ts, surv.event.ts), pred=mypred, btime=utime[i])
 		}	
 	},
 	"prodlim"={
-		#require(prodlim)
-		prodlim.m <- prodlim::prodlim(Surv(time, event) ~ score, data=data.tr)
+		require(KernSmooth)
+		prodlim.m <- prodlim(Surv(time, event) ~ score, data=data.tr)
 		lpred <- predict(prodlim.m, newdata=data.ts, times=utime)
 		names(lpred) <- dimnames(data.ts)[[1]]
 		bsc <- rep(NA, length(btime))
 		for(i in 1:length(utime)) {
 			mypred <- unlist(lapply(lpred, function(x, ix) { return(x[[ix]]) }, ix=i))
-			bsc[is.na(bsc) & btime <= utime[i]] <- ipred:::sbrier(obj=Surv(surv.time.ts, surv.event.ts), pred=mypred, btime=utime[i])
+			bsc[is.na(bsc) & btime <= utime[i]] <- sbrier(obj=Surv(surv.time.ts, surv.event.ts), pred=mypred, btime=utime[i])
 		}
 	})
 	if(sum(is.na(bsc)) > 0) { bsc[is.na(bsc)] <- bsc[ min(which(is.na(bsc)))-1] } 
