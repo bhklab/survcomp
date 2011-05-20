@@ -1,6 +1,6 @@
 'td.sens.spec' <-
 function(cl, surv.time, surv.event, time, span=0, sampling=FALSE, na.rm=FALSE, ...) {
-	require(survivalROC)
+	#require(survivalROC)
 	
 	if((length(cl) + length(surv.time) + length(surv.event)) != (3 * length(cl))) { stop("paramaters cl, surv.time and surv.event must have the same length!") }
 	if(is.null(names(cl))) { names(cl) <- names(surv.time) <- names(surv.event) <- paste("X", 1:length(cl), sep=".") }
@@ -18,8 +18,8 @@ function(cl, surv.time, surv.event, time, span=0, sampling=FALSE, na.rm=FALSE, .
 	mycutoff <- sum(cl2 == ucl2[1])
 	
 	##using the survival.C function
-	rr <- survivalROC::survivalROC.C(Stime=st, status=se, marker=marker.fake, predict.time=time, span=span,  ...)
-	#rr <- survivalROC::survivalROC(Stime=st, status=se, marker=marker.fake, cut.values=mycutoff, predict.time=time, span=span, lambda=lambda, ...)
+	rr <- survivalROC:::survivalROC.C(Stime=st, status=se, marker=marker.fake, predict.time=time, span=span,  ...)
+	#rr <- survivalROC:::survivalROC(Stime=st, status=se, marker=marker.fake, cut.values=mycutoff, predict.time=time, span=span, lambda=lambda, ...)
 
 	sens.se <- spec.se <- NA
 	if(sampling) {
@@ -35,8 +35,8 @@ function(cl, surv.time, surv.event, time, span=0, sampling=FALSE, na.rm=FALSE, .
 			marker.fake <- 1:length(cl)
 			names(marker.fake) <- names(cl)
 			mycutoff <- sum(cl == ucl[1])
-			rr <- survivalROC::survivalROC.C(Stime=surv.time, status=surv.event, marker=marker.fake,  predict.time=time, span=span, ...)
-			#rr <- survivalROC::survivalROC(Stime=surv.time, status=surv.event, marker=marker.fake, cut.values=mycutoff, predict.time=time, span=span, lambda=lambda, ...)
+			rr <- survivalROC:::survivalROC.C(Stime=surv.time, status=surv.event, marker=marker.fake,  predict.time=time, span=span, ...)
+			#rr <- survivalROC:::survivalROC(Stime=surv.time, status=surv.event, marker=marker.fake, cut.values=mycutoff, predict.time=time, span=span, lambda=lambda, ...)
 			return(list("sens"=rr$TP[which(rr$cut.values == mycutoff)], "spec"=1-rr$FP[which(rr$cut.values == mycutoff)]))
 		}
 		myx <- 1:length(cl2)
@@ -55,8 +55,8 @@ function(cl, surv.time, surv.event, time, span=0, sampling=FALSE, na.rm=FALSE, .
 			return(xdata[-x])	
 		}
 		
-		sens.se <- bootstrap::jackknife(x=1:length(cl2), theta=theta.foo2, stat="sens", xdata=list("sens"=sens.values, "spec"=spec.values))$jack.se
-		spec.se <- bootstrap::jackknife(x=1:length(cl2), theta=theta.foo2, stat="spec", xdata=list("sens"=sens.values, "spec"=spec.values))$jack.se	
+		sens.se <- bootstrap:::jackknife(x=1:length(cl2), theta=theta.foo2, stat="sens", xdata=list("sens"=sens.values, "spec"=spec.values))$jack.se
+		spec.se <- bootstrap:::jackknife(x=1:length(cl2), theta=theta.foo2, stat="spec", xdata=list("sens"=sens.values, "spec"=spec.values))$jack.se	
 	}
 	
 	return(list("sens"=rr$TP[which(rr$cut.values == mycutoff)], "sens.se"=sens.se, "spec"=1-rr$FP[which(rr$cut.values == mycutoff)], "spec.se"=spec.se))	
