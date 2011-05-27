@@ -7,7 +7,7 @@ Description: R package providing functions to assess and to compare the performa
 biocViews: GeneExpression, DifferentialExpression, Visualization
 Author: Benjamin Haibe-Kains, Markus Schroeder, Christos Sotiriou, Gianluca Bontempi, John Quackenbush
 Maintainer: Benjamin Haibe-Kains <bhaibeka@jimmy.harvard.edu>, Markus Schroeder <mschroed@jimmy.harvard.edu>
-Depends: survival, survivalROC, bootstrap , grid, rmeta
+Depends: survival, grid, rmeta, KernSmooth, bootstrap, survivalROC
 Suggests: Hmisc, CPE, clinfun, survJamda, Biobase
 Imports: ipred, prodlim, SuppDists, KernSmooth
 License: Artistic-2.0

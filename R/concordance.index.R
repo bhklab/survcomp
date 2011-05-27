@@ -62,9 +62,9 @@ function(x, surv.time, surv.event, cl, weights, comppairs=10, strat, alpha=0.05,
     return(list("c.index"=NA, "se"=NA, "lower"=NA, "upper"=NA, "p.value"=NA, "n"=length(x2), "data"=data, "comppairs"=cscount))
   }
   
-  pc <- (1 / (N * (N - 1))) * sum(ch)
-  pd  <- (1 / (N * (N - 1))) * sum(dh)
-  cindex <- pc / (pc + pd)
+	pc <- (1 / (N * (N - 1))) * sum(ch)
+	pd  <- (1 / (N * (N - 1))) * sum(dh)
+	cindex <- pc / (pc + pd)
 	
 	switch(method,
 	"noether"={
@@ -81,10 +81,7 @@ function(x, surv.time, surv.event, cl, weights, comppairs=10, strat, alpha=0.05,
   },
 	"conservative"={
     C <- cindex
-    sum.ch <- sum(ch,na.rm=TRUE)
-    sum.dh <- sum(dh,na.rm=TRUE)
-    pc <- (1 / (N * (N - 1))) * sum.ch
-    pd  <- (1 / (N * (N - 1))) * sum.dh
+    ## pc and pd have been computed previously
     w <- (2 * qnorm(p=alpha / 2, lower.tail=FALSE)^2) / (N * (pc + pd))
     ci <- sqrt(w^2 + 4 * w * C * (1 - C)) / (2 * (1 + w))
     point <- (w + 2 * C) / (2 * (1 + w))
@@ -103,6 +100,6 @@ function(x, surv.time, surv.event, cl, weights, comppairs=10, strat, alpha=0.05,
   upper <- ifelse(upper < 0, 0, upper)
   upper <- ifelse(upper > 1, 1, upper)
   if(msurv) { data <- list("x"=x, "surv.time"=surv.time, "surv.event"=surv.event) } else { data  <- list("x"=x, "cl"=cl) }
-  if((varp / N) > 0) {se <- sqrt(varp / N)} else {se <- NA}
+  if(!is.na(varp) && (varp / N) > 0) { se <- sqrt(varp / N) } else { se <- NA }
   return(list("c.index"=cindex, "se"=se, "lower"=lower, "upper"=upper, "p.value"=p, "n"=length(x2), "data"=data, "comppairs"=cscount))
 }
