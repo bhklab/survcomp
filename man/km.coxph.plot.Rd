@@ -44,7 +44,6 @@ km.coxph.plot(formula.s, data.s, sub.s = "all", x.label, y.label,
 %\note{ ~~further notes~~ }
 \seealso{\code{\link[survival]{survfit}}, \code{\link[survival]{coxph}}}
 \examples{
-require(survival)
 set.seed(12345)
 stime <- rexp(100) * 10
 cens   <- runif(100,.5,2) * 10

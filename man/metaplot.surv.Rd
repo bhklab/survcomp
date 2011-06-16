@@ -57,5 +57,6 @@ metaplot.surv(mn, se=NULL, lower=NULL, upper=NULL, nn=NULL,
 
 \examples{
 metaplot.surv(mn=c(0.4,0.5,0.6), lower=c(0.35,0.4,0.57), upper=c(0.45,0.6,0.63), labels=c("A","B","C"), xlim=c(0.2,0.8), boxsize=0.5, zero=0.5, col=meta.colors.surv(box="royalblue",line="darkblue",zero="firebrick"))
-\keyword{hplot}
+}
+\keyword{ hplot }
 

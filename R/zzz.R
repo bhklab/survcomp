@@ -2,4 +2,3 @@
 {
   library.dynam("survcomp", pkgname, libname)
 }
-                                    
