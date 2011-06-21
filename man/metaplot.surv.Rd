@@ -15,7 +15,7 @@ metaplot.surv(mn, se=NULL, lower=NULL, upper=NULL, nn=NULL,
     summn = NULL, sumse = NULL, sumlower = NULL, sumupper = NULL,
     sumnn = NULL, summlabel = "Summary", logeffect = FALSE,
     lwd = 2, boxsize = 1, zero = as.numeric(logeffect),
-    colors=meta.colors.surv(), xaxt="s", logticks=TRUE, ... )
+    colors=meta.colors(), xaxt="s", logticks=TRUE, ... )
 }
 %- maybe also `usage' for other objects documented here.
 \arguments{
@@ -56,7 +56,7 @@ metaplot.surv(mn, se=NULL, lower=NULL, upper=NULL, nn=NULL,
 }
 
 \examples{
-metaplot.surv(mn=c(0.4,0.5,0.6), lower=c(0.35,0.4,0.57), upper=c(0.45,0.6,0.63), labels=c("A","B","C"), xlim=c(0.2,0.8), boxsize=0.5, zero=0.5, col=meta.colors.surv(box="royalblue",line="darkblue",zero="firebrick"))
+metaplot.surv(mn=c(0.4,0.5,0.6), lower=c(0.35,0.4,0.57), upper=c(0.45,0.6,0.63), labels=c("A","B","C"), xlim=c(0.2,0.8), boxsize=0.5, zero=0.5, col=meta.colors(box="royalblue",line="darkblue",zero="firebrick"))
 }
 \keyword{ hplot }
 
