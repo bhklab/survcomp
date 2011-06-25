@@ -29,18 +29,23 @@ function(x, surv.time, surv.event, cl, weights, comppairs=10, strat, alpha=0.05,
 	cl2 <- cl[cc.ix]
 	st <- surv.time[cc.ix]
 	se <- surv.event[cc.ix]
-	if(sum(se) == 0) {
-	 warning("\nNo events, the concordance index cannot be computed!")
-	 if(msurv) { data <- list("x"=x, "surv.time"=surv.time, "surv.event"=surv.event) } else { data  <- list("x"=x, "cl"=cl) }
-   return(list("c.index"=NA, "se"=NA, "lower"=NA, "upper"=NA, "p.value"=NA, "n"=0, "data"=data, "comppairs"=NA))
-  }
+	if(msurv && sum(se) == 0) {
+		warning("\nno events, the concordance index cannot be computed!")
+		data <- list("x"=x, "surv.time"=surv.time, "surv.event"=surv.event)
+		return(list("c.index"=NA, "se"=NA, "lower"=NA, "upper"=NA, "p.value"=NA, "n"=0, "data"=data, "comppairs"=NA))
+	}
+	if(!msurv && length(unique(cl2)) == 1) {
+		warning("\nonly one class, the concordance index cannot be computed!")
+		data  <- list("x"=x, "cl"=cl)
+		return(list("c.index"=NA, "se"=NA, "lower"=NA, "upper"=NA, "p.value"=NA, "n"=0, "data"=data, "comppairs"=NA))
+	}
 	weights <- weights[cc.ix]
 	strat <- strat[cc.ix]
 	strat <- as.numeric(as.factor(strat))
 	ustrat <- sort(unique(strat)) ## to check later
 	N <- sum(weights) ##length(x2)
 	if(N <= 1) {
-    warning("\nWeights of observations are too small (sum should be > 1), the concordance index cannot be computed!")
+    warning("\nweights of observations are too small (sum should be > 1), the concordance index cannot be computed!")
     if(msurv) { data <- list("x"=x, "surv.time"=surv.time, "surv.event"=surv.event) } else { data  <- list("x"=x, "cl"=cl) }
     return(list("c.index"=NA, "se"=NA, "lower"=NA, "upper"=NA, "p.value"=NA, "n"=length(x2), "data"=data, "comppairs"=NA))
   }	

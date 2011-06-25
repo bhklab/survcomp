@@ -61,6 +61,7 @@ cat("survival prediction:\n")
 concordance.index(x=age, surv.time=stime, surv.event=sevent, strat=strat,
   weights=weight, method="noether", comppairs=comppairs)
 cat("binary class prediction:\n")
+## is age predictive of sex?
 concordance.index(x=age, cl=sex, strat=strat, method="noether")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
