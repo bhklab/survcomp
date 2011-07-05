@@ -20,7 +20,10 @@ function(list.dindex1, list.dindex2, hetero=FALSE) {
 	}
 	x1.meta <- combine.est(x=x1, x.se=x1.se, hetero=hetero, na.rm=TRUE)
 	x2.meta <- combine.est(x=x2, x.se=x2.se, hetero=hetero, na.rm=TRUE) 
-	
+	if(x1.meta$estimate == x2.meta$estimate && x1.meta$se == x2.meta$se)) {
+	## same concordance indices	
+		return(list("p.value"=1, "cindex1"=x1.meta$estimate, "cindex2"=x2.meta$estimate))
+	}
 	rz <- combine.est(x=corz, x.se=corz.se, na.rm=TRUE, hetero=hetero)$estimate
 	## since r is the spearman correlation coefficient and not the Pearson's one, we should apply a correction factor (see http://en.wikipedia.org/wiki/Spearman's_rank_correlation_coefficient for details)
 	rz <- rz / (sqrt((n - 3) / 1.06))
