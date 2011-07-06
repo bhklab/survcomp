@@ -48,7 +48,7 @@
 \begin{document}
 
 %------------------------------------------------------------
-\title{\vspace{-2cm}\Rpackage{SurvComp}: a package for performance assessment and comparison for survival analysis}
+\title{\vspace{-2cm}\Rpackage{survcomp}: a package for performance assessment and comparison for survival analysis}
 %------------------------------------------------------------
 \author[1,2,3]{Benjamin Haibe-Kains}
 \author[1,5]{Markus Schr\"{o}der}
