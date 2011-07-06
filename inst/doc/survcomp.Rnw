@@ -1,6 +1,6 @@
 %\VignetteIndexEntry{SurvComp:  a package for performance assessment and comparison for survival analysis}
-%\VignetteDepends{survival, ipred, prodlim, survivalROC, SuppDists, grid, rmeta, bootstrap}
-%\VignetteSuggests{Hmisc, CPE, clinfun, survJamda, Biobase}
+%\VignetteDepends{survival, survivalROC, bootstrap, grid, rmeta}
+%\VignetteSuggests{Hmisc, CPE, clinfun, survJamda, SuppDists, prodlim, ipred, Biobase, xtable}
 %\VignetteKeywords{Breast Cancer, Survival Analysis, GeneExpression, DifferentialExpression}
 %\VignettePackage{survcomp}
 
@@ -322,18 +322,18 @@ tt <- as.data.frame(NULL)
 for(i in 1:7){
   tt <- rbind(
     tt,combine.est(
-    x=cbind(   cindexall.mainz.small[i,"cindex"],
+    x=cbind( cindexall.mainz.small[i,"cindex"],
         cindexall.transbig.small[i,"cindex"],
         cindexall.upp.small[i,"cindex"],
         cindexall.unt.small[i,"cindex"],
         cindexall.vdx.small[i,"cindex"],
         cindexall.nki.small[i,"cindex"]),
-    x.se=cbind(cindexall.mainz.small[i,"cindex.se"],
+    x.se=cbind (cindexall.mainz.small[i,"cindex.se"],
         cindexall.transbig.small[i,"cindex.se"],
         cindexall.upp.small[i,"cindex.se"],
         cindexall.unt.small[i,"cindex.se"],
         cindexall.vdx.small[i,"cindex.se"],
-        cindexall.nki.small[i,"cindex.se"]),na.rm=TRUE)
+        cindexall.nki.small[i,"cindex.se"]), na.rm=TRUE)
     )
 }
 tt$lower <- tt$estimate + qnorm(0.025, lower.tail=TRUE) * tt$se
@@ -438,7 +438,7 @@ r.lower <- c(NA,ccindex$lower)
 r.upper <- c(NA,ccindex$upper)
 
 forestplot.surv(labeltext=labeltext, mean=r.mean, lower=r.lower, upper=r.upper, zero=0.5,
-    align=c("l"), graphwidth=unit(2, "inches"), x.ticks=seq(0.4,0.7,0.05), xlab=paste("Concordance Index", myspace, sep=""),
+    align=c("l"), graphwidth=unit(2, "inches"), x.ticks=seq(0.4,0.7,0.05), xlab=paste( "Concordance Index", myspace, sep=""),
     col=meta.colors(box="royalblue", line="darkblue", zero="darkred"), box.size=bs, clip=c(0.4,1))
 @
 
@@ -466,7 +466,7 @@ r.lower <- c(NA,log2(chratio$lower))
 r.upper <- c(NA,log2(chratio$upper))
 
 forestplot.surv(labeltext=labeltext, mean=r.mean, lower=r.lower, upper=r.upper, zero=0,
-    align=c("l"), graphwidth=unit(2, "inches"), x.ticks=seq(-0.5,3.5,0.5), xlab=paste("log2 Hazard Ratio", myspace, sep=""),
+    align=c("l"), graphwidth=unit(2, "inches"), x.ticks=seq(-0.5,3.5,0.5), xlab=paste( "log2 Hazard Ratio", myspace, sep=""),
     col=meta.colors(box="royalblue", line="darkblue", zero="darkred"), box.size=bs, clip=c(-0.75,3.5))
 @
 
@@ -491,7 +491,7 @@ r.lower <- c(NA,tt$lower)
 r.upper <- c(NA,tt$upper)                               
 
 forestplot.surv(labeltext=labeltext, mean=r.mean, lower=r.lower, upper=r.upper, zero=0.5,
-    align=c("l"), graphwidth=unit(2, "inches"), x.ticks=seq(0.4,0.8,0.05), xlab=paste("AURKA Concordance Index", myspace, sep=""),
+    align=c("l"), graphwidth=unit(2, "inches"), x.ticks=seq(0.4,0.8,0.05), xlab=paste( "AURKA Concordance Index", myspace, sep=""),
     col=meta.colors(box="royalblue", line="darkblue", zero="darkred"), box.size=bs, clip=c(0.5,1), is.summary=(c(rep(FALSE,8),TRUE)))
 @
 
@@ -514,7 +514,7 @@ r.lower <- c(NA,tt$lower)
 r.upper <- c(NA,tt$upper)
 
 forestplot.surv(labeltext=labeltext, mean=r.mean, lower=r.lower, upper=r.upper, zero=0.5,
-    align=c("l"), graphwidth=unit(2, "inches"), x.ticks=seq(0.4,0.75,0.05), xlab=paste("VEGF Concordance Index", myspace, sep=""),
+    align=c("l"), graphwidth=unit(2, "inches"), x.ticks=seq(0.4,0.75,0.05), xlab=paste( "VEGF Concordance Index", myspace, sep=""),
     col=meta.colors(box="royalblue", line="darkblue", zero="darkred"), box.size=bs, clip=c(0.3,0.75), is.summary=(c(rep(FALSE,8),TRUE)))
 @
 
@@ -552,7 +552,7 @@ r.lower <- c(NA,tt$lower)
 r.upper <- c(NA,tt$upper)                            
 
 forestplot.surv(labeltext=labeltext, mean=r.mean, lower=r.lower, upper=r.upper, zero=0.5,
-    align=c("l"), graphwidth=unit(2, "inches"), x.ticks=seq(0.4,0.8,0.05), xlab=paste("AURKA and VEGF Concordance Index", myspace, sep=""),
+    align=c("l"), graphwidth=unit(2, "inches"), x.ticks=seq(0.4,0.8,0.05), xlab=paste( "AURKA and VEGF Concordance Index", myspace, sep=""),
     col=meta.colors(line=c(rep(c(NA, "darkblue", "seagreen"),7)), zero="firebrick", box=c(rep(c(NA," royalblue", "forestgreen"),7))), box.size=bs,
     clip=c(0.3,1), is.summary=(c(rep(FALSE,19), TRUE, TRUE)))
 @
@@ -601,7 +601,7 @@ r.lower <- c(NA,log2(tt$lower))
 r.upper <- c(NA,log2(tt$upper))                            
 
 forestplot.surv(labeltext=labeltext, mean=r.mean, lower=r.lower, upper=r.upper, zero=0,
-    align=c("l"), graphwidth=unit(2, "inches"), x.ticks=seq(-1.25,1.5,0.25), xlab=paste("VEGF log2 D Index", myspace, sep=""),
+    align=c("l"), graphwidth=unit(2, "inches"), x.ticks=seq(-1.25,1.5,0.25), xlab=paste( "VEGF log2 D Index", myspace, sep=""),
     col=meta.colors(box="royalblue", line="darkblue", zero="darkred"), box.size=bs, clip=c(-1.5,1.75), is.summary=(c(rep(FALSE,8), TRUE)))
 @
 
@@ -626,7 +626,7 @@ r.lower <- c(NA,log2(tt$lower))
 r.upper <- c(NA,log2(tt$upper))  
    
 forestplot.surv(labeltext=labeltext, mean=r.mean, lower=r.lower, upper=r.upper, zero=0,
-    align=c("l"), graphwidth=unit(2, "inches"), x.ticks=seq(-0.5,3.5,0.5), xlab=paste("AURKA log2 Hazard Ratio", myspace, sep=""),
+    align=c("l"), graphwidth=unit(2, "inches"), x.ticks=seq(-0.5,3.5,0.5), xlab=paste( "AURKA log2 Hazard Ratio", myspace, sep=""),
     col=meta.colors(box="royalblue", line="darkblue", zero="darkred"), box.size=bs, clip=c(-0.5,3.5),is.summary=(c(rep(FALSE,8), TRUE)))
 @
 
@@ -669,7 +669,7 @@ To display a Kaplan Meier curve \cite{Kaplan1958} for all datasets you can use:
 surv.data <- censor.time(surv.time=c(pData(mainz7g)[ ,"t.dmfs"], pData(transbig7g)[ ,"t.dmfs"], pData(unt7g)[ ,"t.dmfs"], pData(vdx7g)[ ,"t.dmfs"], pData(upp7g)[ ,"t.rfs"], pData(nki7g)[ ,"t.dmfs"]) / 365, surv.event=c(pData(mainz7g)[ ,"e.dmfs"], pData(transbig7g)[ ,"e.dmfs"], pData(unt7g)[ ,"e.dmfs"], pData(vdx7g)[ ,"e.dmfs"], pData(upp7g)[ ,"e.rfs"], pData(nki7g)[ ,"e.dmfs"]), time.cens=tc / 365)
 gg <- factor(c(rep("mainz", nrow(pData(mainz7g))), rep("transbig", nrow(pData(transbig7g))), rep("unt", nrow(pData(unt7g))), rep("vdx", nrow(pData(vdx7g))), rep("upp", nrow(pData(upp7g))), rep("nki", nrow(pData(nki7g)))), levels=c("mainz", "transbig", "unt", "vdx", "upp", "nki"))
 dd <- data.frame("time"=surv.data[[1]], "event"=surv.data[[2]], "group"=gg)
-km.coxph.plot(formula.s=formula(Surv(time, event) ~ group), data.s=dd, sub.s="all", x.label="Time (years)", y.label="Probability of DMFS/RFS", main.title="", sub.title="", leg.pos="bottomright", leg.inset=0.05, o.text=FALSE, v.line=FALSE, h.line=FALSE, .lty=rep(1, length(levels(gg))), show.n.risk=TRUE, n.risk.step=1, n.risk.cex=0.85, .col=c("darkorange", "red", "darkblue", "darkgreen", "black", "brown"), leg.text=paste(levels(gg), myspace, sep=""), verbose=FALSE, ylim=c(0.1,1))
+km.coxph.plot(formula.s=formula(Surv(time, event) ~ group), data.s=dd, sub.s="all", x.label="Time (years)", y.label = "Probability of DMFS/RFS", main.title="", sub.title="", leg.pos="bottomright", leg.inset=0.05, o.text=FALSE, v.line=FALSE, h.line=FALSE, .lty=rep(1, length(levels(gg))), show.n.risk=TRUE, n.risk.step=1, n.risk.cex=0.85, .col=c("darkorange", "red", "darkblue", "darkgreen", "black", "brown"), leg.text=paste(levels(gg), myspace, sep=""), verbose=FALSE, ylim=c(0.1,1))
 @
 
 If you want do display the survival curve for a single gene using the data of all six datasets, we have to concatenate the survival and expression data of all datasets (see \Robject{surv.time.all}, \Robject{surv.event.all} and \Robject{aurka.exprs} below). After that we split the patients in each dataset into three parts acording to their gene expression. We use the function \Rfunction{quantile()} for that. In the end we have three groups, representing the low gene expression group (lowest 33\% of the gene expression), intermediate gene expression group (gene expression between 33\% and 66\%) and high gene expression group (over 66\%).
@@ -683,7 +683,7 @@ aurkaPagi <- "NM_003600"
 surv.time.all <- c(pData(mainz7g)[ ,"t.dmfs"], pData(transbig7g)[ ,"t.dmfs"], pData(unt7g)[ ,"t.dmfs"], pData(upp7g)[ ,"t.rfs"], pData(vdx7g)[ ,"t.dmfs"], pData(nki7g)[ ,"t.dmfs"])             
 surv.event.all <- c(pData(mainz7g)[ ,"e.dmfs"], pData(transbig7g)[ ,"e.dmfs"], pData(unt7g)[ ,"e.dmfs"], pData(upp7g)[ ,"e.rfs"], pData(vdx7g)[ ,"e.dmfs"], pData(nki7g)[ ,"e.dmfs"])            
 aurka.exprs <- c(exprs(mainz7g)[aurkaPaf,], exprs(transbig7g)[aurkaPaf,], exprs(unt7g)[aurkaPaf,], exprs(upp7g)[aurkaPaf,], exprs(vdx7g)[aurkaPaf,], exprs(nki7g)[aurkaPagi,])
-aurka.exprs.length <- c(length(exprs(mainz7g)[aurkaPaf,]), length(exprs(transbig7g)[aurkaPaf,]), length(exprs(unt7g)[aurkaPaf,]), length(exprs(upp7g)[aurkaPaf,]), length(exprs(vdx7g)[aurkaPaf,]), length(exprs(nki7g)[aurkaPagi,]))
+aurka.exprs.length <- c(length( exprs(mainz7g)[aurkaPaf,] ), length( exprs(transbig7g)[aurkaPaf,] ), length( exprs(unt7g)[aurkaPaf,] ), length( exprs(upp7g)[aurkaPaf,] ), length( exprs(vdx7g)[aurkaPaf,] ), length( exprs(nki7g)[aurkaPagi,] ))
 
 pos <- 0
 mygroup <- NULL
@@ -739,20 +739,20 @@ cindexMetaNki <- t(apply(X=exprs(nki7g)[,ccNki], MARGIN=1, function(x, y, z) {
 ccmData <- tt <- rr <- NULL
 for(i in 1:7){
   tt <- NULL
-  listOne <- list("mainz"=cindexMetaMainz[[i]],
-                   "transbig"=cindexMetaTransbig[[i]],
-                   "upp"=cindexMetaUpp[[i]],
-                   "unt"=cindexMetaUnt[[i]],
-                   "vdx"=cindexMetaVdx[[i]],
-                   "nki"=cindexMetaNki[[i]])
+  listOne <- list("mainz" = cindexMetaMainz[[i]],
+                   "transbig" = cindexMetaTransbig[[i]],
+                   "upp" = cindexMetaUpp[[i]],
+                   "unt" = cindexMetaUnt[[i]],
+                   "vdx" = cindexMetaVdx[[i]],
+                   "nki" = cindexMetaNki[[i]])
                    
   for(j in 1:7){
-    listTwo <- list("mainz"=cindexMetaMainz[[j]],
-                    "transbig"=cindexMetaTransbig[[j]],
-                    "upp"=cindexMetaUpp[[j]],
-                    "unt"=cindexMetaUnt[[j]],
-                    "vdx"=cindexMetaVdx[[j]],
-                    "nki"=cindexMetaNki[[j]])
+    listTwo <- list("mainz" = cindexMetaMainz[[j]],
+                    "transbig" = cindexMetaTransbig[[j]],
+                    "upp" = cindexMetaUpp[[j]],
+                    "unt" = cindexMetaUnt[[j]],
+                    "vdx" = cindexMetaVdx[[j]],
+                    "nki" = cindexMetaNki[[j]])
                     
     rr <- cindex.comp.meta(list.cindex1=listOne, list.cindex2=listTwo)
     tt <- cbind(tt, rr$p.value) ##list(round(rr$p.value,5)))
@@ -805,7 +805,7 @@ cindex.comp & Function to compare two concordance indices\\
 cindex.comp.meta & Function to compare two concordance indices\\
 combine.est & Function to combine estimates\\
 combine.test & Function to combine probabilities\\
-concordance.index & Function to compute the concordance index for survival or binary class prediction\\
+concordance.index & Function to compute the cindex for survival or binary class prediction\\
 cvpl & Function to compute the CVPL\\
 dindex.comp & Function to compare two D indices\\
 dindex.comp.meta & Function to compare two D indices\\
@@ -820,6 +820,7 @@ iauc.comp & Function to compare two IAUCs through time-dependent ROC curves\\
 ibsc.comp & Function to compare two IBSCs\\
 km.coxph.plot & Function to plot several Kaplan-Meier survival curves\\
 logpl & Function to compute the log partial likelihood of a Cox model\\
+metaplot.surv & Meta plots enables to display performance estimates of survival models\\
 no.at.risk & Function to compute the number of individuals at risk\\
 sbrier.score2proba & Function to compute the BSCs from a risk score, for all the times of event occurrence\\
 score2proba & Function to compute the survival probabilities from a risk score\\

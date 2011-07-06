@@ -1,7 +1,7 @@
 `D.index` <-
 function(x, surv.time, surv.event, weights, strat, alpha=0.05, na.rm=FALSE, ...) {
 	require(survival)
-	require(SuppDists)
+	#require(SuppDists)
 	if(!missing(weights)) {
 		if(length(weights) != length(x)) { stop("bad length for parameter weights!") }
 	} else { weights <- rep(1,  length(x)) }
@@ -22,7 +22,7 @@ function(x, surv.time, surv.event, weights, strat, alpha=0.05, na.rm=FALSE, ...)
 	sweights <- weights[cc.ix][oo]
 	sstrat <- strat[cc.ix][oo]	
 	kap <- sqrt(8/pi)
-	z <- kap^-1 * normOrder(N=length(sx))
+	z <- kap^-1 * SuppDists::normOrder(N=length(sx))
 	#ties?
 	dup <- duplicated(sx)
 	if(any(dup)) {

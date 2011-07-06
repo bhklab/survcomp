@@ -7,7 +7,7 @@ Function to compute the concordance index for a risk prediction, i.e. the probab
 }
 \usage{
 concordance.index(x, surv.time, surv.event, cl, weights, comppairs=10, strat,
-  alpha = 0.05, outx = TRUE, method = c("conservative", "noether", "name"),
+  alpha = 0.05, outx = TRUE, method = c("conservative", "noether", "nam"),
   na.rm = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
@@ -17,7 +17,7 @@ concordance.index(x, surv.time, surv.event, cl, weights, comppairs=10, strat,
   \item{surv.event}{a vector of event occurence indicators.}
   \item{cl}{a vector of binary class indicators.}
   \item{weights}{weight of each sample.}
-  \item{comppairs}{threshold for compairable samples.}
+  \item{comppairs}{threshold for compairable patients.}
   \item{strat}{stratification indicator.}
   \item{alpha}{apha level to compute confidence interval.}
   \item{outx}{set to \code{TRUE} to not count pairs of observations tied on \code{x} as a relevant pair. This results in a Goodman-Kruskal gamma type rank correlation.}
@@ -61,6 +61,7 @@ cat("survival prediction:\n")
 concordance.index(x=age, surv.time=stime, surv.event=sevent, strat=strat,
   weights=weight, method="noether", comppairs=comppairs)
 cat("binary class prediction:\n")
+## is age predictive of sex?
 concordance.index(x=age, cl=sex, strat=strat, method="noether")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

@@ -1,8 +1,8 @@
 `sbrier.score2proba` <-
 function(data.tr, data.ts, method=c("cox", "prodlim")) {
-	require(ipred)
+	## require(ipred)
 	method <- match.arg(method)
-	#remove missing values and sort the data for the test set
+	## remove missing values and sort the data for the test set
 	cc.ix <- complete.cases(data.ts)
 	ot <- order(data.ts$time)[1:(length(cc.ix)-sum(!cc.ix))]
 	data.ts <- data.ts[ot, ,drop=FALSE]
@@ -14,10 +14,10 @@ function(data.tr, data.ts, method=c("cox", "prodlim")) {
 	bsc <- rep(NA, length(btime))
 	switch(method,
 	"cox"={
-		require(survival)
-		#fit the cox model for the training set
-		coxm <- coxph(Surv(time, event) ~ score, data=data.tr)
-		#compute survival probabilities using the cox model fitted on the training set and the score from the test set
+		##require(survival)
+		## fit the cox model for the training set
+		coxm <- survival::coxph(Surv(time, event) ~ score, data=data.tr)
+		## compute survival probabilities using the cox model fitted on the training set and the score from the test set
 		#sf <- survfit(coxm, newdata=data.ts)
 		dd <- data.frame("score"=score.ts)
 		sf <- survfit(coxm, newdata=dd)
@@ -27,7 +27,7 @@ function(data.tr, data.ts, method=c("cox", "prodlim")) {
 		}	
 	},
 	"prodlim"={
-		require(prodlim)
+		require(KernSmooth)
 		prodlim.m <- prodlim(Surv(time, event) ~ score, data=data.tr)
 		lpred <- predict(prodlim.m, newdata=data.ts, times=utime)
 		names(lpred) <- dimnames(data.ts)[[1]]

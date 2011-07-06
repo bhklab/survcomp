@@ -1,3 +1,9 @@
 useDynLib(survcomp)
 
+importFrom(SuppDists, normOrder)
+importFrom(prodlim, prodlim)
+importFrom(KernSmooth, dpik)
+importFrom(ipred, sbrier)
+
+
 exportPattern("^[^\\.]")

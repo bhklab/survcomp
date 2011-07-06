@@ -1,5 +1,5 @@
 `concordance.index` <-
-function(x, surv.time, surv.event, cl, weights, comppairs=10, strat, alpha=0.05, outx=TRUE, method=c("conservative", "noether", "name"), na.rm=FALSE) {
+function(x, surv.time, surv.event, cl, weights, comppairs=10, strat, alpha=0.05, outx=TRUE, method=c("conservative", "noether", "nam"), na.rm=FALSE) {
 	method <- match.arg(method)
 	if(!missing(weights)) {
 		if(length(weights) != length(x)) { stop("bad length for parameter weights!") }
@@ -29,18 +29,23 @@ function(x, surv.time, surv.event, cl, weights, comppairs=10, strat, alpha=0.05,
 	cl2 <- cl[cc.ix]
 	st <- surv.time[cc.ix]
 	se <- surv.event[cc.ix]
-	if(sum(se) == 0) {
-	 warning("\nNo events, the concordance index cannot be computed!")
-	 if(msurv) { data <- list("x"=x, "surv.time"=surv.time, "surv.event"=surv.event) } else { data  <- list("x"=x, "cl"=cl) }
-   return(list("c.index"=NA, "se"=NA, "lower"=NA, "upper"=NA, "p.value"=NA, "n"=0, "data"=data, "comppairs"=NA))
-  }
+	if(msurv && sum(se) == 0) {
+		warning("\nno events, the concordance index cannot be computed!")
+		data <- list("x"=x, "surv.time"=surv.time, "surv.event"=surv.event)
+		return(list("c.index"=NA, "se"=NA, "lower"=NA, "upper"=NA, "p.value"=NA, "n"=0, "data"=data, "comppairs"=NA))
+	}
+	if(!msurv && length(unique(cl2)) == 1) {
+		warning("\nonly one class, the concordance index cannot be computed!")
+		data  <- list("x"=x, "cl"=cl)
+		return(list("c.index"=NA, "se"=NA, "lower"=NA, "upper"=NA, "p.value"=NA, "n"=0, "data"=data, "comppairs"=NA))
+	}
 	weights <- weights[cc.ix]
 	strat <- strat[cc.ix]
 	strat <- as.numeric(as.factor(strat))
 	ustrat <- sort(unique(strat)) ## to check later
-	N <- sum(weights) ## length(x2)
+	N <- sum(weights) ##length(x2)
 	if(N <= 1) {
-    warning("\nWeights of observations are too small (sum should be > 1), the concordance index cannot be computed!")
+    warning("\nweights of observations are too small (sum should be > 1), the concordance index cannot be computed!")
     if(msurv) { data <- list("x"=x, "surv.time"=surv.time, "surv.event"=surv.event) } else { data  <- list("x"=x, "cl"=cl) }
     return(list("c.index"=NA, "se"=NA, "lower"=NA, "upper"=NA, "p.value"=NA, "n"=length(x2), "data"=data, "comppairs"=NA))
   }	
@@ -56,15 +61,15 @@ function(x, surv.time, surv.event, cl, weights, comppairs=10, strat, alpha=0.05,
   dh <- out$dh
   uh <- out$uh
   rph <- out$rph
-  cscount <- sum(ch + dh) ## comparable sample pairs
+  cscount <- sum(ch + dh) ## comparable pairs
   if(sum(ch)==0 || sum(dh)==0 || sum(ch * (ch - 1))==0 || sum(dh * (dh - 1))==0 || sum(ch * dh)==0 || cscount < comppairs){
     if(msurv) { data <- list("x"=x, "surv.time"=surv.time, "surv.event"=surv.event) } else { data  <- list("x"=x, "cl"=cl) }
     return(list("c.index"=NA, "se"=NA, "lower"=NA, "upper"=NA, "p.value"=NA, "n"=length(x2), "data"=data, "comppairs"=cscount))
   }
   
-  pc <- (1 / (N * (N - 1))) * sum(ch)
-  pd  <- (1 / (N * (N - 1))) * sum(dh)
-  cindex <- pc / (pc + pd)
+	pc <- (1 / (N * (N - 1))) * sum(ch)
+	pd  <- (1 / (N * (N - 1))) * sum(dh)
+	cindex <- pc / (pc + pd)
 	
 	switch(method,
 	"noether"={
@@ -81,10 +86,7 @@ function(x, surv.time, surv.event, cl, weights, comppairs=10, strat, alpha=0.05,
   },
 	"conservative"={
     C <- cindex
-    sum.ch <- sum(ch,na.rm=TRUE)
-    sum.dh <- sum(dh,na.rm=TRUE)
-    pc <- (1 / (N * (N - 1))) * sum.ch
-    pd  <- (1 / (N * (N - 1))) * sum.dh
+    ## pc and pd have been computed previously
     w <- (2 * qnorm(p=alpha / 2, lower.tail=FALSE)^2) / (N * (pc + pd))
     ci <- sqrt(w^2 + 4 * w * C * (1 - C)) / (2 * (1 + w))
     point <- (w + 2 * C) / (2 * (1 + w))
@@ -103,6 +105,6 @@ function(x, surv.time, surv.event, cl, weights, comppairs=10, strat, alpha=0.05,
   upper <- ifelse(upper < 0, 0, upper)
   upper <- ifelse(upper > 1, 1, upper)
   if(msurv) { data <- list("x"=x, "surv.time"=surv.time, "surv.event"=surv.event) } else { data  <- list("x"=x, "cl"=cl) }
-  if((varp / N) > 0) {se <- sqrt(varp / N)} else {se <- NA}
+  if(!is.na(varp) && (varp / N) > 0) { se <- sqrt(varp / N) } else { se <- NA }
   return(list("c.index"=cindex, "se"=se, "lower"=lower, "upper"=upper, "p.value"=p, "n"=length(x2), "data"=data, "comppairs"=cscount))
 }
