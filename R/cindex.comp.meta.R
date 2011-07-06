@@ -26,7 +26,7 @@ function(list.cindex1, list.cindex2, hetero=FALSE) {
 	}
 	x1.meta <- combine.est(x=x1, x.se=x1.se, hetero=hetero, na.rm=TRUE)
 	x2.meta <- combine.est(x=x2, x.se=x2.se, hetero=hetero, na.rm=TRUE)
-	if(x1.meta$estimate == x2.meta$estimate && x1.meta$se == x2.meta$se)) {
+	if(x1.meta$estimate == x2.meta$estimate && x1.meta$se == x2.meta$se) {
 	## same concordance indices	
 		return(list("p.value"=1, "cindex1"=x1.meta$estimate, "cindex2"=x2.meta$estimate))
 	}
