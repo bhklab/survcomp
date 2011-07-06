@@ -8,7 +8,6 @@
 \documentclass[12pt]{article}
 
 \usepackage{helvet}
-\usepackage[helvet]{sfmath}
 \renewcommand{\familydefault}{\sfdefault}
 \usepackage{amsmath}
 \usepackage{hyperref}
