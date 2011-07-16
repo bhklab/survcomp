@@ -18,9 +18,10 @@ function(x, surv.time, surv.event, cl, weights, comppairs=10, strat, alpha=0.05,
 	} else { surv.time <- surv.event <- rep(0, length(x)) } ## binary classes
 	
 	cc.ix <- complete.cases(x, surv.time, surv.event, cl, weights, strat)
-	if(all(!cc.ix)) {
+	if(sum(cc.ix) < 3) {
+	## not enough observations	
 		if(msurv) { data <- list("x"=x, "surv.time"=surv.time, "surv.event"=surv.event) } else { data  <- list("x"=x, "cl"=cl) }
-		return(list("c.index"=NA, "se"=NA, "lower"=NA, "upper"=NA, "p.value"=NA, "n"=0, "data"=data, "comppairs"=NA))	
+		return(list("c.index"=NA, "se"=NA, "lower"=NA, "upper"=NA, "p.value"=NA, "n"=sum(cc.ix), "data"=data, "comppairs"=NA))	
 	}
 	if(any(!cc.ix) & !na.rm) { stop("NA values are present!") }
   ## remove samples whose the weight is equal to 0 to speed up the computation of the concordance index

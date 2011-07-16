@@ -8,6 +8,11 @@ function(x, surv.time, surv.event, weights, strat, alpha=0.05, na.rm=FALSE, ...)
 		if(length(strat) != length(x)) { stop("bad length for parameter strat!") }
 	} else { strat <- rep(1,  length(x)) }
 	cc.ix <- complete.cases(x, surv.time, surv.event, weights, strat)
+	if(sum(cc.ix) < 3) {
+	## not enough observations	
+		data <- list("x"=x, "z"=rep(NA, length(x)), "surv.time"=surv.time, "surv.event"=surv.event, "weights"=weights, "strat"=strat)
+		return(list("hazard.ratio"=NA, "coef"=NA, "se"=NA, "lower"=NA, "upper"=NA, "p.value"=NA, "n"=sum(cc.ix), "coxm"=NA, "data"=data))	
+	}
 	if(any(!cc.ix) & !na.rm) { stop("NA values are present!") }
 	sx <- x[cc.ix]
 	oo <- order(sx, decreasing=FALSE)
