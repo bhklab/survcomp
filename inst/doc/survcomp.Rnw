@@ -66,11 +66,12 @@
 
 \SweaveOpts{highlight=TRUE, tidy=TRUE, keep.space=TRUE, keep.blank.space=FALSE, keep.comment=TRUE}
 
-%<<setup,echo=FALSE>>=
-%library(pgfSweave)
-%setCacheDir("cache")
-%options(keep.source=TRUE)
-%@
+<<setup,echo=FALSE>>=
+##library(pgfSweave)
+##setCacheDir("cache")
+##options(keep.source=TRUE)
+options(width=60)
+@
 
 
 \maketitle
@@ -482,7 +483,7 @@ r.upper <- c(NA,log2(chratio$upper))
 
 forestplot.surv(labeltext=labeltext, mean=r.mean, lower=r.lower,
   upper=r.upper, zero=0, align=c("l"),
-  graphwidth=unit(2, "inches"), x.ticks=seq(-0.5,2.5,0.25),
+  graphwidth=unit(2, "inches"), x.ticks=seq(-0.5,1.25,0.25),
   xlab=paste( "log2 Hazard Ratio", myspace, sep=""),
   col=meta.colors(box="royalblue", line="darkblue",
   zero="darkred"), box.size=bs, clip=c(-0.75,3.5))
@@ -676,7 +677,7 @@ r.upper <- c(NA,log2(tt$upper))
    
 forestplot.surv(labeltext=labeltext, mean=r.mean, lower=r.lower,
   upper=r.upper, zero=0, align=c("l"),
-  graphwidth=unit(2, "inches"), x.ticks=seq(-0.5,3.5,0.5),
+  graphwidth=unit(2, "inches"), x.ticks=seq(-0.5,2,0.5),
   xlab=paste( "AURKA log2 Hazard Ratio", myspace, sep=""),
   col=meta.colors(box="royalblue", line="darkblue",
   zero="darkred"), box.size=bs, clip=c(-0.5,3.5),
