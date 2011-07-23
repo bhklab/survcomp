@@ -1,7 +1,8 @@
 `D.index` <-
-function(x, surv.time, surv.event, weights, strat, alpha=0.05, na.rm=FALSE, ...) {
+function(x, surv.time, surv.event, weights, strat, alpha=0.05, method.test=c("logrank", "likelihood.ratio", "wald"), na.rm=FALSE, ...) {
 	require(survival)
 	#require(SuppDists)
+	method.test <- match.arg(method.test)
 	if(!missing(weights)) {
 		if(length(weights) != length(x)) { stop("bad length for parameter weights!") }
 	} else { weights <- rep(1,  length(x)) }
@@ -44,7 +45,20 @@ function(x, surv.time, surv.event, weights, strat, alpha=0.05, na.rm=FALSE, ...)
 		dicoef <- rr$coefficients
 		dise <- sqrt(drop(rr$var))
 		names(dicoef) <- names(dise) <- NULL
-		res <- list("d.index"=exp(dicoef), "coef"=dicoef, "se"=dise, "lower"=exp(dicoef - qnorm(alpha / 2, lower.tail=FALSE) * dise), "upper"=exp(dicoef + qnorm(alpha / 2, lower.tail=FALSE) * dise), "p.value"=pchisq((dicoef / dise)^2, df=1, lower.tail=FALSE), "n"=rr$n, "coxm"=rr, "data"=data)
+		mystat <- NA
+		switch(method.test, 
+		"logrank"={
+			mystat <- rr$score
+		},
+		"likelihood.ratio"={
+			mysat <- 2 * (rr$loglik[2] - rr$loglik[1])
+		},
+		"wald"={
+			mystats <- rr$wald.test
+			##(hrcoef / hrse)^2
+		}) 
+		mypp <- pchisq(mystat, df=1, lower.tail=FALSE)
+		res <- list("d.index"=exp(dicoef), "coef"=dicoef, "se"=dise, "lower"=exp(dicoef - qnorm(alpha / 2, lower.tail=FALSE) * dise), "upper"=exp(dicoef + qnorm(alpha / 2, lower.tail=FALSE) * dise), "p.value"=mypp, "n"=rr$n, "coxm"=rr, "data"=data)
 	}
 	
 	return(res)

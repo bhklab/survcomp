@@ -6,8 +6,7 @@
 Function to compute the hazard ratio for a risk prediction.
 }
 \usage{
-hazard.ratio(x, surv.time, surv.event, weights, strat, alpha = 0.05,
-  na.rm = FALSE, ...)
+hazard.ratio(x, surv.time, surv.event, weights, strat, alpha = 0.05, method.test = c("logrank", "likelihood.ratio", "wald"), na.rm = FALSE, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -17,6 +16,7 @@ hazard.ratio(x, surv.time, surv.event, weights, strat, alpha = 0.05,
   \item{weights}{weight of each sample.}
   \item{strat}{stratification indicator.}
   \item{alpha}{apha level to compute confidence interval.}
+  \item{method.test}{Statistical test to use in order to compute the p-values related to a D. index, see \link[survival]{summary.coxph} for more details.}
   \item{na.rm}{\code{TRUE} if missing values should be removed.}
   \item{...}{additional parameters to be passed to the \code{\link[survival]{coxph}} function.}
 }
