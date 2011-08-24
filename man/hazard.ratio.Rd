@@ -25,7 +25,8 @@ hazard.ratio(x, surv.time, surv.event, weights, strat, alpha = 0.05, method.test
 }
 \value{
   \item{hazard.ratio }{hazard ratio estimate.}
-  \item{se }{standard error of the estimate.}
+	\item{coef }{coefficient (beta) estimated in the cox regression model.}
+  \item{se }{standard error of the coefficient (beta) estimate.}
   \item{lower }{lower bound for the confidence interval.}
   \item{upper }{upper bound for the confidence interval.}
   \item{p.value }{p-value computed using the likelihood ratio test whether the hazard ratio is different from 1.}
