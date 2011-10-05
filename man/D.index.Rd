@@ -6,8 +6,7 @@
 Function to compute the D index for a risk prediction, i.e. an estimate of the log hazard ratio comparing two equal-sized prognostic groups. This is a natural measure of separation between two independent survival distributions under the proportional hazards assumption.
 }
 \usage{
-D.index(x, surv.time, surv.event, weights, strat, alpha = 0.05,
-  na.rm = FALSE, ...)
+D.index(x, surv.time, surv.event, weights, strat, alpha = 0.05, method.test = c("logrank", "likelihood.ratio", "wald"), na.rm = FALSE, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -17,6 +16,7 @@ D.index(x, surv.time, surv.event, weights, strat, alpha = 0.05,
   \item{weights}{weight of each sample.}
   \item{strat}{stratification indicator.}
   \item{alpha}{apha level to compute confidence interval.}
+  \item{method.test}{Statistical test to use in order to compute the p-values related to a D. index, see \link[survival]{summary.coxph} for more details.}
   \item{na.rm}{\code{TRUE} if missing values should be removed.}
   \item{...}{additional parameters to be passed to the \code{\link[survival]{coxph}} function.}
 }
