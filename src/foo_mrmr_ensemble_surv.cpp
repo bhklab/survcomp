@@ -170,13 +170,9 @@ double returnConcordanceIndexC(int *msurv, int *ustrat, double *x2, int *cl2,
 	res_cIndex=tmp_ch/ (tmp_ch+tmp_dh);
 	
 	/// scale value to be in the intervall [-1,1] as correlation and square to be on same scale as mutual information [0,1]
-//	cout<<"tmp_ch "<<tmp_ch<<endl;
-//	cout<<"n "<<n<<endl;
-//	cout<<"data [0] "<<x2[0]<<endl;
-//	cout<<"msurv "<<*msurv<<endl;
+
 	res_cIndex=2*res_cIndex-1;
 	res_cIndex=res_cIndex*res_cIndex;
-//	cout<<"res cIndex function "<<res_cIndex<<endl;
 	return res_cIndex;
 }
 
@@ -604,7 +600,7 @@ void mrmr_ensemble_one_gene_remove (tree<int>& res, tree<int>::pre_order_iterato
 	}
 
 	build_mim_cIndex_subset(mat_info, data, namat, n, nsamples, ind, nsamples ,msurv, ustrat, cl2,st, se, weights,strat, N, outx,  lenU);
-
+	
 	for(unsigned int k=0;k< max_elements ;++k){
 		vec_local_max_mean[k]=-1000;
 	}
@@ -669,8 +665,9 @@ void mrmr_ensemble_one_gene_remove (tree<int>& res, tree<int>::pre_order_iterato
 				}
 				mrmr_vec_sort[k]=vec_mean[k];
 			}
+
 			sort(mrmr_vec_sort,mrmr_vec_sort+n);
-	
+
 			tmp_val_max=mrmr_vec_sort[n-maxnsol-1];
 			int cnt_loop_max=0;
 			
