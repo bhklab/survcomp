@@ -82,7 +82,7 @@ function(x, surv.time, surv.event, cl, weights, comppairs=10, strat, alpha=0.05,
       ci <- qnorm(p=alpha / 2, lower.tail=FALSE) * sqrt(varp / N)
       lower <- cindex - ci
       upper <- cindex + ci
-      p <- pnorm((cindex - 0.5) / sqrt(varp / N), lower.tail=cindex < 0.5)
+      p <- pnorm((cindex - 0.5) / sqrt(varp / N), lower.tail=cindex < 0.5) * 2
     } else { ci <- lower <- upper <- p <- NA } 
   },
 	"conservative"={
