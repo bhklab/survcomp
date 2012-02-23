@@ -3,10 +3,11 @@ metaplot.surv <- function( mn, se=NULL, lower=NULL, upper=NULL, nn=NULL,
     summn = NULL, sumse = NULL, sumlower = NULL, sumupper = NULL,
     sumnn = NULL, summlabel = "Summary", logeffect = FALSE,
     lwd = 2, boxsize = 1, zero = as.numeric(logeffect),
-    colors=meta.colors(), xaxt="s", logticks=TRUE, ... ) {
+    colors, xaxt="s", logticks=TRUE, ... ) {
   nth<-function(x,i){
       x[ (i-1) %% length(x) +1]
   }
+	if(missing(colors)) { colors <- rmeta::meta.colors() }
   ci.value <- -qnorm( ( 1 - conf.level ) / 2 )
   ok <- is.finite( mn + se )
   if ( is.null( xlim ) ) 

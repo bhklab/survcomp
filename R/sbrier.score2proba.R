@@ -23,18 +23,18 @@ function(data.tr, data.ts, method=c("cox", "prodlim")) {
 		sf <- survfit(coxm, newdata=dd)
 		for(i in 1:length(utime)) {
 			mypred <- getsurv2(sf=sf, time=utime[i])
-			bsc[is.na(bsc) & btime <= utime[i]] <- sbrier(obj=Surv(surv.time.ts, surv.event.ts), pred=mypred, btime=utime[i])
+			bsc[is.na(bsc) & btime <= utime[i]] <- ipred::sbrier(obj=Surv(surv.time.ts, surv.event.ts), pred=mypred, btime=utime[i])
 		}	
 	},
 	"prodlim"={
-		require(KernSmooth)
-		prodlim.m <- prodlim(Surv(time, event) ~ score, data=data.tr)
+		#require(KernSmooth)
+		prodlim.m <- prodlim::prodlim(Surv(time, event) ~ score, data=data.tr)
 		lpred <- predict(prodlim.m, newdata=data.ts, times=utime)
 		names(lpred) <- dimnames(data.ts)[[1]]
 		bsc <- rep(NA, length(btime))
 		for(i in 1:length(utime)) {
 			mypred <- unlist(lapply(lpred, function(x, ix) { return(x[[ix]]) }, ix=i))
-			bsc[is.na(bsc) & btime <= utime[i]] <- sbrier(obj=Surv(surv.time.ts, surv.event.ts), pred=mypred, btime=utime[i])
+			bsc[is.na(bsc) & btime <= utime[i]] <- ipred::sbrier(obj=Surv(surv.time.ts, surv.event.ts), pred=mypred, btime=utime[i])
 		}
 	})
 	if(sum(is.na(bsc)) > 0) { bsc[is.na(bsc)] <- bsc[ min(which(is.na(bsc)))-1] } 

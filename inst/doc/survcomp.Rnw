@@ -1,6 +1,6 @@
 %\VignetteIndexEntry{SurvComp:  a package for performance assessment and comparison for survival analysis}
-%\VignetteDepends{xtable, survival, survivalROC, bootstrap, grid, rmeta}
-%\VignetteSuggests{Hmisc, CPE, clinfun, survJamda, SuppDists, prodlim, ipred, Biobase, xtable}
+%\VignetteDepends{survival, bootstrap, grid, rmeta, SuppDists, prodlim, ipred, survivalROC}
+%\VignetteSuggests{Hmisc, CPE, clinfun, survJamda, Biobase, xtable}
 %\VignetteKeywords{Breast Cancer, Survival Analysis, GeneExpression, DifferentialExpression}
 %\VignettePackage{survcomp}
 
@@ -133,6 +133,8 @@ To use the \Robject{ExpressionSet} object we have to load the \Rpackage{Biobase}
 
 <<loadDepends, results=hide>>==
 library(Biobase)
+library(xtable)
+library(rmeta)
 library(xtable)
 @
 

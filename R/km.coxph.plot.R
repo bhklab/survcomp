@@ -1,5 +1,5 @@
 'km.coxph.plot' <-
-function(formula.s, data.s, sub.s="all", x.label, y.label, main.title, sub.title, leg.text, leg.pos="bottomright", leg.inset=0.05, o.text, v.line, h.line, .col=1:4, .lty=1, .lwd=1, show.n.risk=FALSE, n.risk.step, n.risk.cex=0.85, verbose=TRUE, ...) {
+function(formula.s, data.s, sub.s="all", x.label, y.label, main.title, sub.title, leg.text, leg.pos="bottomright", leg.bty="o", leg.inset=0.05, o.text, v.line, h.line, .col=1:4, .lty=1, .lwd=1, show.n.risk=FALSE, n.risk.step, n.risk.cex=0.85, verbose=TRUE, ...) {
 
     require(survival)
 	
@@ -25,7 +25,7 @@ function(formula.s, data.s, sub.s="all", x.label, y.label, main.title, sub.title
     if(!missing(v.line) && !is.null(v.line)) { abline(v=v.line, lty=3, col="purple") }
 	if(!missing(h.line) && !is.null(h.line)) { abline(h=h.line, lty=3, col="purple") }
 
-    if(!is.null(leg.text)) { legend(x=leg.pos, xjust=0, yjust=1, legend=leg.text, col=.col, lty=.lty, lwd=.lwd, cex=0.9, bg="white", inset=leg.inset) }
+    if(!is.null(leg.text)) { legend(x=leg.pos, xjust=0, yjust=1, legend=leg.text, col=.col, lty=.lty, lwd=.lwd, cex=0.9, bg="white", inset=leg.inset, bty=leg.bty) }
     if(!is.null(sub.title)) { mtext(sub.title, line=-4, outer=TRUE) }
     if(missing(o.text) ) {
 		sdf <- survdiff(formula.s, data=data.s, subset=sub.s)

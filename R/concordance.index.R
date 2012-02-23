@@ -1,6 +1,7 @@
 `concordance.index` <-
-function(x, surv.time, surv.event, cl, weights, comppairs=10, strat, alpha=0.05, outx=TRUE, method=c("conservative", "noether", "nam"), na.rm=FALSE) {
+function(x, surv.time, surv.event, cl, weights, comppairs=10, strat, alpha=0.05, outx=TRUE, method=c("conservative", "noether", "nam"), alternative=c("two.sided", "less", "greater"), na.rm=FALSE) {
 	method <- match.arg(method)
+	alternative <- match.arg(alternative)
 	if(!missing(weights)) {
 		if(length(weights) != length(x)) { stop("bad length for parameter weights!") }
 		if(min(weights, na.rm=TRUE) < 0 && max(weights, na.rm=TRUE) > 1) { stop("weights must be a number between 0 and 1!") }
@@ -82,7 +83,11 @@ function(x, surv.time, surv.event, cl, weights, comppairs=10, strat, alpha=0.05,
       ci <- qnorm(p=alpha / 2, lower.tail=FALSE) * sqrt(varp / N)
       lower <- cindex - ci
       upper <- cindex + ci
-      p <- pnorm((cindex - 0.5) / sqrt(varp / N), lower.tail=cindex < 0.5) * 2
+      switch(alternative, 
+		"two.sided"={ p <- pnorm((cindex - 0.5) / sqrt(varp / N), lower.tail=cindex < 0.5) * 2 }, 
+		"less"={ p <- pnorm((cindex - 0.5) / sqrt(varp / N), lower.tail=TRUE) }, 
+		"greater"={  p <- pnorm((cindex - 0.5) / sqrt(varp / N), lower.tail=FALSE) }
+	)
     } else { ci <- lower <- upper <- p <- NA } 
   },
 	"conservative"={
