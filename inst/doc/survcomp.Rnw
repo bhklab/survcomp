@@ -50,18 +50,23 @@
 %------------------------------------------------------------
 \title{\vspace{-2cm}\Rpackage{survcomp}: a package for performance assessment and comparison for survival analysis}
 %------------------------------------------------------------
-\author[1,2,3]{Benjamin Haibe-Kains}
-\author[1,5]{Markus Schr\"{o}der}
+\author[1]{Benjamin Haibe-Kains}
+\author[2]{Markus Schr\"{o}der}
+\author[3]{Catharina Olsen}
 \author[4]{Christos Sotiriou}
 \author[3]{Gianluca Bontempi}
-\author[1,2]{John Quackenbush}
+\author[5,6]{John Quackenbush}
 
 
-\affil[1]{Computational Biology and Functional Genomics Laboratory, Dana-Farber Cancer Institute, Harvard School of Public Health}
-\affil[2]{Center for Cancer Computational Biology, Dana-Farber Cancer Institute}
+\affil[1]{Bioinformatics and Computational Genomics Laboratory, Institut de Recherches Cliniques de Montr\'{e}al}
+\affil[2]{Computational Genomics, Center for Biotechnology, Bielefeld University, Germany}
 \affil[3]{Machine Learning Group, Universit\'{e} Libre de Bruxelles}
 \affil[4]{Breast Cancer Translational Research Laboratory, Institut Jules Bordet, Universit\'{e} Libre de Bruxelles}
-\affil[5]{Computational Genomics, Center for Biotechnology, Bielefeld University, Germany}
+\affil[5]{Computational Biology and Functional Genomics Laboratory, Dana-Farber Cancer Institute, Harvard School of Public Health}
+\affil[6]{Center for Cancer Computational Biology, Dana-Farber Cancer Institute}
+
+
+
 
 
 \SweaveOpts{highlight=TRUE, tidy=TRUE, keep.space=TRUE, keep.blank.space=FALSE, keep.comment=TRUE}
