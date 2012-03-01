@@ -1,6 +1,6 @@
 'td.sens.spec' <-
 function(cl, surv.time, surv.event, time, span=0, sampling=FALSE, na.rm=FALSE, ...) {
-	require(survivalROC)
+	#require(survivalROC)
 	
 	if((length(cl) + length(surv.time) + length(surv.event)) != (3 * length(cl))) { stop("paramaters cl, surv.time and surv.event must have the same length!") }
 	if(is.null(names(cl))) { names(cl) <- names(surv.time) <- names(surv.event) <- paste("X", 1:length(cl), sep=".") }

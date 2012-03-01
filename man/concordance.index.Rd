@@ -6,9 +6,7 @@
 Function to compute the concordance index for a risk prediction, i.e. the probability that, for a pair of randomly chosen comparable samples, the sample with the higher risk prediction will experience an event before the other sample or belongs to a higher binary class.
 }
 \usage{
-concordance.index(x, surv.time, surv.event, cl, weights, comppairs=10, strat,
-  alpha = 0.05, outx = TRUE, method = c("conservative", "noether", "nam"),
-  na.rm = FALSE)
+concordance.index(x, surv.time, surv.event, cl, weights, comppairs=10, strat, alpha = 0.05, outx = TRUE, method = c("conservative", "noether", "nam"), alternative = c("two.sided", "less", "greater"), na.rm = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -22,6 +20,7 @@ concordance.index(x, surv.time, surv.event, cl, weights, comppairs=10, strat,
   \item{alpha}{apha level to compute confidence interval.}
   \item{outx}{set to \code{TRUE} to not count pairs of observations tied on \code{x} as a relevant pair. This results in a Goodman-Kruskal gamma type rank correlation.}
   \item{method}{can take the value \code{conservative}, \code{noether} or \code{name} (see paper Pencina et al. for details).}
+  \item{alternative}{a character string specifying the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} (concordance index is greater than 0.5) or \code{"less"} (concordance index is less than 0.5). You can specify just the initial letter.}
   \item{na.rm}{\code{TRUE} if missing values should be removed.}
 }
 %%\details{

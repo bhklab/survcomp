@@ -39,7 +39,7 @@ function(x, surv.time, surv.event, weights, strat, alpha=0.05, method.test=c("lo
 			mystat <- rr$score
 		},
 		"likelihood.ratio"={
-			mysat <- 2 * (rr$loglik[2] - rr$loglik[1])
+			mystat <- 2 * (rr$loglik[2] - rr$loglik[1])
 		},
 		"wald"={
 			mystat <- rr$wald.test

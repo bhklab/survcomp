@@ -8,7 +8,7 @@ Draw a forest plot together with a table of text.
 \usage{
 forestplot.surv(labeltext, mean, lower, upper, align = NULL,
   is.summary = FALSE, clip = c(-Inf, Inf), xlab = "", zero = 0,
-  graphwidth = unit(2, "inches"), col = meta.colors(), xlog = FALSE,
+  graphwidth = unit(2, "inches"), col, xlog = FALSE,
   box.size = NULL, x.ticks = NULL, ...)
 }
 %- maybe also 'usage' for other objects documented here.
@@ -45,7 +45,17 @@ rmeta package, CRAN, Thomas Lumley <tlumley@u.washington.edu>. Functions for sim
 }
 \seealso{\code{metaplot}, \code{forestplot}}
 \examples{
-##
+require(rmeta)
+myspace <- "    "
+labeltext <- cbind(c("Gene Symbol", "AAA", "BBB", "CCC"),c(rep(myspace,4)))
+bs <- rep(0.5, nrow(labeltext))                              
+r.mean <- c(NA, 0.35, 0.5, 0.65)
+r.lower <- c(NA, 0.33, 0.4, 0.6)
+r.upper <- c(NA, 0.37, 0.6, 0.7)
+
+forestplot.surv(labeltext=labeltext, mean=r.mean, lower=r.lower, upper=r.upper, zero=0.5,
+    align=c("l"), graphwidth=unit(2, "inches"), x.ticks=seq(0.3,0.8,0.1), xlab=paste( "Forestplot Example", myspace, sep=""),
+    col=meta.colors(box="royalblue", line="darkblue", zero="darkred"), box.size=bs, clip=c(0.3,0.8))
 }
 \keyword{hplot}% at least one, from doc/KEYWORDS
 

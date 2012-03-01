@@ -1,8 +1,8 @@
 `forestplot.surv` <-
-function(labeltext, mean, lower, upper, align=NULL, is.summary=FALSE, clip=c(-Inf,Inf), xlab="", zero= 0, graphwidth=unit(2,"inches"), col=meta.colors(), xlog=FALSE, box.size=NULL, x.ticks=NULL, ...){
-
-  require("grid") || stop("`grid' package not found")
-  require("rmeta") || stop("`rmeta' package not found")
+function(labeltext, mean, lower, upper, align=NULL, is.summary=FALSE, clip=c(-Inf,Inf), xlab="", zero= 0, graphwidth=unit(2,"inches"), col, xlog=FALSE, box.size=NULL, x.ticks=NULL, ...){
+	
+  #require("grid") || stop("`grid' package not found")
+  #require("rmeta") || stop("`rmeta' package not found")
 
   ## Function to draw a non-summary rect-plus-CI
   drawNormalCI <- function(LL, OR, UL, size, bcol, lcol) {
@@ -56,7 +56,7 @@ function(labeltext, mean, lower, upper, align=NULL, is.summary=FALSE, clip=c(-In
   plot.new()
   ## calculate width based on labels with something in every column
   widthcolumn<-!apply(is.na(labeltext),1,any)
-  
+  if(missing(col)) { col <- rmeta::meta.colors() }
   nc<-NCOL(labeltext)
   nr<-NROW(labeltext)
   labels<-vector("list",nc)
