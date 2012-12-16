@@ -7,9 +7,7 @@ function(pred, surv.time, surv.event, strata, na.rm=FALSE, verbose=FALSE) {
 	
 	logpl1 <- function(pred, surv.time, surv.event, verbose=FALSE) {	
 	
-		nm <- length(pred)
-		n <- nm[1]
-		m <- nm[2]
+		n <- length(pred)
 		r <- rank(surv.time)
 		ita <- pred
 		epita <- exp(ita)
