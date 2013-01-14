@@ -20,7 +20,7 @@ function(x, surv.time, surv.event, surv.entry=NULL, time, cutpts=NA, na.rm=FALSE
    
 	if(all(time < surv.time2[surv.event2 == 1])) { return(list("spec"=NA, "sens"=NA, "rule"=myrule, "cuts"=cutpts, "time"=time, "survival"=NA, "AUC"=NA, "data"=data)) }
     
-	rocco <- survivalROC::survivalROC(Stime=surv.time2, status=surv.event2, marker=x2, predict.time=time, cut.values=cutpts, entry=surv.entry, span=span, lambda=lambda, ...)
+	rocco <- survivalROC::survivalROC(Stime=surv.time2, status=surv.event2, x2, predict.time=time, cut.values=cutpts, entry=surv.entry, span=span, lambda=lambda, ...)
 	res <- list("spec"=1-rocco$FP, "sens"=rocco$TP, "rule"=myrule, "cuts"=cutpts)
 	
 	return(list("spec"=1-rocco$FP, "sens"=rocco$TP, "rule"=myrule, "cuts"=cutpts, "time"=time, "survival"=rocco$Survival, "AUC"=rocco$AUC, "data"=data))
