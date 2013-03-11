@@ -26,9 +26,9 @@ double get_correlation_ensemble(double data [],int ind_x, int ind_y, int size);
 void build_mim_cIndex_subset(double mim[],double data[],int nvar,int nsample, int subset [],int size_subset,int *msurv, int *ustrat, int *cl2, double *st, int *se, double *weights, int *strat, int *N, int *outx, int *lenU);
 double returnconcordanceIndexC(int *msurv, int *ustrat, double *x2, int *cl2, double *st, int *se, double *weights, int *strat, int *N, int *outx, int lenS, int *lenU);
 void remove_childless_nodes( tree<int>& res, tree<double>&res_mean, int max_elements_tmp);
-void bootstrap_tree(tree<int>& res,tree<double>& res_mrmr, double data[],int namat[], int nsamples,int n, int rep_boot,  int *msurv, int *ustrat, double *x2, int *cl2,
+void bootstrap_tree(tree<int>& res,tree<double>& res_mrmr, double data[],int namat[], int nsamples,int n, int rep_boot,  int *msurv, int *ustrat, int *cl2,
 					double *st, int *se, double *weights, int *strat, int *N, int *outx, int lenS, int *lenU);
-void bootstrap_mrmr(double &mean, double &sd, double data[],int namat[],int size, int rep_boot, int size_boot,int nsamples, int var_target, int var_interest, int nprev_sel,int* var_ind, int *msurv, int *ustrat, double *x2, int *cl2,
+void bootstrap_mrmr(double &mean, double &sd, double data[],int namat[],int size, int rep_boot, int size_boot,int nsamples, int var_target, int var_interest, int nprev_sel,int* var_ind, int *msurv, int *ustrat, int *cl2,
 					double *st, int *se, double *weights, int *strat, int *N, int *outx, int lenS, int *lenU);
 double mrnet_onegene(double mim [], int size, int nbvar,int *var_ind,int var_target, int var_interest);
 int verify_equivalentset_nparents (tree<int>& tr, tree<int>::pre_order_iterator it, tree<int>::pre_order_iterator end,tree<double>& tr_mrmr, int maxnsol);

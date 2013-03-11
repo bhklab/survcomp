@@ -13,7 +13,7 @@ function(data,res.main,maxparents,predn) {
 		if(length(res.vec)>3){
 			cnt_main <- cnt_main+2*res.main[cnt_main]+1
 			nsol <- sum(res.vec==0)
-			res <- matrix(0,ncol=nsol,nrow=(maxparents+1))
+			res <- matrix(0,nc=nsol,nr=(maxparents+1))
 			
 			val <- res.vec[2:(res.vec[1]+1)]
 			ind <- res.vec[(res.vec[1]+2):(2*res.vec[1]+1)]

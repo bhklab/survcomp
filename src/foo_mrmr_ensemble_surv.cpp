@@ -282,7 +282,7 @@ void remove_childless_nodes( tree<int>& res, tree<double>&res_mean, int max_elem
 		}
 	}	
 }
-void bootstrap_tree(tree<int>& res,tree<double>& res_mrmr, double data[],int namat[], int nsamples,int n, int rep_boot, int *msurv, int *ustrat, double *x2, int *cl2,double *st, int *se, double *weights, int *strat, int *N, int *outx, int lenS, int *lenU){
+void bootstrap_tree(tree<int>& res,tree<double>& res_mrmr, double data[],int namat[], int nsamples,int n, int rep_boot, int *msurv, int *ustrat, int *cl2,double *st, int *se, double *weights, int *strat, int *N, int *outx, int lenS, int *lenU){
 	int  nsub, *prev_sel,nsamples_boot=nsamples,*to_remove;
 	tree<int>::iterator li=res.begin_leaf(),li2;
 	tree<double>::iterator li_mrmr=res_mrmr.begin_leaf(),li2_mrmr;
@@ -323,7 +323,7 @@ void bootstrap_tree(tree<int>& res,tree<double>& res_mrmr, double data[],int nam
 				index--;
 				li2=res.parent(li2);
 			}
-			bootstrap_mrmr(mean[k], sd[k], data,namat,n, rep_boot,nsamples_boot,nsamples, target, prev_sel[max_depth-1], max_depth-1,prev_sel, msurv, ustrat, x2, cl2,st, se, weights,strat, N, outx, lenS, lenU);
+			bootstrap_mrmr(mean[k], sd[k], data,namat,n, rep_boot,nsamples_boot,nsamples, target, prev_sel[max_depth-1], max_depth-1,prev_sel, msurv, ustrat, cl2,st, se, weights,strat, N, outx, lenS, lenU);
 			k++;
 		}
 		li++;
@@ -368,7 +368,7 @@ void bootstrap_tree(tree<int>& res,tree<double>& res_mrmr, double data[],int nam
 	remove_childless_nodes(res, res_mrmr,max_depth+1);
 	
 }
-void bootstrap_mrmr(double &mean, double &sd, double data[],int namat[],int size, int rep_boot, int size_boot,int nsamples, int var_target, int var_interest, int nprev_sel,int* var_ind, int *msurv, int *ustrat, double *x2, int *cl2,
+void bootstrap_mrmr(double &mean, double &sd, double data[],int namat[],int size, int rep_boot, int size_boot,int nsamples, int var_target, int var_interest, int nprev_sel,int* var_ind, int *msurv, int *ustrat, int *cl2,
 					double *st, int *se, double *weights, int *strat, int *N, int *outx, int lenS, int *lenU)
 {
 	//mean
@@ -567,7 +567,7 @@ int verify_equivalentset_nparents (tree<int>& tr, tree<int>::pre_order_iterator 
 }
 
 
-void mrmr_ensemble_one_gene_remove (tree<int>& res, tree<int>::pre_order_iterator one, double data[], int namat[], int nsamples,int n , int max_elements, int predn , int rep_boot, int maxnsol, double threshold, int *msurv, int *ustrat, double *x2, int *cl2,
+void mrmr_ensemble_one_gene_remove (tree<int>& res, tree<int>::pre_order_iterator one, double data[], int namat[], int nsamples,int n , int max_elements, int predn , int rep_boot, int maxnsol, double threshold, int *msurv, int *ustrat, int *cl2,
 			double *st, int *se, double *weights, int *strat, int *N, int *outx, int lenS, int *lenU){
 	//n					number of variables
 	//predn:			index of target node
@@ -711,7 +711,7 @@ void mrmr_ensemble_one_gene_remove (tree<int>& res, tree<int>::pre_order_iterato
 	}
 	res=res_tmp_new;
 
-	bootstrap_tree(res,res_mrmr, data, namat,  nsamples, n, rep_boot, msurv, ustrat, x2, cl2,st, se, weights,strat, N, outx, lenS, lenU);
+	bootstrap_tree(res,res_mrmr, data, namat,  nsamples, n, rep_boot, msurv, ustrat, cl2,st, se, weights,strat, N, outx, lenS, lenU);
 
 }
 
@@ -734,7 +734,7 @@ SEXP mrmr_cIndex_ensemble_remove( SEXP Rdata, SEXP Rnamat, SEXP Rmaxparents, SEX
 	const int *npredn;
 	
 	
-	double *x2, *st, *weights;
+	double  *st, *weights;
 	int *msurv, *ustrat, *cl2, *se, *strat, *N, *outx, *lenS, *lenU;
 	
 	SEXP Rres;
@@ -787,7 +787,7 @@ SEXP mrmr_cIndex_ensemble_remove( SEXP Rdata, SEXP Rnamat, SEXP Rmaxparents, SEX
 		one=res_tree.insert(top, predn[i]);
 		
 		//build ensemble tree
-		mrmr_ensemble_one_gene_remove(res_tree, one, data,namat,*nsample,(*nvar+1),*maxparents,predn[i],*rep_boot, *maxnsol, *threshold, msurv, ustrat, x2, cl2,st, se, weights,strat, N, outx, *lenS, lenU);
+		mrmr_ensemble_one_gene_remove(res_tree, one, data,namat,*nsample,(*nvar+1),*maxparents,predn[i],*rep_boot, *maxnsol, *threshold, msurv, ustrat, cl2,st, se, weights,strat, N, outx, *lenS, lenU);
 		
 		////////////////////////
 		//convert tree to vector

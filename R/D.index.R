@@ -5,6 +5,10 @@ function(x, surv.time, surv.event, weights, strat, alpha=0.05, method.test=c("lo
 	method.test <- match.arg(method.test)
 	if(!missing(weights)) {
 		if(length(weights) != length(x)) { stop("bad length for parameter weights!") }
+		## remove weights=0 because the coxph function does not deal with them properly
+		iix <- weights <= 0
+		if(any(iix)) { warning("samples with weight<=0 are discarded") }
+		weights[iix] <- NA
 	} else { weights <- rep(1,  length(x)) }
 	if(!missing(strat)) {
 		if(length(strat) != length(x)) { stop("bad length for parameter strat!") }
