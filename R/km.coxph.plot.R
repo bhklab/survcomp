@@ -7,6 +7,7 @@ function(formula.s, data.s, weight.s, sub.s="all", x.label, y.label, main.title,
 	if(missing(leg.text)) { leg.text <- NULL }
   if(missing(weight.s)) { weight.s <- array(1, dim=nrow(data.s), dimnames=list(rownames(data.s))) }
   assign("weight.s", weight.s, envir=.GlobalEnv)
+  weighted <- length(sort(unique(weight.s))) > 1
 	
 	ng <- length(leg.text)
     old.mar <- par("mar")
@@ -23,7 +24,7 @@ function(formula.s, data.s, weight.s, sub.s="all", x.label, y.label, main.title,
     title(main.title)
 	
     if(!missing(v.line) && !is.null(v.line)) { abline(v=v.line, lty=3, col="purple") }
-	if(!missing(h.line) && !is.null(h.line)) { abline(h=h.line, lty=3, col="purple") }
+    if(!missing(h.line) && !is.null(h.line)) { abline(h=h.line, lty=3, col="purple") }
 
     if(!is.null(leg.text)) { legend(x=leg.pos, xjust=0, yjust=1, legend=leg.text, col=.col, lty=.lty, lwd=.lwd, cex=0.9, bg="white", inset=leg.inset, bty=leg.bty) }
     if(!is.null(sub.title)) { mtext(sub.title, line=-4, outer=TRUE) }
@@ -37,7 +38,7 @@ function(formula.s, data.s, weight.s, sub.s="all", x.label, y.label, main.title,
     if(is.null(o.text)) { o.text <- FALSE }
     text(0,0, o.text, cex=0.85, pos=4)
 
-    if( show.n.risk ) {
+    if (show.n.risk && !weighted) {
         usr.xy <- par( "usr" )
         nrisk <- no.at.risk( formula.s, data.s, sub.s, n.risk.step, floor(usr.xy[2]) )
         at.loc <- seq(0, usr.xy[2], n.risk.step)
