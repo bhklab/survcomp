@@ -21,7 +21,7 @@ function(formula.s, data.s, weight.s, x.label, y.label, main.title, sub.title, l
         .xlab = ""
     }
     
-    plot(survfit(formula.s, data=data.s, weights=weight.s, subset=sub.s), xaxt=.xaxt, col=.col, lty=.lty, lwd=.lwd, xlab=.xlab, ylab=y.label, ... )
+    plot(survfit(formula.s, data=data.s, weights=weight.s), xaxt=.xaxt, col=.col, lty=.lty, lwd=.lwd, xlab=.xlab, ylab=y.label, ... )
     title(main.title)
 	
     if (!missing(v.line) && !is.null(v.line)) { abline(v=v.line, lty=3, col="purple") }
@@ -30,7 +30,7 @@ function(formula.s, data.s, weight.s, x.label, y.label, main.title, sub.title, l
     if (!is.null(leg.text)) { legend(x=leg.pos, xjust=0, yjust=1, legend=leg.text, col=.col, lty=.lty, lwd=.lwd, cex=0.9, bg="white", inset=leg.inset, bty=leg.bty) }
     if (!is.null(sub.title)) { mtext(sub.title, line=-4, outer=TRUE) }
     if (missing(o.text)) {
-		  sdf <- summary(survival::coxph(formula.s, data=data.s, subset=sub.s, weights=weight.s))
+		  sdf <- summary(survival::coxph(formula.s, data=data.s, weights=weight.s))
 	    if(verbose) { print(sdf) }
         p.val <- sdf$sctest["pvalue"]
         o.text <- sprintf("Logrank P = %.1E", p.val)
@@ -40,7 +40,7 @@ function(formula.s, data.s, weight.s, x.label, y.label, main.title, sub.title, l
 
     if (show.n.risk && !weighted) {
         usr.xy <- par( "usr" )
-        nrisk <- no.at.risk( formula.s, data.s, sub.s, n.risk.step, floor(usr.xy[2]) )
+        nrisk <- no.at.risk( formula.s, data.s, n.risk.step, floor(usr.xy[2]) )
         at.loc <- seq(0, usr.xy[2], n.risk.step)
         axis(1, at=at.loc)
         mtext(x.label, side=1, line=2)
@@ -53,5 +53,5 @@ function(formula.s, data.s, weight.s, x.label, y.label, main.title, sub.title, l
        }
     }
 
-    if( exists("sub.s", envir=.GlobalEnv) ) remove("sub.s", envir=.GlobalEnv)
+    if( exists("weight.s", envir=.GlobalEnv) ) remove("weight.s", envir=.GlobalEnv)
 }
