@@ -6,13 +6,12 @@
 Function to plot several Kaplan-Meier survival curves with number of individuals at risk at some time points.
 }
 \usage{
-km.coxph.plot(formula.s, data.s, sub.s = "all", x.label, y.label, main.title, sub.title, leg.text, leg.pos = "bottomright", leg.bty = "o", leg.inset = 0.05, o.text, v.line, h.line, .col = 1:4, .lty = 1, .lwd = 1, show.n.risk = FALSE, n.risk.step, n.risk.cex = 0.85, verbose = TRUE, ...)
+km.coxph.plot(formula.s, data.s, x.label, y.label, main.title, sub.title, leg.text, leg.pos = "bottomright", leg.bty = "o", leg.inset = 0.05, o.text, v.line, h.line, .col = 1:4, .lty = 1, .lwd = 1, show.n.risk = FALSE, n.risk.step, n.risk.cex = 0.85, verbose = TRUE, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{formula.s}{formula composed of a \code{Surv} object and a strata variable (i.e. stratification).}
   \item{data.s}{data frame composed of the variables used in the formula.}
-  \item{sub.s}{vector of booleans specifying if only a subset of the data should be considered. Default value is "all".}
   \item{x.label}{label for the y-axis.}
   \item{y.label}{label for the x-axis.}
   \item{main.title}{main title at the top of the plot.}

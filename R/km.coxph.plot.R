@@ -1,11 +1,12 @@
 'km.coxph.plot' <-
-function(formula.s, data.s, weight.s, sub.s="all", x.label, y.label, main.title, sub.title, leg.text, leg.pos="bottomright", leg.bty="o", leg.inset=0.05, o.text, v.line, h.line, .col=1:4, .lty=1, .lwd=1, show.n.risk=FALSE, n.risk.step, n.risk.cex=0.85, verbose=TRUE, ...) {
+function(formula.s, data.s, weight.s, x.label, y.label, main.title, sub.title, leg.text, leg.pos="bottomright", leg.bty="o", leg.inset=0.05, o.text, v.line, h.line, .col=1:4, .lty=1, .lwd=1, show.n.risk=FALSE, n.risk.step, n.risk.cex=0.85, verbose=TRUE, ...) {
 	
-  if(length(sub.s) == 1 && sub.s=="all") { sub.s <- rep(TRUE, nrow(data.s)) }
-  assign("sub.s", sub.s, envir=.GlobalEnv)
-	if(missing(sub.title)) { sub.title <- NULL }
-	if(missing(leg.text)) { leg.text <- NULL }
-  if(missing(weight.s)) { weight.s <- array(1, dim=nrow(data.s), dimnames=list(rownames(data.s))) }
+	if (missing(sub.title)) { sub.title <- NULL }
+	if (missing(leg.text)) { leg.text <- NULL }
+  if (missing(weight.s)) { weight.s <- array(1, dim=nrow(data.s), dimnames=list(rownames(data.s))) }
+  ## weights should be > 0
+  data.s <- data.s[!is.na(weight.s) & weight.s > 0, , drop=FALSE]
+  weight.s <- weight.s[!is.na(weight.s) & weight.s > 0]
   assign("weight.s", weight.s, envir=.GlobalEnv)
   weighted <- length(sort(unique(weight.s))) > 1
 	
@@ -19,9 +20,6 @@ function(formula.s, data.s, weight.s, sub.s="all", x.label, y.label, main.title,
         .xaxt="n"
         .xlab = ""
     }
-    ## weights should be > 0
-    data.s <- data.s[!is.na(weight.s) & weight.s > 0, , drop=FALSE]
-    weight.s <- weight.s[!is.na(weight.s) & weight.s > 0]
     
     plot(survfit(formula.s, data=data.s, weights=weight.s, subset=sub.s), xaxt=.xaxt, col=.col, lty=.lty, lwd=.lwd, xlab=.xlab, ylab=y.label, ... )
     title(main.title)
