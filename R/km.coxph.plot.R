@@ -40,7 +40,7 @@ function(formula.s, data.s, weight.s, x.label, y.label, main.title, sub.title, l
 
     if (show.n.risk && !weighted) {
         usr.xy <- par( "usr" )
-        nrisk <- no.at.risk( formula.s, data.s, n.risk.step, floor(usr.xy[2]) )
+        nrisk <- no.at.risk(formula.s=formula.s, data.s=data.s, sub.s="all", t.step=n.risk.step, t.end=floor(usr.xy[2]) )
         at.loc <- seq(0, usr.xy[2], n.risk.step)
         axis(1, at=at.loc)
         mtext(x.label, side=1, line=2)
