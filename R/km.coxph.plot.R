@@ -19,7 +19,9 @@ function(formula.s, data.s, weight.s, sub.s="all", x.label, y.label, main.title,
         .xaxt="n"
         .xlab = ""
     }
-
+    ## weights should be > 0
+    data.s <- data.s[!is.na(weight.s) & weight.s > 0, , drop=FALSE]
+    
     plot(survfit(formula.s, data=data.s, weights=weight.s, subset=sub.s), xaxt=.xaxt, col=.col, lty=.lty, lwd=.lwd, xlab=.xlab, ylab=y.label, ... )
     title(main.title)
 	
@@ -29,7 +31,7 @@ function(formula.s, data.s, weight.s, sub.s="all", x.label, y.label, main.title,
     if (!is.null(leg.text)) { legend(x=leg.pos, xjust=0, yjust=1, legend=leg.text, col=.col, lty=.lty, lwd=.lwd, cex=0.9, bg="white", inset=leg.inset, bty=leg.bty) }
     if (!is.null(sub.title)) { mtext(sub.title, line=-4, outer=TRUE) }
     if (missing(o.text)) {
-		sdf <- summary(survival::coxph(formula.s, data=data.s, subset=sub.s, weights=weight.s))
+		  sdf <- summary(survival::coxph(formula.s, data=data.s, subset=sub.s, weights=weight.s))
 	    if(verbose) { print(sdf) }
         p.val <- sdf$sctest["pvalue"]
         o.text <- sprintf("Logrank P = %.1E", p.val)
