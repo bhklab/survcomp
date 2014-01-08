@@ -14,7 +14,7 @@ function(formula.s, data.s, weight.s, sub.s="all", x.label, y.label, main.title,
     on.exit( par( mar = old.mar ) )
     .xaxt="s"
     .xlab=x.label
-    if( show.n.risk ) {
+    if (show.n.risk) {
         par(mar = old.mar + c(ng,8,3,0))
         .xaxt="n"
         .xlab = ""
@@ -23,19 +23,18 @@ function(formula.s, data.s, weight.s, sub.s="all", x.label, y.label, main.title,
     plot(survfit(formula.s, data=data.s, weights=weight.s, subset=sub.s), xaxt=.xaxt, col=.col, lty=.lty, lwd=.lwd, xlab=.xlab, ylab=y.label, ... )
     title(main.title)
 	
-    if(!missing(v.line) && !is.null(v.line)) { abline(v=v.line, lty=3, col="purple") }
-    if(!missing(h.line) && !is.null(h.line)) { abline(h=h.line, lty=3, col="purple") }
+    if (!missing(v.line) && !is.null(v.line)) { abline(v=v.line, lty=3, col="purple") }
+    if (!missing(h.line) && !is.null(h.line)) { abline(h=h.line, lty=3, col="purple") }
 
-    if(!is.null(leg.text)) { legend(x=leg.pos, xjust=0, yjust=1, legend=leg.text, col=.col, lty=.lty, lwd=.lwd, cex=0.9, bg="white", inset=leg.inset, bty=leg.bty) }
-    if(!is.null(sub.title)) { mtext(sub.title, line=-4, outer=TRUE) }
-    if(missing(o.text && !weighted) ) {
-		sdf <- survdiff(formula.s, data=data.s, subset=sub.s)
+    if (!is.null(leg.text)) { legend(x=leg.pos, xjust=0, yjust=1, legend=leg.text, col=.col, lty=.lty, lwd=.lwd, cex=0.9, bg="white", inset=leg.inset, bty=leg.bty) }
+    if (!is.null(sub.title)) { mtext(sub.title, line=-4, outer=TRUE) }
+    if (missing(o.text)) {
+		sdf <- summary(survival::coxph(formula.s, data=data.s, subset=sub.s, weights=weight.s))
 	    if(verbose) { print(sdf) }
-        p.val <- 1-pchisq(sdf$chisq,length(sdf$n)-1)
-        #if( p.val < 0.001 ) o.text <- "P < 0.001" else o.text <- paste("P =", signif(p.val,3)) #, "(log-rank test)")
+        p.val <- sdf$sctest["pvalue"]
         o.text <- sprintf("Logrank P = %.1E", p.val)
     }
-    if(is.null(o.text)) { o.text <- FALSE }
+    if (is.null(o.text)) { o.text <- FALSE }
     text(0,0, o.text, cex=0.85, pos=4)
 
     if (show.n.risk && !weighted) {
