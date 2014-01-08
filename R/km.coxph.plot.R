@@ -21,6 +21,7 @@ function(formula.s, data.s, weight.s, sub.s="all", x.label, y.label, main.title,
     }
     ## weights should be > 0
     data.s <- data.s[!is.na(weight.s) & weight.s > 0, , drop=FALSE]
+    weight.s <- weight.s[!is.na(weight.s) & weight.s > 0]
     
     plot(survfit(formula.s, data=data.s, weights=weight.s, subset=sub.s), xaxt=.xaxt, col=.col, lty=.lty, lwd=.lwd, xlab=.xlab, ylab=y.label, ... )
     title(main.title)
