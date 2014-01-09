@@ -38,7 +38,7 @@ function(formula.s, data.s, weight.s, x.label, y.label, main.title, sub.title, l
     if (is.null(o.text)) { o.text <- FALSE }
     text(0,0, o.text, cex=0.85, pos=4)
 
-    if (show.n.risk && !weighted) {
+    if (show.n.risk) {
         usr.xy <- par( "usr" )
         nrisk <- no.at.risk(formula.s=formula.s, data.s=data.s, sub.s="all", t.step=n.risk.step, t.end=floor(usr.xy[2]) )
         at.loc <- seq(0, usr.xy[2], n.risk.step)
