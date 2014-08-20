@@ -84,10 +84,10 @@ function(x, surv.time, surv.event, cl, weights, comppairs=10, strat, alpha=0.05,
       lower <- cindex - ci
       upper <- cindex + ci
       switch(alternative, 
-		"two.sided"={ p <- pnorm((cindex - 0.5) / sqrt(varp / N), lower.tail=cindex < 0.5) * 2 }, 
-		"less"={ p <- pnorm((cindex - 0.5) / sqrt(varp / N), lower.tail=TRUE) }, 
-		"greater"={  p <- pnorm((cindex - 0.5) / sqrt(varp / N), lower.tail=FALSE) }
-	)
+		   "two.sided"={ p <- pnorm((cindex - 0.5) / sqrt(varp / N), lower.tail=cindex < 0.5) * 2 }, 
+		   "less"={ p <- pnorm((cindex - 0.5) / sqrt(varp / N), lower.tail=TRUE) }, 
+		   "greater"={  p <- pnorm((cindex - 0.5) / sqrt(varp / N), lower.tail=FALSE) }
+	    )
     } else { ci <- lower <- upper <- p <- NA } 
   },
 	"conservative"={
