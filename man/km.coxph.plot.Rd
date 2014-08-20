@@ -6,12 +6,13 @@
 Function to plot several Kaplan-Meier survival curves with number of individuals at risk at some time points.
 }
 \usage{
-km.coxph.plot(formula.s, data.s, x.label, y.label, main.title, sub.title, leg.text, leg.pos = "bottomright", leg.bty = "o", leg.inset = 0.05, o.text, v.line, h.line, .col = 1:4, .lty = 1, .lwd = 1, show.n.risk = FALSE, n.risk.step, n.risk.cex = 0.85, verbose = TRUE, ...)
+km.coxph.plot(formula.s, data.s, weight.s, x.label, y.label, main.title, sub.title, leg.text, leg.pos = "bottomright", leg.bty = "o", leg.inset = 0.05, o.text, v.line, h.line, .col = 1:4, .lty = 1, .lwd = 1, show.n.risk = FALSE, n.risk.step, n.risk.cex = 0.85, verbose = TRUE, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{formula.s}{formula composed of a \code{Surv} object and a strata variable (i.e. stratification).}
   \item{data.s}{data frame composed of the variables used in the formula.}
+  \item{weight.s}{vector of weights of length nrow(data.s).}
   \item{x.label}{label for the y-axis.}
   \item{y.label}{label for the x-axis.}
   \item{main.title}{main title at the top of the plot.}
@@ -48,9 +49,10 @@ sevent  <- as.numeric(stime <= cens)
 stime <- pmin(stime, cens)
 strat <- sample(1:3, 100, replace=TRUE)
 dd <- data.frame("surv.time"=stime, "surv.event"=sevent, "strat"=strat)
+ddweights <- array(1, dim=nrow(dd))
 
 km.coxph.plot(formula.s=Surv(surv.time, surv.event) ~ strat, data.s=dd,
-  sub.s="all", x.label="Time (years)", y.label="Probability of survival",
+  weight.s=ddweights, x.label="Time (years)", y.label="Probability of survival",
   main.title="", leg.text=paste(c("Low", "Intermediate", "High"), "   ", sep=""),
   leg.pos="topright", leg.inset=0, .col=c("darkblue", "darkgreen", "darkred"),
   .lty=c(1,1,1), show.n.risk=TRUE, n.risk.step=2, n.risk.cex=0.85, verbose=FALSE)
