@@ -1,5 +1,17 @@
 citHeader("To cite survcomp in publications use:")
 
+
+citEntry(entry="article",
+  title  ="survcomp: an R/Bioconductor package for performance assessment and comparison of survival models",
+  author = "Schroeder MS, Culhane AC, Quackenbush J, Haibe-Kains B",
+  journal = "Bioinformatics",
+  year = "2011",
+  volume = "27(22)",
+  pages = "3206-3208.",
+  textVersion = paste("Schroeder MS, Culhane AC, Quackenbush J, Haibe-Kains B",
+    "survcomp: an R/Bioconductor package for performance assessment and comparison of survival models",
+    "Bioinformatics 27(22): 3206-3208. (2011)."))
+
 citEntry(entry="article",
   title  ="A comparative study of survival models for breast cancer prognostication on microarray data: does a single gene beat them all?",
   author = "Haibe-Kains B, Desmedt C, Sotiriou C, Bontempi G",
