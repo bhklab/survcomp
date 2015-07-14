@@ -8,7 +8,7 @@ biocViews: GeneExpression, DifferentialExpression, Visualization
 Author: Benjamin Haibe-Kains, Markus Schroeder, Catharina Olsen, Christos Sotiriou, Gianluca Bontempi, John Quackenbush
 Maintainer: Benjamin Haibe-Kains <benjamin.haibe.kains@utoronto.ca>, Markus Schroeder <markus.schroeder@ucdconnect.ie>, Catharina Olsen <colsen@ulb.ac.be>
 Depends: survival, prodlim, R (>= 2.10)
-Suggests: Hmisc, CPE, clinfun, survJamda, Biobase
+Suggests: Hmisc, CPE, clinfun, Biobase
 Imports: ipred, SuppDists, KernSmooth, survivalROC, bootstrap, grid, rmeta
 License: Artistic-2.0
 URL: http://www.pmgenomics.ca/bhklab/
