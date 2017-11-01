@@ -3,6 +3,9 @@ r: bioc-devel
 sudo: required
 cache: packages
 
+r_packages:
+  - xtable
+
 r_github_packages:
   - jimhester/covr
 
