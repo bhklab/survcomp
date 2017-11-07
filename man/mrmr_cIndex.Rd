@@ -15,6 +15,6 @@ mRMR cIndex
 \item{Rthreshold}{...}
 }
 \author{
-Heather Colsen
+Catharina Colsen
 }
 \keyword{ methods }

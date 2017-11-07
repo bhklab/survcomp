@@ -1,5 +1,5 @@
 # survcomp #
-[![Travis Build Status](https://travis-ci.org/bhklab/survcomp.svg?branch=master)](https://travis-ci.org/bhklab/survcomp) [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/vlq02a0ix42dcv3q/branch/master?svg=true)](https://ci.appveyor.com/project/kofiav/survcomp)
+[![Travis Build Status](https://travis-ci.org/bhklab/survcomp.svg?branch=master)](https://travis-ci.org/bhklab/survcomp) [![codecov](https://codecov.io/gh/bhklab/survcomp/branch/master/graph/badge.svg)](https://codecov.io/gh/bhklab/survcomp) [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/vlq02a0ix42dcv3q/branch/master?svg=true)](https://ci.appveyor.com/project/kofiav/survcomp)
 
 Overview
 --------

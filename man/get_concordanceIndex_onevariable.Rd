@@ -21,6 +21,6 @@ Get the concordance index
 \item{RlenU}{...}
 }
 \author{
-Heather Colsen
+Catharina Colsen
 }
 \keyword{ methods }
