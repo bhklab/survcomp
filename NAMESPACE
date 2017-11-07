@@ -7,6 +7,9 @@ importFrom(bootstrap, jackknife)
 importFrom(rmeta, meta.colors)
 import(grid)
 importFrom(survivalROC, survivalROC, survivalROC.C)
-
+importFrom(graphics, abline, axis, legend, lines, mtext,
+    par, plot, plot.new, polygon, rect, text, title)
+importFrom(stats, complete.cases, cor, formula, pchisq,
+    pnorm, predict, pt, qnorm, wilcox.test)
 
 exportPattern("^[^\\.]")

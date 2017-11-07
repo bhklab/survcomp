@@ -6,14 +6,20 @@
 Function to compute the balanced hazard ratio for a risk group prediction.
 }
 \usage{
-balanced.hazard.ratio(x, surv.time, surv.event, alpha = 0.05, ...)
+balanced.hazard.ratio(x, surv.time, surv.event, alpha = 0.05,
+method.test = c("logrank", "likelihood.ratio", "wald"),
+ties = c("efron", "breslow", "exact"), weights, strat, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{a vector of risk group predictions.}
   \item{surv.time}{a vector of event times.}
   \item{surv.event}{a vector of event occurrence indicators.}
-  \item{alpha}{apha level to compute confidence interval.}
+  \item{alpha}{alpha level to compute confidence interval.}
+  \item{method.test}{...}
+  \item{ties}{...}
+  \item{weights}{...}
+  \item{strat}{...}
   \item{...}{additional parameters to be passed to the \code{\link{hazard.ratio}} and the \code{\link[survival]{coxph}} functions.}
 }
 \details{
