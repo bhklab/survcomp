@@ -8,7 +8,6 @@ function(data.tr, score, yr, method=c("cox", "prodlim"), conf.int=0.95, which.es
 	names(pred) <- names(score)
 	switch(method,
 	"cox"={
-		require(survival)
 		predm <- coxph(Surv(time, event) ~ score, data=data.tr)
 		sf <- survfit(predm, newdata=data.frame("score"=score2), conf.int=conf.int)
 		pred[cc.ix] <- getsurv2(sf=sf, time=yr, which.est=which.est)

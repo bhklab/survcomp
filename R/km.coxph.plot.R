@@ -1,15 +1,17 @@
 'km.coxph.plot' <-
 function(formula.s, data.s, weight.s, x.label, y.label, main.title, sub.title, leg.text, leg.pos="bottomright", leg.bty="o", leg.inset=0.05, o.text, v.line, h.line, .col=1:4, .lty=1, .lwd=1, show.n.risk=FALSE, n.risk.step, n.risk.cex=0.85, verbose=TRUE, ...) {
-	
+
 	if (missing(sub.title)) { sub.title <- NULL }
 	if (missing(leg.text)) { leg.text <- NULL }
   if (missing(weight.s)) { weight.s <- array(1, dim=nrow(data.s), dimnames=list(rownames(data.s))) }
   ## weights should be > 0
   data.s <- data.s[!is.na(weight.s) & weight.s > 0, , drop=FALSE]
   weight.s <- weight.s[!is.na(weight.s) & weight.s > 0]
-  assign("weight.s", weight.s, envir=.GlobalEnv)
+  pos <- 1
+  envir = as.environment(pos)
+  assign("weight.s", weight.s, envir = envir)
   weighted <- length(sort(unique(weight.s))) > 1
-	
+
 	ng <- length(leg.text)
     old.mar <- par("mar")
     on.exit( par( mar = old.mar ) )
@@ -20,10 +22,10 @@ function(formula.s, data.s, weight.s, x.label, y.label, main.title, sub.title, l
         .xaxt="n"
         .xlab = ""
     }
-    
+
     plot(survfit(formula.s, data=data.s, weights=weight.s), xaxt=.xaxt, col=.col, lty=.lty, lwd=.lwd, xlab=.xlab, ylab=y.label, ... )
     title(main.title)
-	
+
     if (!missing(v.line) && !is.null(v.line)) { abline(v=v.line, lty=3, col="purple") }
     if (!missing(h.line) && !is.null(h.line)) { abline(h=h.line, lty=3, col="purple") }
 

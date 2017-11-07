@@ -3,10 +3,13 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Function to compute the concordance index for survival or binary class prediction}
 \description{
-Function to compute the minimum redundancy - maximum relevance (mRMR) ranking for a risk prediction or a binary classification task based on the concordance index. The mRMR feature selection has been adapted to use the concordance index to estimate the correlation between a variable and the output (binary or survival) data. 
+Function to compute the minimum redundancy - maximum relevance (mRMR) ranking for a risk prediction or a binary classification task based on the concordance index. The mRMR feature selection has been adapted to use the concordance index to estimate the correlation between a variable and the output (binary or survival) data.
 }
 \usage{
-mrmr.cindex.ensemble(x, surv.time, surv.event, cl, weights, comppairs=10, strat, alpha = 0.05, outx = TRUE, method = c("conservative", "noether", "nam"), alternative = c("two.sided", "less", "greater"), maxparents, maxnsol, nboot = 200, na.rm = FALSE)
+mrmr.cindex.ensemble(x, surv.time, surv.event, cl, weights, comppairs=10,
+strat, alpha = 0.05, outx = TRUE, method = c("conservative", "noether",
+"nam"), alternative = c("two.sided", "less", "greater"), maxparents,
+maxnsol, nboot = 200, na.rm = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

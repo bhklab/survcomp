@@ -6,7 +6,8 @@
 Function to compute the hazard ratio for a risk prediction.
 }
 \usage{
-hazard.ratio(x, surv.time, surv.event, weights, strat, alpha = 0.05, method.test = c("logrank", "likelihood.ratio", "wald"), na.rm = FALSE, ...)
+hazard.ratio(x, surv.time, surv.event, weights, strat, alpha = 0.05,
+method.test = c("logrank", "likelihood.ratio", "wald"), na.rm = FALSE, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

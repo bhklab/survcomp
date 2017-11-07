@@ -27,13 +27,12 @@ hr.comp2(x1, beta1, se1, x2, beta2, se2, n)
   \item{hr2 }{value of the second hazard ratio}
 }
 \references{ Student 1908) "The Probable Error of a Mean", \emph{Biometrika}, \bold{6}, 1, pages 1--25.
-	
+
 	Haibe-Kains, B. and Desmedt, C. and Sotiriou, C. and Bontempi, G. (2008) "A comparative study of survival models for breast cancer prognostication based on microarray  data: does a single gene beat them all?", \emph{Bioinformatics}, \bold{24}, 19, pages 2200--2208. }
 \author{ Benjamin Haibe-Kains }
 %\note{}
 \seealso{ \code{\link[survival]{coxph}}, \code{\link{t.test}} }
 \examples{
-require(survival)
 set.seed(12345)
 age <- as.numeric(rnorm(100, 50, 10) >= 50)
 size <- as.numeric(rexp(100,1) > 1)

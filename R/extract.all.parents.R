@@ -1,11 +1,11 @@
-'.extract.all.parents'  <- 
+'.extract.all.parents'  <-
 function(data,res.main,maxparents,predn) {
 ### function taking the output of the regrnet.ensemble method and returns a matrix
 ### containing one equivalent model in each column. The target variable is in the first row.
 ### res.main: 	output of regrnet.ensemble
 ### maxparents:	maxparents parameter of the netinf method
 ### predn:	list of target variables for which ensemble method was run.
-	
+
 	final <- NULL
 	cnt_main <- 1
 	for(imain in 1:length(predn)){
@@ -13,8 +13,8 @@ function(data,res.main,maxparents,predn) {
 		if(length(res.vec)>3){
 			cnt_main <- cnt_main+2*res.main[cnt_main]+1
 			nsol <- sum(res.vec==0)
-			res <- matrix(0,nc=nsol,nr=(maxparents+1))
-			
+			res <- matrix(0,ncol=nsol,nrow=(maxparents+1))
+
 			val <- res.vec[2:(res.vec[1]+1)]
 			ind <- res.vec[(res.vec[1]+2):(2*res.vec[1]+1)]
 			res[1,1:ind[1]] <- rep(val[1],ind[1])
@@ -26,7 +26,7 @@ function(data,res.main,maxparents,predn) {
 			last_level <- FALSE
 			i <- 2
 			ind2 <- 1
-			
+
 			while(i<=nvar && !last_level){
 				if(ind[i]!=0){
 					if(ind[i]>1){
@@ -48,7 +48,7 @@ function(data,res.main,maxparents,predn) {
 					ind2 <- ind2+1
 				}
 				nelem <- nelem+ind[i]
-				if(cnt==sum_old){			
+				if(cnt==sum_old){
 					sum_old <- nelem
 					if(nelem==0){
 						last_level <- TRUE

@@ -26,7 +26,6 @@ vector of two elements: \code{logpl} and \code{event} for the estimation of the 
 %\note{}
 \seealso{ \code{\link[survival]{coxph}}, \code{\link{cvpl}} }
 \examples{
-require(survival)
 set.seed(12345)
 age <- rnorm(100, 50, 10)
 stime <- rexp(100)
