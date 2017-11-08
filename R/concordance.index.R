@@ -9,7 +9,7 @@ function(x, surv.time, surv.event, cl, weights, comppairs=10, strat, alpha=0.05,
 	if(!missing(strat)) {
 		if(length(strat) != length(x)) { stop("bad length for parameter strat!") }
 	} else { strat <- rep(1, length(x)) }
-	
+
 	if(missing(cl) && (missing(surv.time) || missing(surv.event))) { stop("binary classes and survival data are missing!") }
 	if(!missing(cl) && (!missing(surv.time) || !missing(surv.event))) { stop("choose binary classes or survival data but not both!") }
 	msurv <- FALSE
@@ -17,12 +17,12 @@ function(x, surv.time, surv.event, cl, weights, comppairs=10, strat, alpha=0.05,
 		msurv <- TRUE
 		cl <- rep(0, length(x))
 	} else { surv.time <- surv.event <- rep(0, length(x)) } ## binary classes
-	
+
 	cc.ix <- complete.cases(x, surv.time, surv.event, cl, weights, strat)
 	if(sum(cc.ix) < 3) {
-	## not enough observations	
+	## not enough observations
 		if(msurv) { data <- list("x"=x, "surv.time"=surv.time, "surv.event"=surv.event) } else { data  <- list("x"=x, "cl"=cl) }
-		return(list("c.index"=NA, "se"=NA, "lower"=NA, "upper"=NA, "p.value"=NA, "n"=sum(cc.ix), "data"=data, "comppairs"=NA))	
+		return(list("c.index"=NA, "se"=NA, "lower"=NA, "upper"=NA, "p.value"=NA, "n"=sum(cc.ix), "data"=data, "comppairs"=NA))
 	}
 	if(any(!cc.ix) & !na.rm) { stop("NA values are present!") }
   ## remove samples whose the weight is equal to 0 to speed up the computation of the concordance index
@@ -50,12 +50,12 @@ function(x, surv.time, surv.event, cl, weights, comppairs=10, strat, alpha=0.05,
     warning("\nweights of observations are too small (sum should be > 1), the concordance index cannot be computed!")
     if(msurv) { data <- list("x"=x, "surv.time"=surv.time, "surv.event"=surv.event) } else { data  <- list("x"=x, "cl"=cl) }
     return(list("c.index"=NA, "se"=NA, "lower"=NA, "upper"=NA, "p.value"=NA, "n"=length(x2), "data"=data, "comppairs"=NA))
-  }	
+  }
 
 	ch <- dh <- uh <- rph <- rep(0, times=length(strat))
 	lenS <- length(strat)
 	lenU <- length(ustrat)
-	out <- .C("concordanceIndexC", as.integer(as.logical(msurv)), as.integer(ustrat), as.double(x2),
+	out <- .C(.C_concordanceIndexC, as.integer(as.logical(msurv)), as.integer(ustrat), as.double(x2),
 			as.integer(cl2), as.double(st), as.integer(se), as.double(weights), as.integer(strat),
 			as.integer(N), as.integer(as.logical(outx)), ch = as.numeric(ch), dh = as.numeric(dh),
 			uh = as.numeric(uh), rph = as.numeric(rph), as.integer(lenS), as.integer(lenU), PACKAGE="survcomp")
@@ -68,11 +68,11 @@ function(x, surv.time, surv.event, cl, weights, comppairs=10, strat, alpha=0.05,
     if(msurv) { data <- list("x"=x, "surv.time"=surv.time, "surv.event"=surv.event) } else { data  <- list("x"=x, "cl"=cl) }
     return(list("c.index"=NA, "se"=NA, "lower"=NA, "upper"=NA, "p.value"=NA, "n"=length(x2), "data"=data, "comppairs"=cscount))
   }
-  
+
 	pc <- (1 / (N * (N - 1))) * sum(ch)
 	pd  <- (1 / (N * (N - 1))) * sum(dh)
 	cindex <- pc / (pc + pd)
-	
+
 	switch(method,
 	"noether"={
     pcc <- (1 / (N * (N - 1) * (N - 2))) * sum(ch * (ch - 1))
@@ -83,12 +83,12 @@ function(x, surv.time, surv.event, cl, weights, comppairs=10, strat, alpha=0.05,
       ci <- qnorm(p=alpha / 2, lower.tail=FALSE) * sqrt(varp / N)
       lower <- cindex - ci
       upper <- cindex + ci
-      switch(alternative, 
-		   "two.sided"={ p <- pnorm((cindex - 0.5) / sqrt(varp / N), lower.tail=cindex < 0.5) * 2 }, 
-		   "less"={ p <- pnorm((cindex - 0.5) / sqrt(varp / N), lower.tail=TRUE) }, 
+      switch(alternative,
+		   "two.sided"={ p <- pnorm((cindex - 0.5) / sqrt(varp / N), lower.tail=cindex < 0.5) * 2 },
+		   "less"={ p <- pnorm((cindex - 0.5) / sqrt(varp / N), lower.tail=TRUE) },
 		   "greater"={  p <- pnorm((cindex - 0.5) / sqrt(varp / N), lower.tail=FALSE) }
 	    )
-    } else { ci <- lower <- upper <- p <- NA } 
+    } else { ci <- lower <- upper <- p <- NA }
   },
 	"conservative"={
     C <- cindex
@@ -103,7 +103,7 @@ function(x, surv.time, surv.event, cl, weights, comppairs=10, strat, alpha=0.05,
     varp <- NA
   },
   "name"={
-    stop("method not implemented!")	
+    stop("method not implemented!")
   })
   #bound the confidence interval
   lower <- ifelse(lower < 0, 0, lower)
