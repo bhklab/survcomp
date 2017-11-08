@@ -39,7 +39,9 @@ n.risk.cex = 0.85, verbose = TRUE, ...)
 \details{
   The original version of this function was kindly provided by Dr Christos Hatzis (January, 17th 2006).
 }
-%\value{}
+\value{
+Several Kaplan-Meier survival curves with number of individuals at risk at some time points.
+}
 %\references{}
 \author{Christos Hatzis, Benjamin Haibe-Kains}
 %\note{ ~~further notes~~ }
