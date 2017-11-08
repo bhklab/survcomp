@@ -716,7 +716,8 @@ void mrmr_ensemble_one_gene_remove (tree<int>& res, tree<int>::pre_order_iterato
 }
 
 
-SEXP mrmr_cIndex_ensemble_remove( SEXP Rdata, SEXP Rnamat, SEXP Rmaxparents, SEXP Rnvar, SEXP Rnsample, SEXP Rpredn, SEXP Rnpredn, SEXP Rrep_boot, SEXP Rmaxnsol, SEXP Rthreshold, SEXP Rmsurv, SEXP Rustrat, SEXP Rcl2, SEXP Rst, SEXP Rse, SEXP Rweights, SEXP Rstrat, SEXP RN, SEXP Routx, SEXP RlenS, SEXP RlenU){
+extern "C" SEXP
+mrmr_cIndex_ensemble_remove( SEXP Rdata, SEXP Rnamat, SEXP Rmaxparents, SEXP Rnvar, SEXP Rnsample, SEXP Rpredn, SEXP Rnpredn, SEXP Rrep_boot, SEXP Rmaxnsol, SEXP Rthreshold, SEXP Rmsurv, SEXP Rustrat, SEXP Rcl2, SEXP Rst, SEXP Rse, SEXP Rweights, SEXP Rstrat, SEXP RN, SEXP Routx, SEXP RlenS, SEXP RlenU){
 	// Rdata:		data should be passed as vector, variable-wise appended
 	// Rmaxparents:	number of maximum number of parents
 	// Rnvar:		number of variables in the dataset

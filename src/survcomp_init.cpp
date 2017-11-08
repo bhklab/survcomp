@@ -3,13 +3,28 @@
 #include <stdlib.h> // for NULL
 #include <R_ext/Rdynload.h>
 
+/* FIXME:
+ Check these declarations against the C/Fortran source code.
+ */
+
 /* .C calls */
-extern void concordanceIndexC(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
+extern "C" void
+concordanceIndexC(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
 
 /* .Call calls */
-extern "C" SEXP get_concordanceIndex_onevariable(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
-extern "C" SEXP mrmr_cIndex(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
-extern "C" SEXP mrmr_cIndex_ensemble_remove(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+extern "C" SEXP
+get_concordanceIndex_onevariable(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+
+extern "C" SEXP
+mrmr_cIndex(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+
+extern "C" SEXP
+mrmr_cIndex_ensemble_remove(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+
+static const R_CMethodDef CEntries[] = {
+    {"concordanceIndexC", (DL_FUNC) &concordanceIndexC, 16},
+    {NULL, NULL, 0}
+};
 
 static const R_CallMethodDef CallEntries[] = {
     {"get_concordanceIndex_onevariable", (DL_FUNC) &get_concordanceIndex_onevariable, 12},
@@ -18,8 +33,10 @@ static const R_CallMethodDef CallEntries[] = {
     {NULL, NULL, 0}
 };
 
-void R_init_survcomp(DllInfo *dll)
-{
-    R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
-    R_useDynamicSymbols(dll, FALSE);
+extern "C" {
+    void R_init_survcomp(DllInfo *dll)
+    {
+        R_registerRoutines(dll, CEntries, CallEntries, NULL, NULL);
+        R_useDynamicSymbols(dll, FALSE);
+    }
 }

@@ -1,4 +1,4 @@
-useDynLib(survcomp, .fixes=".C_", get_concordanceIndex_onevariable, mrmr_cIndex, mrmr_cIndex_ensemble_remove, .registration = TRUE)
+useDynLib(survcomp, .fixes=".C_", concordanceIndexC, get_concordanceIndex_onevariable, mrmr_cIndex, mrmr_cIndex_ensemble_remove, .registration = TRUE)
 
 importFrom(SuppDists, normOrder)
 importFrom(prodlim, prodlim)
