@@ -23,7 +23,6 @@ getsurv2(sf, time, which.est = c("point", "lower", "upper"))
 %\note{}
 \seealso{ \code{\link[survival]{survfit}} }
 \examples{
-require(survival)
 set.seed(12345)
 age <- rnorm(30, 50, 10)
 stime <- rexp(30)

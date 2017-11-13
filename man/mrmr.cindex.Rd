@@ -3,10 +3,12 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Function to compute the concordance index for survival or binary class prediction}
 \description{
-Function to compute the minimum redundancy - maximum relevance (mRMR) ranking for a risk prediction or a binary classification task based on the concordance index. The mRMR feature selection has been adapted to use the concordance index to estimate the correlation between a variable and the output (binary or survival) data. 
+Function to compute the minimum redundancy - maximum relevance (mRMR) ranking for a risk prediction or a binary classification task based on the concordance index. The mRMR feature selection has been adapted to use the concordance index to estimate the correlation between a variable and the output (binary or survival) data.
 }
 \usage{
-mrmr.cindex(x, surv.time, surv.event, cl, weights, comppairs=10, strat, alpha = 0.05, outx = TRUE, method = c("conservative", "noether", "nam"), alternative = c("two.sided", "less", "greater"), na.rm = FALSE)
+mrmr.cindex(x, surv.time, surv.event, cl, weights, comppairs=10, strat,
+alpha = 0.05, outx = TRUE, method = c("conservative", "noether", "nam"),
+alternative = c("two.sided", "less", "greater"), na.rm = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -51,7 +53,8 @@ weight <- runif(100, min=0, max=1)
 comppairs <- 10
 xx <- data.frame("age"=age, "sex"=sex)
 cat("survival prediction:\n")
-mrmr.cindex(x=xx, surv.time=stime, surv.event=sevent, strat=strat, weights=weight, method="noether", comppairs=comppairs)
+mrmr.cindex(x=xx, surv.time=stime, surv.event=sevent, strat=strat, weights=weight,
+method="noether", comppairs=comppairs)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

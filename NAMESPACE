@@ -1,4 +1,4 @@
-useDynLib(survcomp)
+useDynLib(survcomp, .fixes=".C_", concordanceIndexC, get_concordanceIndex_onevariable, mrmr_cIndex, mrmr_cIndex_ensemble_remove, .registration = TRUE)
 
 importFrom(SuppDists, normOrder)
 importFrom(prodlim, prodlim)
@@ -7,6 +7,10 @@ importFrom(bootstrap, jackknife)
 importFrom(rmeta, meta.colors)
 import(grid)
 importFrom(survivalROC, survivalROC, survivalROC.C)
-
+importFrom(survival, coxph, survfit, Surv)
+importFrom(graphics, abline, axis, legend, lines, mtext,
+    par, plot, plot.new, polygon, rect, text, title)
+importFrom(stats, complete.cases, cor, formula, pchisq,
+    pnorm, predict, pt, qnorm, wilcox.test)
 
 exportPattern("^[^\\.]")
