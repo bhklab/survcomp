@@ -1,8 +1,5 @@
 `cvpl` <-
 function(x, surv.time, surv.event, strata, nfold=1, setseed, na.rm=FALSE, verbose=FALSE) {
-
-	require(survival)
-	
 	x <- as.data.frame(x)
 	if(is.null(dimnames(x))) { dimnames(x) <- list(names(surv.time), "x") }
 	if(missing(strata)) { strata <- rep(1, length(surv.time)) }
@@ -21,7 +18,7 @@ function(x, surv.time, surv.event, strata, nfold=1, setseed, na.rm=FALSE, verbos
 		k <- 1
 		nfold <- nr
 	} else { k <- floor(nr / nfold) }
-	
+
 	## set the random seed to use the same data partition
 	## for the cross-validation
 	if (!missing(setseed)) {
@@ -50,7 +47,7 @@ function(x, surv.time, surv.event, strata, nfold=1, setseed, na.rm=FALSE, verbos
 			l <- NA
 			li <- NA
 		}
-		
+
 		res.cvpl <- res.cvpl + (li - l)
 		pl <- c(pl, (li - l) / length(s.ix)) # dividing by the number of events instead?
 	}

@@ -6,7 +6,8 @@
 Function to compute the D index for a risk prediction, i.e. an estimate of the log hazard ratio comparing two equal-sized prognostic groups. This is a natural measure of separation between two independent survival distributions under the proportional hazards assumption.
 }
 \usage{
-D.index(x, surv.time, surv.event, weights, strat, alpha = 0.05, method.test = c("logrank", "likelihood.ratio", "wald"), na.rm = FALSE, ...)
+D.index(x, surv.time, surv.event, weights, strat, alpha = 0.05,
+method.test = c("logrank", "likelihood.ratio", "wald"), na.rm = FALSE, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -23,10 +24,11 @@ D.index(x, surv.time, surv.event, weights, strat, alpha = 0.05, method.test = c(
 \details{
   The D index is computed using the Cox model fitted on the scaled rankits of the risk scores instead of the risk scores themselves. The scaled rankits are the expected standard Normal order statistics scaled by \code{kappa = sqrt(8/pi)}. See (Royston and Sauerbrei, 2004) for details.
 
-Note that the value D reported in (Royston and Sauerbrei, 2004) is given 
+Note that the value D reported in (Royston and Sauerbrei, 2004) is given
 }
 \value{
-  \item{d.index }{D index estimate.}
+  \item{d.index }{D index (exponentiated, aka hazard ratio).}
+	\item{coef }{D index estimate (coefficient) fitted in the cox regression model.}
   \item{se }{standard error of the estimate.}
   \item{lower }{lower bound for the confidence interval.}
   \item{upper }{upper bound for the confidence interval.}

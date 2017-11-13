@@ -6,7 +6,10 @@
 Function to plot several Kaplan-Meier survival curves with number of individuals at risk at some time points.
 }
 \usage{
-km.coxph.plot(formula.s, data.s, weight.s, x.label, y.label, main.title, sub.title, leg.text, leg.pos = "bottomright", leg.bty = "o", leg.inset = 0.05, o.text, v.line, h.line, .col = 1:4, .lty = 1, .lwd = 1, show.n.risk = FALSE, n.risk.step, n.risk.cex = 0.85, verbose = TRUE, ...)
+km.coxph.plot(formula.s, data.s, weight.s, x.label, y.label, main.title, sub.title,
+leg.text, leg.pos = "bottomright", leg.bty = "o", leg.inset = 0.05, o.text, v.line,
+h.line, .col = 1:4, .lty = 1, .lwd = 1, show.n.risk = FALSE, n.risk.step,
+n.risk.cex = 0.85, verbose = TRUE, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -36,7 +39,9 @@ km.coxph.plot(formula.s, data.s, weight.s, x.label, y.label, main.title, sub.tit
 \details{
   The original version of this function was kindly provided by Dr Christos Hatzis (January, 17th 2006).
 }
-%\value{}
+\value{
+Several Kaplan-Meier survival curves with number of individuals at risk at some time points.
+}
 %\references{}
 \author{Christos Hatzis, Benjamin Haibe-Kains}
 %\note{ ~~further notes~~ }

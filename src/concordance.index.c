@@ -103,7 +103,8 @@ void concordanceIndexC(int *msurv, int *ustrat, double *x2, int *cl2,
             if (*outx == 1) {
               uhsj = uhsj + whj;
             } else {
-              dhsj = dhsj + whj;
+              dhsj = dhsj + whj / 2;
+              chsj = chsj + whj / 2;
             }
           }
         }    
@@ -119,7 +120,8 @@ void concordanceIndexC(int *msurv, int *ustrat, double *x2, int *cl2,
             if (*outx == 1) {
               uhsj = uhsj + whj;
             } else {
-              dhsj = dhsj + whj;
+              dhsj = dhsj + whj / 2;
+              chsj = chsj + whj / 2;
             }
           }
         }

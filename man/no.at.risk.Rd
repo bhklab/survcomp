@@ -27,7 +27,6 @@ number of individuals at risk at each time step specified in \code{t.step} up to
 %\note{ ~~further notes~~ }
 \seealso{\code{\link[survival]{survfit}}, \code{\link[survcomp]{km.coxph.plot}}}
 \examples{
-require(survival)
 set.seed(12345)
 stime <- rexp(100)
 cens   <- runif(100,.5,2)
