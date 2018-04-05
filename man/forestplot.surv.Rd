@@ -54,7 +54,7 @@ r.lower <- c(NA, 0.33, 0.4, 0.6)
 r.upper <- c(NA, 0.37, 0.6, 0.7)
 
 forestplot.surv(labeltext=labeltext, mean=r.mean, lower=r.lower, upper=r.upper,
-zero=0.5, align=c("l"), graphwidth=unit(2, "inches"), x.ticks=seq(0.3,0.8,0.1),
+zero=0.5, align=c("l"), graphwidth=grid::unit(2, "inches"), x.ticks=seq(0.3,0.8,0.1),
 xlab=paste( "Forestplot Example", myspace, sep=""), col=meta.colors(box="royalblue",
 line="darkblue", zero="darkred"), box.size=bs, clip=c(0.3,0.8))
 }
