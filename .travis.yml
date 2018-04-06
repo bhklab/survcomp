@@ -5,6 +5,7 @@ cache: packages
 apt_packages:
   - ghostscript
 r_packages:
+  - devtools
   - xtable
 r_github_packages:
   - jimhester/covr
