@@ -97,8 +97,9 @@ The \Rpackage{SurvComp} package is providing functions to assess and to statisti
 \Rpackage{SurvComp} requires that \Rpackage{survival}, \Rpackage{ipred},  \Rpackage{prodlim}, \Rpackage{survivalROC}, \Rpackage{SuppDists}, \Rpackage{bootstrap} and \Rpackage{R} (>= 2.3.0) are installed. These should be installed automatically when you install \Rpackage{SurvComp}. To install \Rpackage{SurvComp}, source biocLite from bioconductor:
 
 <<install-pkg, eval=false>>=
-source("http://bioconductor.org/biocLite.R")
-biocLite("survcomp")
+if (!requireNamespace("BiocManager", quietly=TRUE))
+    install.packages("BiocManager")
+BiocManager::install("survcomp")
 @
 
 Load the \Rpackage{SurvComp}, into your current workspace:
