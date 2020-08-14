@@ -28,7 +28,7 @@ Note that the value D reported in (Royston and Sauerbrei, 2004) is given
 }
 \value{
   \item{d.index }{D index (exponentiated, aka hazard ratio).}
-	\item{coef }{D index estimate (coefficient) fitted in the cox regression model.}
+  \item{coef }{D index estimate (coefficient) fitted in the cox regression model.}
   \item{se }{standard error of the estimate.}
   \item{lower }{lower bound for the confidence interval.}
   \item{upper }{upper bound for the confidence interval.}
