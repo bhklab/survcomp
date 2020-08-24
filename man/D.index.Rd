@@ -27,7 +27,7 @@ method.test = c("logrank", "likelihood.ratio", "wald"), na.rm = FALSE, ...)
 Note that the value D reported in (Royston and Sauerbrei, 2004) is given
 }
 \value{
-  \item{d.index }{The The d.index value is the robust hazard ratio (coefficient exponentiated).}
+  \item{d.index }{The d.index value is the robust hazard ratio (coefficient exponentiated).}
   \item{coef }{D index as reported in (Royston and Sauerbrei, 2004), ie. coefficient fitted in the cox regression model.}
   \item{se }{standard error of the estimate.}
   \item{lower }{lower bound for the confidence interval.}
