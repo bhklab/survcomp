@@ -31,7 +31,7 @@
 #'   kappa = sqrt(8/pi). See (Royston and Sauerbrei, 2004) for details.
 #'   Note that the value D reported in (Royston and Sauerbrei, 2004) is given.
 #'
-#' @value
+#' @return
 #' A list with items:
 #' - d.index: D index (exponentiated, aka hazard ratio).
 #' - coef: D index estimate (coefficient) fitted in the cox regression model.
@@ -44,9 +44,6 @@
 #' - data: list of data used to compute the index (x, z, surv.time and
 #' surv.event). The item z contains the scaled rankits which are the expected
 #' standard Normal order statistics scaled by kappa.
-#'
-#' @authors
-#' Benjamin Haibe-Kains
 #'
 #' @references
 #' Royston, P. and Sauerbrei, W. (2004) "A new measure of prognostic separation

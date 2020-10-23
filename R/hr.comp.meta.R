@@ -37,9 +37,6 @@
 #' - data: list of data used to compute the hazard ratio (x, surv.time and
 #' surv.event).
 #'
-#' @authors
-#' Benjamin Haibe-Kains
-#'
 #' @references
 #' Cox, D. R. (1972) "Regression Models and Life Tables", Journal of the Royal
 #'   Statistical Society Series B, 34, pages 187–220.

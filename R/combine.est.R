@@ -20,9 +20,6 @@
 #' - estimate: meta-estimate
 #' - se: standard error of the meta-estimate
 #'
-#' @authors
-#' Benjamin Haibe-Kains
-#'
 #' @references
 #' Cochrane, W. G. (1954) "The combination of estimates from different
 #'   experiments", Biometrics, 10, pages 101–129.

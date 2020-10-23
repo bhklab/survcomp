@@ -21,9 +21,6 @@
 #'
 #' @return [`numeric`] p-value
 #'
-#' @authors
-#' Benjamin Haibe-Kains
-#'
 #' @references
 #' Whitlock, M. C. (2005) "Combining probability from independent tests: the
 #'   weighted Z-method is superior to Fisher's approach", J. Evol. Biol., 18,

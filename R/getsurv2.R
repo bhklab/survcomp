@@ -20,13 +20,10 @@
 #'
 #' @return vector of survival probabilities
 #'
-#' @authors
-#' Benjamin Haibe-Kains
-#'
 #' @seealso
 #' [survival::survfit]
 #'
-#' @exampless
+#' @examples
 #' set.seed(12345)
 #' age <- rnorm(30, 50, 10)
 #' stime <- rexp(30)

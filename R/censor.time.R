@@ -18,8 +18,6 @@
 #' - surv.time.cens: vector of censored times to event occurrence
 #' - srv.event.cens: vector of censored indicators for event occurrence
 #'
-#' @authors
-#' Benjamin Haibe-Kains
 #'
 #' @examples
 #' set.seed(12345)

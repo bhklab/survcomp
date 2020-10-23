@@ -29,10 +29,6 @@
 #' - n: number of observations used to estimate the cross-validated partial
 #' likelihood
 #'
-#'
-#' @authors
-#' Benjamin Haibe-Kains
-#'
 #' @references
 #' Verweij PJM. and van Houwelingen H (1993) "Cross-validation in survival
 #'   analysis", Statistics in Medicine, 12, pages 2305–2314

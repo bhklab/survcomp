@@ -23,9 +23,6 @@
 #' - bhr1: value of the first balanced hazard ratio
 #' - bhr2: value of the second balanced hazard ratio
 #'
-#' @authors
-#' Samuel Branders, Benjamin Haibe-Kains
-#'
 #' @references
 #' Student. (1908) "The Probable Error of a Mean", Biometrika, 6, 1, pages 1–25.
 #' Haibe-Kains, B. and Desmedt, C. and Sotiriou, C. and Bontempi, G. (2008)

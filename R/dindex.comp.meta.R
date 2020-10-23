@@ -29,9 +29,6 @@
 #' - dindex1: meta-estimator of the first D index.
 #' - dindex2: meta-estimator of the second D index.
 #'
-#' @authors
-#' Benjamin Haibe-Kains
-#'
 #' @references
 #' Cochrane, W. G. (1954) "The combination of estimates from different
 #'   experiments", Biometrics, 10, pages 101–129.

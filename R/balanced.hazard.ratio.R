@@ -35,9 +35,6 @@
 #' - data: list of data used to compute the balanced hazard ratio (x,
 #' surv.time and surv.event).
 #'
-#' @authors
-#' Samuel Branders
-#'
 #' @references
 #' Branders, S. and Dupont, P. (2015) "A balanced hazard ratio for risk group
 #'   evaluation from survival data", Statistics in Medicine, 34(17),

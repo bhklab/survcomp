@@ -28,8 +28,6 @@
 #' - cindex1: meta-estimator of the first concordance index.
 #' - cindex2: meta-estimator of the second concordance index.
 #'
-#' @authors
-#' Benjamin Haibe-Kains
 #'
 #' @references
 #' Cochrane, W. G. (1954) "The combination of estimates from different

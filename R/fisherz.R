@@ -27,9 +27,6 @@
 #'
 #' @return [`numeric`] Fisher's z statistic
 #'
-#' @authors
-#' Benjamin Haibe-Kains
-#'
 #' @references
 #' R. A. Fisher (1915) "Frequency distribution of the values of the correlation
 #'   coefficient in samples of an indefinitely large population". Biometrika,

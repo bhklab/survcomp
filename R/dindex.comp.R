@@ -25,9 +25,6 @@
 #' - dindex1: value of the first D index
 #' - dindex2: value of the second D index
 #'
-#' @authors
-#' Benjamin Haibe-Kains
-#'
 #' @references
 #' Haibe-Kains, B. and Desmedt, C. and Sotiriou, C. and Bontempi, G. (2008)
 #'   "A comparative study of survival models for breast cancer prognostication

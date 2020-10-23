@@ -25,8 +25,6 @@
 #' - hr1: value of the first hazard ratio
 #' - hr2: value of the second hazard ratio
 #'
-#' @authors
-#' Benjamin Haibe-Kains
 #'
 #' @references
 #' Student (1908). "The Probable Error of a Mean", Biometrika, 6, 1, pages 1–25.
