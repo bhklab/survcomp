@@ -1,3 +1,43 @@
+#' @name getsurv2
+#'
+#' @title Function to retrieve the survival probabilities at a specific point
+#'   in time
+#'
+#' @description
+#' The function retrieves the survival probabilities from a survfit object, for
+#'   a specific point in time.
+#'
+#' @usage getsurv2(sf, time, which.est = c("point", "lower", "upper"))
+#'
+#' @param sf survfit object
+#' @param time time at which the survival probabilities must be retrieved
+#' @param which.est which estimation to be returned? point for the point
+#'   estimate, lower for the lower bound and upper for the upper bound
+#'
+#' @details
+#' The survival probabilities are estimated through the [survival::survfit]
+#'   function.
+#'
+#' @return vector of survival probabilities
+#'
+#' @authors
+#' Benjamin Haibe-Kains
+#'
+#' @seealso
+#' [survival::survfit]
+#'
+#' @exampless
+#' set.seed(12345)
+#' age <- rnorm(30, 50, 10)
+#' stime <- rexp(30)
+#' cens <- runif(30,.5,2)
+#' sevent <- as.numeric(stime <= cens)
+#' stime <- pmin(stime, cens)
+#' sf <- survfit(Surv(stime, sevent) ~ 1)
+#' getsurv2(sf, time=1)
+#'
+#' @md
+#' @export
 getsurv2 <-
 function(sf, time, which.est=c("point", "lower", "upper")) {
 	which.est <- match.arg(which.est)
