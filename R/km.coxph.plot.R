@@ -1,3 +1,80 @@
+#' @name km.coxph.plot
+#'
+#' @title Function to plot several Kaplan-Meier survival curves
+#'
+#' @description
+#' Function to plot several Kaplan-Meier survival curves with number of
+#'   individuals at risk at some time points.
+#'
+#' @usage
+#' km.coxph.plot(formula.s, data.s, weight.s, x.label, y.label, main.title, sub.title,
+#' leg.text, leg.pos = "bottomright", leg.bty = "o", leg.inset = 0.05, o.text, v.line,
+#' h.line, .col = 1:4, .lty = 1, .lwd = 1, show.n.risk = FALSE, n.risk.step,
+#' n.risk.cex = 0.85, verbose = TRUE, ...)
+#'
+#' @param formula.s formula composed of a Surv object and a strata variable
+#'   (i.e. stratification).
+#' @param data.s data frame composed of the variables used in the formula.
+#' @param weight.s vector of weights of length nrow(data.s).
+#' @param x.label label for the y-axis.
+#' @param y.label label for the x-axis.
+#' @param main.title main title at the top of the plot.
+#' @param sub.title subtitle at the bottom of the plot.
+#' @param leg.text text in the legend.
+#' @param leg.pos the location may also be specified by setting 'x' to a single
+#'   keyword from the list "bottomright", "bottom", "bottomleft", "left",
+#'   "topleft", "top", "topright", "right" and "center". This places the
+#'   legend on the inside of the plot frame at the given location.
+#' @param leg.bty the type of box to be drawn around the legend. The allowed
+#'   values are "o" (the default) and "n".
+#' @param leg.inset inset distance from the margins as a fraction of the plot
+#'   region. Default value is 0.05.
+#' @param o.text plot the logrank p-value.
+#' @param v.line x coordinate(s) for vertical line(s).
+#' @param h.line y coordinate(s) for horizontal line(s).
+#' @param .col vector of colors for the different survival curves.
+#' @param .lty vector of line types for the different survival curves
+#' @param .lwd vector of line widths for the different survival curves.
+#' @param show.n.risk if `TRUE`, show the numbers of samples at risk for each time
+#'   step.
+#' @param n.risk.step vector specifying the time to be the steps for displaying
+#'   the number of individuals at risk.
+#' @param n.risk.cex size of the number of individuals at risk. Default value is
+#'   0.85.
+#' @param verbose verbosity level (TRUE or FALSE). Default value is TRUE.
+#' @param ... additional parameters to be passed to the plot function.
+#'
+#' @details
+#' The original version of this function was kindly provided by Dr Christos
+#'   Hatzis (January, 17th 2006).
+#'
+#' @return
+#' Several Kaplan-Meier survival curves with number of individuals at risk at
+#'   some time points.
+#'
+#' @seealso
+#' [survival::suvfit], [survival::coxph]
+#'
+#' @examples
+#' set.seed(12345)
+#' stime <- rexp(100) * 10
+#' cens   <- runif(100,.5,2) * 10
+#' sevent  <- as.numeric(stime <= cens)
+#' stime <- pmin(stime, cens)
+#' strat <- sample(1:3, 100, replace=TRUE)
+#' dd <- data.frame("surv.time"=stime, "surv.event"=sevent, "strat"=strat)
+#' ddweights <- array(1, dim=nrow(dd))
+#'
+#' if (interactive()) {
+#' km.coxph.plot(formula.s=Surv(surv.time, surv.event) ~ strat, data.s=dd,
+#'   weight.s=ddweights, x.label="Time (years)", y.label="Probability of survival",
+#'   main.title="", leg.text=paste(c("Low", "Intermediate", "High"), "   ", sep=""),
+#'   leg.pos="topright", leg.inset=0, .col=c("darkblue", "darkgreen", "darkred"),
+#'   .lty=c(1,1,1), show.n.risk=TRUE, n.risk.step=2, n.risk.cex=0.85, verbose=FALSE)
+#' }
+#'
+#' @md
+#' @export
 km.coxph.plot <-
 function(formula.s, data.s, weight.s, x.label, y.label, main.title, sub.title, leg.text, leg.pos="bottomright", leg.bty="o", leg.inset=0.05, o.text, v.line, h.line, .col=1:4, .lty=1, .lwd=1, show.n.risk=FALSE, n.risk.step, n.risk.cex=0.85, verbose=TRUE, ...) {
 
