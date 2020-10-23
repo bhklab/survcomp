@@ -1,3 +1,11 @@
+#' @name
+#'
+#'
+#'
+#'
+#'
+#' @md
+#' @export
 test.hetero.test <-
 function(p, weight, na.rm=FALSE) {
 	k <- length(p);

@@ -3,6 +3,10 @@
 #' @title Function to compute sensitivity and specificity for a binary
 #'   classification of survival data
 #'
+#' @details
+#' The function is a wrapper for the survivalROC.C function in order to compute
+#'   sensitivity and specificity for a binary classification of survival data.
+#'
 #' @usage
 #' td.sens.spec(cl, surv.time, surv.event, time, span = 0, sampling = FALSE,
 #'   na.rm = FALSE, ...)
