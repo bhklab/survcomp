@@ -1,4 +1,4 @@
-`D.index` <-
+D.index <-
 function(x, surv.time, surv.event, weights, strat, alpha=0.05, method.test=c("logrank", "likelihood.ratio", "wald"), na.rm=FALSE, ...) {
 	#require(SuppDists)
 	method.test <- match.arg(method.test)

@@ -1,4 +1,4 @@
-`cindex.comp` <-
+cindex.comp <-
 function(cindex1, cindex2) {
 
 	if(cindex1$n != cindex2$n) { stop("the concordance indices are computed from different number of samples!") }

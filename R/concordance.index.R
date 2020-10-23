@@ -1,4 +1,79 @@
-`concordance.index` <-
+#' @title Function to compute the concordance index for survival or binary class prediction
+#'
+#' @details
+#' Function to compute the concordance index for a risk prediction, i.e. the
+#'   probability that, for a pair of randomly chosen comparable samples, the
+#'   sample with the higher risk prediction will experience an event before
+#'   the other sample or belongs to a higher binary class.
+#'
+#' @section Note:
+#' The "direction" of the concordance index (< 0.5 or > 0.5) is the opposite
+#'   than the [Hmisc::rcorr.cens] function in the Hmisc package. So you can
+#'   easily get the same results than [Hmisc::rcorr.cens] by changing the sign
+#'   of x.
+#'
+#' @param x a vector of risk predictions.
+#' @param surv.time a vector of event times.
+#' @param cl a vector of event occurence indicators.
+#' @param weights weight of each sample.
+#' @param comppairs threshold for comparable patients.
+#' @param strat stratification indicator.
+#' @param alpha apha level to compute confidence interval.
+#' @param outx set to TRUE to not count pairs of observations tied on x as a
+#'   relevant pair. This results in a Goodman-Kruskal gamma type rank
+#'   correlation.
+#' @param method can take the value conservative, noether or name
+#'   (see paper Pencina et al. for details).
+#' @param alternative a character string specifying the alternative hypothesis,
+#'   must be one of "two.sided" (default), "greater" (concordance index is
+#'   greater than 0.5) or "less" (concordance index is less than 0.5). You can
+#'   specify just the initial letter.
+#' @param na.rm `TRUE` if missing values should be removed.
+#'
+#' @return A [`list`] containing the items:
+#'   - c.index concordance index estimate.
+#'   - se standard error of the estimate.
+#'   - lower lower bound for the confidence interval.
+#'   - upper upper bound for the confidence interval.
+#'   - p.value p-value for the statistical test if the estimate if different from 0.5.
+#'   - n number of samples used for the estimation.
+#'   - data list of data used to compute the index (x, surv.time and surv.event, or cl).
+#'   - comppairs number of compairable pairs.
+#'
+#' @references
+#' Harrel Jr, F. E. and Lee, K. L. and Mark, D. B. (1996) "Tutorial in
+#'   biostatistics: multivariable prognostic models: issues in developing
+#'   models, evaluating assumptions and adequacy, and measuring and reducing
+#'   error", Statistics in Medicine, 15, pages 361–387.
+#' Pencina, M. J. and D'Agostino, R. B. (2004) "Overall C as a measure of
+#'   discrimination in survival analysis: model specific population value and
+#'   confidence interval estimation", Statistics in Medicine, 23, pages
+#'   2109–2123, 2004.
+#'
+#' @seealso
+#' [Hmisc::rcorr.cens], [CPE::phcpe], [clinfun::coxphCPE]
+#'
+#' @examples
+#' set.seed(12345)
+#' age <- rnorm(100, 50, 10)
+#' sex <- sample(0:1, 100, replace=TRUE)
+#' stime <- rexp(100)
+#' cens   <- runif(100,.5,2)
+#' sevent  <- as.numeric(stime <= cens)
+#' stime <- pmin(stime, cens)
+#' strat <- sample(1:3, 100, replace=TRUE)
+#' weight <- runif(100, min=0, max=1)
+#' comppairs <- 10
+#' cat("survival prediction:\n")
+#' concordance.index(x=age, surv.time=stime, surv.event=sevent, strat=strat,
+#'   weights=weight, method="noether", comppairs=comppairs)
+#' cat("binary class prediction:\n")
+#' ## is age predictive of sex?
+#' concordance.index(x=age, cl=sex, strat=strat, method="noether")
+#'
+#' @useDynLib
+#' @export concordance.index
+concordance.index <-
 function(x, surv.time, surv.event, cl, weights, comppairs=10, strat, alpha=0.05, outx=TRUE, method=c("conservative", "noether", "nam"), alternative=c("two.sided", "less", "greater"), na.rm=FALSE) {
 	method <- match.arg(method)
 	alternative <- match.arg(alternative)

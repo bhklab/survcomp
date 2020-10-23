@@ -1,4 +1,4 @@
-'combine.est' <-
+combine.est <-
 function(x, x.se, hetero=FALSE, na.rm=FALSE) {
 	cc.ix <- complete.cases(x, x.se)
 	if(!all(cc.ix) && !na.rm) { stop("missing values are present!") }

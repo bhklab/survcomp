@@ -1,4 +1,4 @@
-`balanced.hazard.ratio` <-
+balanced.hazard.ratio <-
 function(x, surv.time, surv.event, alpha=0.05, method.test = c("logrank", "likelihood.ratio", "wald"), ties=c("efron","breslow","exact"), weights, strat, ...)
 {
     #Balanced Hazard ratio

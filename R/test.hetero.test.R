@@ -1,4 +1,4 @@
-'test.hetero.test' <-
+test.hetero.test <-
 function(p, weight, na.rm=FALSE) {
 	k <- length(p);
 	if(missing(weight)) { weight <- rep(1, k); }

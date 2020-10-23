@@ -1,4 +1,4 @@
-'fisherz' <-
+fisherz <-
 function(x, inv=FALSE, eps=1e-16) {
 	
 	myfoo <- function(x, inv, eps) {

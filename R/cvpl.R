@@ -1,4 +1,4 @@
-`cvpl` <-
+cvpl <-
 function(x, surv.time, surv.event, strata, nfold=1, setseed, na.rm=FALSE, verbose=FALSE) {
 	x <- as.data.frame(x)
 	if(is.null(dimnames(x))) { dimnames(x) <- list(names(surv.time), "x") }

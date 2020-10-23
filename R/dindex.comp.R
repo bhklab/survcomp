@@ -1,4 +1,4 @@
-`dindex.comp` <-
+dindex.comp <-
 function(dindex1, dindex2) {
 	if(dindex1$n != dindex2$n) { stop("the D indices are computed from different number of samples!") }
 	n <- dindex1$n

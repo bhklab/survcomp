@@ -1,4 +1,4 @@
-`sbrier.score2proba` <-
+sbrier.score2proba <-
 function(data.tr, data.ts, method=c("cox", "prodlim")) {
 	## require(ipred)
 	method <- match.arg(method)

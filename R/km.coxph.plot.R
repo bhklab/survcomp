@@ -1,4 +1,4 @@
-'km.coxph.plot' <-
+km.coxph.plot <-
 function(formula.s, data.s, weight.s, x.label, y.label, main.title, sub.title, leg.text, leg.pos="bottomright", leg.bty="o", leg.inset=0.05, o.text, v.line, h.line, .col=1:4, .lty=1, .lwd=1, show.n.risk=FALSE, n.risk.step, n.risk.cex=0.85, verbose=TRUE, ...) {
 
 	if (missing(sub.title)) { sub.title <- NULL }

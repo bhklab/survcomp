@@ -1,4 +1,4 @@
-`hr.comp` <-
+hr.comp <-
 function(hr1, hr2) {
 	if(hr1$n != hr2$n) { stop("the hazard ratios are computed from different number of samples!") }
 	n <- hr1$n

@@ -1,4 +1,4 @@
-`no.at.risk` <-
+no.at.risk <-
 function( formula.s, data.s, sub.s="all", t.step, t.end ) {
 # Updated 6.6.11 to work from summary.surfvit
 

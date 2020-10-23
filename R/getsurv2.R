@@ -1,4 +1,4 @@
-`getsurv2` <-
+getsurv2 <-
 function(sf, time, which.est=c("point", "lower", "upper")) {
 	which.est <- match.arg(which.est)
 	switch(which.est,

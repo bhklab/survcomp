@@ -1,4 +1,4 @@
-`logpl` <-
+logpl <-
 function(pred, surv.time, surv.event, strata, na.rm=FALSE, verbose=FALSE) {
 
 	##############

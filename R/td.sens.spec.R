@@ -1,4 +1,4 @@
-'td.sens.spec' <-
+td.sens.spec <-
 function(cl, surv.time, surv.event, time, span=0, sampling=FALSE, na.rm=FALSE, ...) {
 	#require(survivalROC)
 	

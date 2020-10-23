@@ -1,4 +1,4 @@
-`dindex.comp.meta` <-
+dindex.comp.meta <-
 function(list.dindex1, list.dindex2, hetero=FALSE) {
 
 	if(length(list.dindex1) != length(list.dindex2)) { stop("the concordance indices are computed from different number of samples!") }

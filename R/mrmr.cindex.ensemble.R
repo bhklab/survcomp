@@ -1,4 +1,4 @@
-`mrmr.cindex.ensemble` <-
+mrmr.cindex.ensemble <-
 function(x, surv.time, surv.event, cl, weights, comppairs=10, strat, alpha=0.05, outx=TRUE, method=c("conservative", "noether", "nam"), alternative=c("two.sided", "less", "greater"), maxparents, maxnsol, nboot=200, na.rm=FALSE) {
 
 	nvar<-ncol(x)

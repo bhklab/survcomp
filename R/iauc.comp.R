@@ -1,4 +1,4 @@
-`iauc.comp` <-
+iauc.comp <-
 function(auc1, auc2, time) {
 	if((length(auc1) + length(auc2) + length(time)) != 3 * length(time)) { stop("auc1, auc2 and time must have the same length!") }
 	cc.ix <- complete.cases(auc1, auc2, time)

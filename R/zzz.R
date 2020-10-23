@@ -1,4 +1,4 @@
-.onLoad <- function(libname, pkgname)
-{
-  library.dynam("survcomp", pkgname, libname)
-}
+#.onLoad <- function(libname, pkgname)
+#{
+#  library.dynam("survcomp", pkgname, libname)
+#}

@@ -1,4 +1,4 @@
-`hr.comp.meta` <-
+hr.comp.meta <-
 function(list.hr1, list.hr2, hetero=FALSE) {
 
 	if(length(list.hr1) != length(list.hr2)) { stop("the concordance indices are computed from different number of samples!") }

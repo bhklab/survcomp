@@ -1,4 +1,4 @@
-`bhr.comp` <-
+bhr.comp <-
 function(bhr1, bhr2) {
 	if(bhr1$n != bhr2$n) { stop("the balanced hazard ratios are computed from different number of samples!") }
 	n <- bhr1$n

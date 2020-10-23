@@ -12,3 +12,4 @@ Suggests: Hmisc, CPE, clinfun, xtable, Biobase, BiocManager
 Imports: ipred, SuppDists, KernSmooth, survivalROC, bootstrap, grid, rmeta, stats, graphics
 License: Artistic-2.0
 URL: http://www.pmgenomics.ca/bhklab/
+RoxygenNote: 7.1.1

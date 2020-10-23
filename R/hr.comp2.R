@@ -1,4 +1,4 @@
-`hr.comp2` <-
+hr.comp2 <-
 function(x1, beta1, se1, x2, beta2, se2, n) {
 	r <- cor(x1, x2, method="spearman", use="complete.obs")
 	if(abs(r) < 1) {

@@ -1,4 +1,4 @@
-`tdrocc` <-
+tdrocc <-
 function(x, surv.time, surv.event, surv.entry=NULL, time, cutpts=NA, na.rm=FALSE, verbose=FALSE, span=0, lambda=0, ...) {
 	#require(survivalROC)	
 	data <- list("x"=x, "surv.time"=surv.time, "surv.event"=surv.event)

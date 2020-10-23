@@ -1,4 +1,4 @@
-`cindex.comp.meta` <-
+cindex.comp.meta <-
 function(list.cindex1, list.cindex2, hetero=FALSE) {
 
 	if(length(list.cindex1) != length(list.cindex2)) { stop("the number of concordance indices is not the same!") }

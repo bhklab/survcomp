@@ -12,7 +12,6 @@
 \usepackage{amsmath}
 \usepackage{hyperref}
 \usepackage[numbers]{natbib}
-\usepackage[american]{babel}
 \usepackage{authblk}
 \usepackage{graphicx}
 \usepackage{epstopdf}

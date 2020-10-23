@@ -1,4 +1,4 @@
-`censor.time` <-
+censor.time <-
 function(surv.time, surv.event, time.cens=0) {
 	stc <- surv.time
    sec <- surv.event

@@ -1,4 +1,4 @@
-'.extract.all.parents'  <-
+.extract.all.parents  <-
 function(data,res.main,maxparents,predn) {
 ### function taking the output of the regrnet.ensemble method and returns a matrix
 ### containing one equivalent model in each column. The target variable is in the first row.

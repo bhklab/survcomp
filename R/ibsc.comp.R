@@ -1,4 +1,4 @@
-`ibsc.comp` <-
+ibsc.comp <-
 function(bsc1, bsc2, time) {
 	if((length(bsc1) + length(bsc2) + length(time)) != 3 * length(time)) { stop("bsc1, bsc2 and time must have the same length!") }
 	cc.ix <- complete.cases(bsc1, bsc2, time) & !duplicated(time)

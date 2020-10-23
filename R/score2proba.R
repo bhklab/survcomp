@@ -1,4 +1,4 @@
-`score2proba` <-
+score2proba <-
 function(data.tr, score, yr, method=c("cox", "prodlim"), conf.int=0.95, which.est=c("point", "lower", "upper")) {
 	method <- match.arg(method)
 	which.est <- match.arg(which.est)
