@@ -1,3 +1,61 @@
+#' @name td.sens.spec
+#'
+#' @title Function to compute sensitivity and specificity for a binary
+#'   classification of survival data
+#'
+#' @usage
+#' td.sens.spec(cl, surv.time, surv.event, time, span = 0, sampling = FALSE,
+#'   na.rm = FALSE, ...)
+#'
+#' @param cl vector of binary classes.
+#' @param surv.time vector of times to event occurrence.
+#' @param surv.event vector of event occurrence indicators.
+#' @param time time point for sensitivity and specificity estimations.
+#' @param span Span for the NNE. Default value is 0.
+#' @param sampling jackknife procedure to estimate the standard error of
+#'   sensitivity and specificity estimations.
+#' @param na.rm TRUE if the missing values should be removed from the data,
+#'   FALSE otherwise.
+#' @param ... additional arguments to be passed to the
+#'   [survivalROC::survivalROC] function.
+#'
+#' @details
+#' Only NNE method is used to estimate sensitivity and specificity
+#'   (see [survivalROC::survivalROC.C]). The standard error for sensitivity and
+#'   specificity is estimated through jackknife procedure (see
+#'   [bootstrap::jackknife]).
+#'
+#' @return
+#' A list of items:
+#' - sens: sensitivity estimate
+#' - sens.se: standard error for sensitivity estimate
+#' - spec: specificity estimate
+#' - spec.se: standard error for specificity estimate
+#'
+#' @references
+#' Heagerty, P. J. and Lumley, T. L. and Pepe, M. S. (2000) "Time-Dependent ROC
+#'   Curves for Censored Survival Data and a Diagnostic Marker", Biometrics,
+#'   56, pages 337–344.
+#'
+#' Efron, B. and Tibshirani, R. (1986). "The Bootstrap Method for standard
+#'   errors, confidence intervals, and other measures of statistical accuracy",
+#'   Statistical Science, 1 (1), pages 1–35.
+#'
+#' @seealso
+#' [survivalROC::survivalROC]
+#'
+#' @examples
+#' set.seed(12345)
+#' gender <- sample(c(0,1), 100, replace=TRUE)
+#' stime <- rexp(100)
+#' cens <- runif(100,.5,2)
+#' sevent <- as.numeric(stime <= cens)
+#' stime <- pmin(stime, cens)
+#' mysenspec <- td.sens.spec(cl=gender, surv.time=stime, surv.event=sevent,
+#'   time=1, span=0, na.rm=FALSE)
+#'
+#' @md
+#' @export
 td.sens.spec <-
 function(cl, surv.time, surv.event, time, span=0, sampling=FALSE, na.rm=FALSE, ...) {
 	#require(survivalROC)

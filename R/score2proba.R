@@ -7,12 +7,16 @@
 #'   compute the survival probabilities from a risk score for a specific
 #'   point in time.
 #'
-#' @param data.tr
-#' @param score
-#' @param yr
-#' @param method
-#' @param conf.int
-#' @param which.est
+#' @param data.tr the data frame for the training set. This data frame must
+#'   contain three columns for the times, the event occurrence and the risk
+#'   score. These columns are called "time", "event" and "score" respectively
+#' @param score risk score for the test set
+#' @param yr a point in time for which the survival probabilities must be computed
+#' @param method method for survival probabilities estimation, either cox or
+#'   prodlim for the Cox model or the product-limit estimator, respectively
+#' @param conf.int value in [0,1]. Default at 0.95
+#' @param which.est which estimation to be returned? point for the point
+#'   estimate, lower for the lower bound and upper for the upper bound
 #'
 #' @return vector of predicted survival probabilities
 #'
