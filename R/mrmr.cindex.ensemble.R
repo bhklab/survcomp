@@ -16,21 +16,11 @@
 #' "nam"), alternative = c("two.sided", "less", "greater"), maxparents,
 #' maxnsol, nboot = 200, na.rm = FALSE)
 #'
-#' @param x
-#' @param surv.time
-#' @param surv.event
-#' @param cl
-#' @param weights
-#' @param comppairs
-#' @param strat
-#' @param alpha
-#' @param outx
-#' @param method
-#' @param alternative
-#' @param maxparents
-#' @param maxnsol
-#' @param nboot
-#' @param na.rm
+#' @inheritParams mrmr.cindex
+#' @param maxparents maximum number of candidate variables to be added in the
+#'   ranking solutions tree.
+#' @param maxnsol maximum number of ranking solutions to be considered.
+#' @param nboot number of bootstraps to compute standard error of a ranking solution.
 #'
 #' @return A mRMR ranking
 #'
