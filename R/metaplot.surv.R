@@ -1,3 +1,55 @@
+#' @name metaplot.surv
+#'
+#' @title Meta-analysis plot (forest plot)
+#'
+#' @description
+#' Plot confidence intervals with boxes indicating the sample size/precision and
+#'   optionally a diamond indicating a summary confidence interval. This
+#'   function is usually called by plot methods for meta-analysis objects.
+#'   Additional, you can specifiy your own lower and upper boarder from the
+#'   confidence interval.
+#'
+#' @param mn point estimates from studies
+#' @param se standard errors of mn
+#' @param lower Vector of lower ends of confidence intervals
+#' @param upper Vector of upper ends of confidence intervals
+#' @param nn precision: box ares is proportional to this. 1/se^2 is the default
+#' @param labels labels for each interval
+#' @param conf.level Confidence level for confidence intervals
+#' @param xlab label for the point estimate axis
+#' @param ylab label for the axis indexing the different studies
+#' @param xlim the range for the x axis.
+#' @param summn summary estimate
+#' @param sumse standard error of summary estimate
+#' @param sumlower lower end of confidence intervals of summary estimate
+#' @param sumupper upper end of confidence intervals of summary estimate
+#' @param sumnn precision of summary estimate
+#' @param summlabel label for summary estimate
+#' @param logeffect TRUE to display on a log scale
+#' @param lwd line width
+#' @param boxsize Scale factor for box size
+#' @param zero "Null" effect value
+#' @param xaxt use "n" for no x-axis (to add a customised one)
+#' @param logticks if TRUE and logscale, have tick values approximately equally
+#'   spaced on a log scale
+#' @param colors see [remeta::meta.colors]
+#' @param ... Other graphical parameters
+#'
+#' @return
+#' This function is used for its side-effect.
+#'
+#' @seealso
+#' [survcomp::forestplot.surv]
+#'
+#' @examples
+#' if (interactive()) {
+#'   metaplot.surv(mn=c(0.4,0.5,0.6), lower=c(0.35,0.4,0.57), upper=c(0.45,0.6,0.63),
+#'   labels=c("A","B","C"), xlim=c(0.2,0.8), boxsize=0.5, zero=0.5,
+#'   col=rmeta::meta.colors(box="royalblue",line="darkblue",zero="firebrick"))
+#' }
+#'
+#' @md
+#' @export
 metaplot.surv <- function( mn, se=NULL, lower=NULL, upper=NULL, nn=NULL,
     labels=NULL, conf.level = .95, xlab = "", ylab = "", xlim = NULL,
     summn = NULL, sumse = NULL, sumlower = NULL, sumupper = NULL,
