@@ -1,10 +1,18 @@
+#' .extract.all.parents
+#'
+#' Function taking the output of the regrnet.ensemble method and returns a matrix
+#' containing one equivalent model in each column. The target variable is in the first row.
+#'
+#' @param res.main output of regrnet.ensemble
+#' @param maxparents maxparents parameter of the netinf method
+#' @param predn list of target variables for which ensemble method was run.
+#'
+#' @md
+#' @keywords internal
+#' @noRd
 .extract.all.parents  <-
 function(data,res.main,maxparents,predn) {
-### function taking the output of the regrnet.ensemble method and returns a matrix
-### containing one equivalent model in each column. The target variable is in the first row.
-### res.main: 	output of regrnet.ensemble
-### maxparents:	maxparents parameter of the netinf method
-### predn:	list of target variables for which ensemble method was run.
+
 
 	final <- NULL
 	cnt_main <- 1
