@@ -1,5 +1,3 @@
-#' @name hr.comp
-#'
 #' @title Function to statistically compare two hazard ratios
 #'
 #' @description
@@ -24,7 +22,6 @@
 #' (equivalently hr1 > hr2)
 #' - hr1: value of the first hazard ratio
 #' - hr2: value of the second hazard ratio
-#'
 #'
 #' @references
 #' Student (1908). "The Probable Error of a Mean", Biometrika, 6, 1, pages 1–25.

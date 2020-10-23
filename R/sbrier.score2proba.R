@@ -1,5 +1,3 @@
-#' @name sbrier.score2proba
-#'
 #' @title Function to compute the BSCs from a risk score, for all the times of
 #'   event occurrence
 #'
@@ -17,7 +15,6 @@
 #'   These columns are called "time", "event" and "score" respectively.
 #' @param method method for survival probabilities estimation using either a
 #'   Cox model or the product-limit estimator
-#'
 #'
 #' @return
 #' A list containing items:

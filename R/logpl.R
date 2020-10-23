@@ -1,5 +1,3 @@
-#' @name logpl
-#'
 #' @title Function to compute the log partial likelihood of a Cox model
 #'
 #' @usage

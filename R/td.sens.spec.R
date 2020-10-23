@@ -1,5 +1,3 @@
-#' @name td.sens.spec
-#'
 #' @title Function to compute sensitivity and specificity for a binary
 #'   classification of survival data
 #'

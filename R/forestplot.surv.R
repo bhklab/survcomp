@@ -1,5 +1,3 @@
-#' @name forestplot.surv
-#'
 #' @title Forest plots enables to display performance estimates of survival
 #'   models
 #'

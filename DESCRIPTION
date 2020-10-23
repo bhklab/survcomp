@@ -9,7 +9,9 @@ Author: Benjamin Haibe-Kains, Markus Schroeder, Catharina Olsen, Christos Sotiri
 Maintainer: Benjamin Haibe-Kains <benjamin.haibe.kains@utoronto.ca>, Markus Schroeder <markus.schroeder@ucdconnect.ie>, Catharina Olsen <colsen@ulb.ac.be>
 Depends: survival, prodlim, R (>= 3.4)
 Suggests: Hmisc, CPE, clinfun, xtable, Biobase, BiocManager
-Imports: ipred, SuppDists, KernSmooth, survivalROC, bootstrap, grid, rmeta, stats, graphics
+Imports: ipred, SuppDists, KernSmooth, survivalROC, bootstrap, grid, rmeta,
+  stats, graphics
 License: Artistic-2.0
+Encoding: UTF-8
 URL: http://www.pmgenomics.ca/bhklab/
 RoxygenNote: 7.1.1

@@ -1,5 +1,3 @@
-#' @name censor.time
-#'
 #' @title Function to artificially censor survival data
 #'
 #' @description

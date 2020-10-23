@@ -1,5 +1,3 @@
-#' @name cindex.comp.meta
-#'
 #' @title Function to compare two concordance indices
 #'
 #' @description

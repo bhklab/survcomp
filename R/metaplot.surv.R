@@ -1,5 +1,3 @@
-#' @name metaplot.surv
-#'
 #' @title Meta-analysis plot (forest plot)
 #'
 #' @description
@@ -32,7 +30,7 @@
 #' @param xaxt use "n" for no x-axis (to add a customised one)
 #' @param logticks if TRUE and logscale, have tick values approximately equally
 #'   spaced on a log scale
-#' @param colors see [remeta::meta.colors]
+#' @param colors see [rmeta::meta.colors]
 #' @param ... Other graphical parameters
 #'
 #' @return

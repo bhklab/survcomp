@@ -1,5 +1,3 @@
-#' @name hazard.ratio
-#'
 #' @title Function to estimate the hazard ratio through Cox regression
 #'
 #' @description

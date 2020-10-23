@@ -1,5 +1,3 @@
-#' @title Function to compute the concordance index for survival or binary class prediction
-#'
 #' @details
 #' Function to compute the concordance index for a risk prediction, i.e. the
 #'   probability that, for a pair of randomly chosen comparable samples, the

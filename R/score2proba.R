@@ -1,5 +1,3 @@
-#' @name score2proba
-#'
 #' @title Function to compute the survival probabilities from a risk score
 #'
 #' @description

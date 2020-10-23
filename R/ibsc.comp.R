@@ -1,5 +1,3 @@
-#' @name ibsc.comp
-#'
 #' @title Function to compare two IBSCs
 #'
 #' @description

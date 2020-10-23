@@ -1,5 +1,3 @@
-#' @name D.index
-#'
 #' @title Function to compute the D index
 #'
 #' @description
@@ -122,3 +120,4 @@ function(x, surv.time, surv.event, weights, strat, alpha=0.05, method.test=c("lo
 
 	return(res)
 }
+

@@ -1,5 +1,3 @@
-#' @name iauc.comp
-#'
 #' @title Function to compare two IAUCs through time-dependent ROC curves
 #'
 #' @description

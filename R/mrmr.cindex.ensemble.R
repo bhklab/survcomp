@@ -1,5 +1,3 @@
-#' @name mrmr.cindex.ensemble
-#'
 #' @title Function to compute the concordance index for survival or binary class
 #'   prediction
 #'
@@ -16,7 +14,7 @@
 #' "nam"), alternative = c("two.sided", "less", "greater"), maxparents,
 #' maxnsol, nboot = 200, na.rm = FALSE)
 #'
-#' @inheritParams mrmr.cindex
+#' @inherit mrmr.cindex
 #' @param maxparents maximum number of candidate variables to be added in the
 #'   ranking solutions tree.
 #' @param maxnsol maximum number of ranking solutions to be considered.

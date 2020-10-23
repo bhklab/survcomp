@@ -1,5 +1,3 @@
-#' @name test.hetero.est
-#'
 #' @title Function to test the heterogeneity of set of probabilities
 #'
 #' @description

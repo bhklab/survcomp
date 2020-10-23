@@ -1,5 +1,3 @@
-#' @name bhr.comp
-#'
 #' @title Function to statistically compare two balanced hazard ratios
 #'
 #' @description

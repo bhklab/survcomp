@@ -9,7 +9,7 @@
 #'
 #' @md
 #' @keywords internal
-#' @noRd
+#' @noRds
 .extract.all.parents  <-
 function(data,res.main,maxparents,predn) {
 

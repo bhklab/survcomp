@@ -1,5 +1,3 @@
-#' @name combine.test
-#'
 #' @title Function to combine probabilities
 #'
 #' @description

@@ -1,5 +1,3 @@
-#' @name km.coxph.plot
-#'
 #' @title Function to plot several Kaplan-Meier survival curves
 #'
 #' @description
@@ -53,7 +51,7 @@
 #'   some time points.
 #'
 #' @seealso
-#' [survival::suvfit], [survival::coxph]
+#' [survival::survfit], [survival::coxph]
 #'
 #' @examples
 #' set.seed(12345)

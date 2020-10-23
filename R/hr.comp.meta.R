@@ -1,5 +1,3 @@
-#' @name hr.comp.meta
-#'
 #' @title Function to estimate the hazard ratio through Cox regression
 #'
 #' @description
@@ -18,7 +16,7 @@
 #' @param method.test Statistical test to use in order to compute the p-values
 #'   related to a D. index, see [survival::summary.coxph] for more details.
 #' @param na.rm `TRUE` if missing values should be removed.
-#' @param ... `r print("additional parameters to be passed to [survival::coxph] function")`
+#' @param ... Additional parameters to be passed to [survival::coxph] function"
 #'
 #' @details
 #' The hazard ratio is computed using the Cox model.

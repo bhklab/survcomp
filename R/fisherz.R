@@ -1,5 +1,3 @@
-#' @name fisherz
-#'
 #' @title Function to compute Fisher z transformation
 #'
 #' @description

@@ -1,5 +1,3 @@
-#' @name cvpl
-#'
 #' @title Function to compute the CVPL
 #'
 #' @description
@@ -109,4 +107,3 @@ function(x, surv.time, surv.event, strata, nfold=1, setseed, na.rm=FALSE, verbos
 	names(conv) <- names(pl) <- paste(rep("split", nfold), 1:nfold, sep=".")
 	return (list("cvpl"=res.cvpl, "pl"=pl, "convergence"=conv, "n"=nr))
 }
-

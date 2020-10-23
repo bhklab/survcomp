@@ -1,5 +1,3 @@
-#' @name no.at.risk
-#'
 #' @title Function to compute the number of individuals at risk
 #'
 #' @description

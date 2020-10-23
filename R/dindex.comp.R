@@ -1,5 +1,3 @@
-#' @name dindex.comp
-#'
 #' @title Function to compare two D indices
 #'
 #' @description

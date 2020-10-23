@@ -1,5 +1,3 @@
-#' @name mrmr.cindex
-#'
 #' @title
 #' Function to compute the concordance index for survival or binary class
 #'   prediction
@@ -55,7 +53,7 @@
 #'   2109–2123, 2004.
 #'
 #' @seealso
-#' [Hmsic::rcorr.cens], [CPE::phcpe], [clinfun::coxphCPE]
+#' [Hmisc::rcorr.cens], [CPE::phcpe], [clinfun::coxphCPE]
 #'
 #' @examples
 #' set.seed(12345)

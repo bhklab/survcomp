@@ -1,5 +1,3 @@
-#' @name balanced.harzard.ratio
-#'
 #' @title Function to estimate the balanced hazard ratio through Cox regression
 #'
 #' @description

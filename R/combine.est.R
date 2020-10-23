@@ -1,5 +1,3 @@
-#' @name combine.est
-#'
 #' @title Function to combine estimates
 #'
 #' @description

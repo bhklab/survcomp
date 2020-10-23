@@ -1,5 +1,3 @@
-#' @name getsurv2
-#'
 #' @title Function to retrieve the survival probabilities at a specific point
 #'   in time
 #'

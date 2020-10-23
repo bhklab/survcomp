@@ -1,5 +1,3 @@
-#' @name hr.comp2
-#'
 #' @title Function to statistically compare two hazard ratios (alternative
 #'   interface)
 #'
