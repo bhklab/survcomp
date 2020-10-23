@@ -1,3 +1,76 @@
+#' @name cindex.comp.meta
+#'
+#' @title Function to compare two concordance indices
+#'
+#' @description
+#' This function compares two lists of concordance indices computed from the
+#'   same survival data by using the function concordance.index. The statistical
+#'   test is a Student t test for dependent samples.
+#'
+#' @param list.cindex1 first list of concordance indices as returned by the
+#'   [survcomp::concordance.index] function.
+#' @param list.cindex2 second list of concordance indices as returned by the
+#'   [survcomp::concordance.index] function.
+#' @param hetero if `TRUE`, a random effect model is use to compute the
+#'   meta-estimators. Otherwise a fixed effect model is used.
+#'
+#' @details
+#' In meta-analysis, we estimate the statistic of interest in several
+#'   independent datasets. It results a list of estimates such as list of
+#'   concordance indices. The two lists of concordance indices must be computed
+#'   from the same samples (and corresponding survival data). The function
+#'   computes a meta-estimator for the correlations between the two scores and
+#'   uses a Student t test for dependent samples.
+#'
+#' @return
+#' A list with items:
+#' - p.value: p-value from the Student t test for the comparison cindex1 > cindex2.
+#' - cindex1: meta-estimator of the first concordance index.
+#' - cindex2: meta-estimator of the second concordance index.
+#'
+#' @authors
+#' Benjamin Haibe-Kains
+#'
+#' @references
+#' Cochrane, W. G. (1954) "The combination of estimates from different
+#'   experiments", Biometrics, 10, pages 101–129.
+#' Haibe-Kains, B. and Desmedt, C. and Sotiriou, C. and Bontempi, G. (2008)
+#'   "A comparative study of survival models for breast cancer prognostication
+#'   based on microarray data: does a single gene beat them all?",
+#'   Bioinformatics, 24, 19, pages 2200–2208.
+#'
+#' @seealso
+#' [survcomp::concordance.index]
+#'
+#' @examples
+#' #first dataset
+#' set.seed(12345)
+#' age <- rnorm(100, 50, 10)
+#' size <- rexp(100,1)
+#' stime <- rexp(100)
+#' cens <- runif(100,.5,2)
+#' sevent <- as.numeric(stime <= cens)
+#' stime <- pmin(stime, cens)
+#' c1.1 <- concordance.index(x=age, surv.time=stime, surv.event=sevent,
+#'   method="noether")
+#' c2.1 <- concordance.index(x=size, surv.time=stime, surv.event=sevent,
+#'   method="noether")
+#' #second dataset
+#' set.seed(54321)
+#' age <- rnorm(110, 53, 10)
+#' size <- rexp(110,1.1)
+#' stime <- rexp(110)
+#' cens <- runif(110,.55,2)
+#' sevent <- as.numeric(stime <= cens)
+#' stime <- pmin(stime, cens)
+#' c1.2 <- concordance.index(x=age, surv.time=stime, surv.event=sevent,
+#'   method="noether")
+#' c2.2 <- concordance.index(x=size, surv.time=stime, surv.event=sevent,
+#'   method="noether")
+#' cindex.comp.meta(list.cindex1=list("cindex.age1"=c1.1, "cindex.age2"=c1.2),
+#'   list.cindex2=list("cindex.size1"=c2.1, "cindex.size2"=c2.2))
+#'
+#' @export
 cindex.comp.meta <-
 function(list.cindex1, list.cindex2, hetero=FALSE) {
 
