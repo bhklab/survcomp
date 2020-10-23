@@ -1,3 +1,48 @@
+#' @name logpl
+#'
+#' @title Function to compute the log partial likelihood of a Cox model
+#'
+#' @usage
+#' logpl(pred, surv.time, surv.event, strata, na.rm = FALSE, verbose = FALSE)
+#'
+#' @param surv.time vector of times to event occurrence
+#' @param surv.event vector of indicators for event occurrence
+#' @param pred linear predictors computed using the Cox model
+#' @param strata stratification variable
+#' @param na.rm TRUE if the missing values should be removed from the data,
+#'   FALSE otherwise
+#' @param verbose verbosity of the function
+#'
+#' @return
+#' vector of two elements: `logpl` and event for the estimation of the log
+#'   partial likelihood and the number of events, respectively
+#'
+#' @references
+#' Cox, D. R. (1972) "Regression Models and Life Tables", Journal of the Royal
+#'   Statistical Society Series B, 34, pages 187–220.
+#'
+#' @seealso
+#' [survival::coxph], [survcomp::cvpl]
+#'
+#' @examples
+#' set.seed(12345)
+#' age <- rnorm(100, 50, 10)
+#' stime <- rexp(100)
+#' cens <- runif(100,.5,2)
+#' sevent <- as.numeric(stime <= cens)
+#' stime <- pmin(stime, cens)
+#' dd <- data.frame("stime"=stime, "sevent"=sevent, "age"=age)
+#' ##Cox model
+#' coxm <- coxph(Surv(stime, sevent) ~ age, data=dd)
+#' ##log partial likelihood of the null model
+#' logpl(pred=rep(0, nrow(dd)), surv.time=stime, surv.event=sevent)
+#' ##log partial likelihood of the Cox model
+#' logpl(pred=predict(object=coxm, newdata=dd), surv.time=stime, surv.event=sevent)
+#' ##equivalent to
+#' coxm$loglik
+#'
+#' @md
+#' @export
 logpl <-
 function(pred, surv.time, surv.event, strata, na.rm=FALSE, verbose=FALSE) {
 
