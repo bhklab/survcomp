@@ -10,14 +10,15 @@
 #' cvpl(x, surv.time, surv.event, strata, nfold = 1, setseed, na.rm = FALSE,
 #'   verbose = FALSE)
 #'
-#' @param x
-#' @param surv.time
-#' @param surv.event
-#' @param strata
-#' @param nfold
-#' @param setseed
-#' @param na.rm
-#' @param verbose
+#' @param x data matrix
+#' @param surv.time vector of times to event occurrence
+#' @param surv.event vector of indicators for event occurrence
+#' @param strata stratification variable
+#' @param nfold number of folds for the cross-validation
+#' @param setseed seed for the random generator
+#' @param na.rm `TRUE` if the missing values should be removed from the data,
+#'   `FALSE` otherwise
+#' @param verbose verbosity of the function
 #'
 #' @return
 #' A list with items:
