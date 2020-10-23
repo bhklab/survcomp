@@ -72,6 +72,7 @@
 #' concordance.index(x=age, cl=sex, strat=strat, method="noether")
 #'
 #' @useDynLib
+#' @md
 #' @export concordance.index
 concordance.index <-
 function(x, surv.time, surv.event, cl, weights, comppairs=10, strat, alpha=0.05, outx=TRUE, method=c("conservative", "noether", "nam"), alternative=c("two.sided", "less", "greater"), na.rm=FALSE) {

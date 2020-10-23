@@ -1,3 +1,60 @@
+#' @name cvpl
+#'
+#' @title Function to compute the CVPL
+#'
+#' @description
+#' The function computes the cross-validated partial likelihood (CVPL) for the
+#'   Cox model.
+#'
+#' @usage
+#' cvpl(x, surv.time, surv.event, strata, nfold = 1, setseed, na.rm = FALSE,
+#'   verbose = FALSE)
+#'
+#' @param x
+#' @param surv.time
+#' @param surv.event
+#' @param strata
+#' @param nfold
+#' @param setseed
+#' @param na.rm
+#' @param verbose
+#'
+#' @return
+#' A list with items:
+#' - cvpl: mean cross-validated partial likelihood (lower is better)
+#' - pl: vector of cross-validated partial likelihoods
+#' - convergence: vector of booleans reporting the convergence of the Cox model
+#' in each fold
+#' - n: number of observations used to estimate the cross-validated partial
+#' likelihood
+#'
+#'
+#' @authors
+#' Benjamin Haibe-Kains
+#'
+#' @references
+#' Verweij PJM. and van Houwelingen H (1993) "Cross-validation in survival
+#'   analysis", Statistics in Medicine, 12, pages 2305–2314
+#'
+#' van Houwelingen H, Bruinsma T, Hart AA, van't Veer LJ, and Wessels LFA (2006)
+#'   "Cross-validated Cox regression on microarray gene expression data",
+#'   Statistics in Medicine, 25, pages 3201–3216.
+#'
+#' @seealso
+#' [survcomp::logpl], [survival::coxph]
+#'
+#' @examples
+#' set.seed(12345)
+#' age <- rnorm(100, 50, 10)
+#' stime <- rexp(100)
+#' cens   <- runif(100,.5,2)
+#' sevent  <- as.numeric(stime <= cens)
+#' stime <- pmin(stime, cens)
+#' strat <- sample(1:3, 100, replace=TRUE)
+#' cvpl(x=age, surv.time=stime, surv.event=sevent, strata=strat,
+#'   nfold=10, setseed=54321)
+#'
+#' @export
 cvpl <-
 function(x, surv.time, surv.event, strata, nfold=1, setseed, na.rm=FALSE, verbose=FALSE) {
 	x <- as.data.frame(x)
