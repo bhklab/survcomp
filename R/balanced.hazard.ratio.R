@@ -58,6 +58,7 @@
 #' balanced.hazard.ratio(x=age, surv.time=stime, surv.event=sevent,
 #'   weights=weight, strat=strat)
 #'
+#' @md
 #' @export
 balanced.hazard.ratio <-
 function(x, surv.time, surv.event, alpha=0.05, method.test = c("logrank", "likelihood.ratio", "wald"), ties=c("efron","breslow","exact"), weights, strat, ...)

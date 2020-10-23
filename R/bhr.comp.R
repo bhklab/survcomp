@@ -37,7 +37,9 @@
 #'   pages 2528–2543.
 #'
 #' @seealso
-#' [survcomp::balanced.hazard.ratio], [survival::coxph], [stats::t.test]
+#' [survcomp::balanced.hazard.ratio]
+#' [survival::coxph]
+#' [stats::t.test]
 #'
 #' @examples
 #' set.seed(12345)
@@ -51,6 +53,7 @@
 #' bhr2 <- balanced.hazard.ratio(x=size, surv.time=stime, surv.event=sevent)
 #' bhr.comp(bhr1=bhr1, bhr2=bhr2)
 #'
+#' @md
 #' @export
 bhr.comp <-
 function(bhr1, bhr2) {

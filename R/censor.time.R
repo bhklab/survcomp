@@ -29,6 +29,7 @@
 #' stime <- pmin(stime, cens)
 #' censor.time(surv.time=stime, surv.event=sevent, time.cens=1)
 #'
+#' @md
 #' @export
 censor.time <-
 function(surv.time, surv.event, time.cens=0) {

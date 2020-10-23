@@ -70,6 +70,7 @@
 #' cindex.comp.meta(list.cindex1=list("cindex.age1"=c1.1, "cindex.age2"=c1.2),
 #'   list.cindex2=list("cindex.size1"=c2.1, "cindex.size2"=c2.2))
 #'
+#' @md
 #' @export
 cindex.comp.meta <-
 function(list.cindex1, list.cindex2, hetero=FALSE) {
