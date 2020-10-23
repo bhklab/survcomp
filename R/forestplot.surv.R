@@ -1,3 +1,73 @@
+#' @name forestplot.surv
+#'
+#' @title Forest plots enables to display performance estimates of survival
+#'   models
+#'
+#' @description
+#' Draw a forest plot together with a table of text.
+#'
+#' @usage
+#' forestplot.surv(labeltext, mean, lower, upper, align = NULL,
+#'   is.summary = FALSE, clip = c(-Inf, Inf), xlab = "", zero = 0,
+#'   graphwidth = unit(2, "inches"), col, xlog = FALSE,
+#'   box.size = NULL, x.ticks = NULL, ...)
+#'
+#' @param labeltext Matrix of strings or NAs for blank spaces
+#' @param mean Vector of centers of confidence intervals (or NAs for blank
+#'   space)
+#' @param lower Vector of lower ends of confidence intervals
+#' @param upper Vector of upper ends of confidence intervals
+#' @param align Vector giving alignment (l,r,c) for columns of table
+#' @param is.summary Vector of logicals. Summary lines have bold text and
+#'   diamond confidence intervals.
+#' @param clip Lower and upper limits for clipping confidence intervals to
+#'   arrows
+#' @param xlab x-axis label
+#' @param zero x-axis coordinate for zero line
+#' @param graphwidth Width of confidence interval graph
+#' @param col See [rmeta::meta.colors]
+#' @param xlog If `TRUE`, x-axis tick marks are exponentiated
+#' @param box.size Override the default box size based on precision
+#' @param x.ticks Optional user-specified x-axis tick marks. Specify `NULL` to
+#'   use the defaults, `numeric(0)` to omit the x-axis.
+#' @param ... Not used.
+#'
+#' @details
+#' This function is more flexible than [rmeta::metaplot] and the plot methods for
+#'   meta-analysis objects, but requires more work by the user. In particular,
+#'   it allows for a table of text, and clips confidence intervals to arrows
+#'   when they exceed specified limits.
+#'
+#' @return None
+#'
+#' @references
+#' rmeta package, CRAN, Thomas Lumley <tlumley@u.washington.edu>. Functions for
+#'   simple fixed and random effects meta-analysis for two-sample comparisons
+#'   and cumulative meta-analyses. Draws standard summary plots, funnel plots,
+#'   and computes summaries and tests for association and heterogeneity.
+#'
+#' @seealso
+#' [rmeta::metaplot], [forestplot::forestplot]
+#'
+#' @examples
+#' require(rmeta)
+#' myspace <- "    "
+#' labeltext <- cbind(c("Gene Symbol", "AAA", "BBB", "CCC"),c(rep(myspace,4)))
+#' bs <- rep(0.5, nrow(labeltext))
+#' r.mean <- c(NA, 0.35, 0.5, 0.65)
+#' r.lower <- c(NA, 0.33, 0.4, 0.6)
+#' r.upper <- c(NA, 0.37, 0.6, 0.7)
+#'
+#' if (interactive()) {
+#' forestplot.surv(labeltext=labeltext, mean=r.mean, lower=r.lower,
+#'   upper=r.upper, zero=0.5, align=c("l"), graphwidth=grid::unit(2, "inches"),
+#'   x.ticks=seq(0.3,0.8,0.1), xlab=paste( "Forestplot Example", myspace, sep=""),
+#'   col=meta.colors(box="royalblue", line="darkblue", zero="darkred"),
+#'   box.size=bs, clip=c(0.3,0.8))
+#' }
+#'
+#' @md
+#' @export
 forestplot.surv <-
 function(labeltext, mean, lower, upper, align=NULL, is.summary=FALSE, clip=c(-Inf,Inf), xlab="", zero= 0, graphwidth=unit(2,"inches"), col, xlog=FALSE, box.size=NULL, x.ticks=NULL, ...){
 	
