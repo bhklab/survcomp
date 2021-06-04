@@ -14,4 +14,4 @@ Imports: ipred, SuppDists, KernSmooth, survivalROC, bootstrap, grid, rmeta,
 License: Artistic-2.0
 Encoding: UTF-8
 URL: http://www.pmgenomics.ca/bhklab/
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.1.9000

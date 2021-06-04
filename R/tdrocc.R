@@ -1,3 +1,5 @@
+#' @title Function to compute time-dependent ROC curves
+#' 
 #' @description
 #' The function is a wrapper for the survivalROC.C function in order to compute
 #'   sensitivity and specificity for a binary classification of survival data.
