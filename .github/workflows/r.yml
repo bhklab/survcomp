@@ -59,7 +59,7 @@ jobs:
           rcmdcheck::rcmdcheck(
             args = c("--no-manual", "--as-cran", "--ignore-vignettes"),
             build_args = c("--no-build-vignettes", "--resave-data"),
-            error_on = "warning", 
+            error_on = "error", 
             check_dir = "check"
           )
         shell: Rscript {0}
