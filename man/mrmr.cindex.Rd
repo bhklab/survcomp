@@ -39,7 +39,7 @@ The "direction" of the concordance index (< 0.5 or > 0.5) is the opposite than t
 Pencina, M. J. and D'Agostino, R. B. (2004) "Overall C as a measure of discrimination in survival analysis: model specific population value and confidence interval estimation", \emph{Statistics in Medicine}, \bold{23}, pages 2109--2123, 2004.}
 \author{Benjamin Haibe-Kains, Markus Schroeder}
 %\note{ ~~further notes~~ }
-\seealso{\code{\link[Hmisc]{rcorr.cens}}, \code{\link[CPE]{phcpe}}, \code{\link[clinfun]{coxphCPE}}}
+\seealso{\code{\link[Hmisc]{rcorr.cens}}, \code{\link[clinfun]{coxphCPE}}}
 \examples{
 set.seed(12345)
 age <- rnorm(100, 50, 10)
