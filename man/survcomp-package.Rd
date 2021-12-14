@@ -63,6 +63,6 @@ Markus Schroeder
 \keyword{ survival }
 \keyword{ htest }
 \seealso{
-\code{survival}, \code{Hmisc}, \code{Design}, \code{prodlim}, \code{survivalROC}, \code{ipred}, \code{bootstrap}, \code{CPE}, \code{clinfun}
+\code{survival}, \code{Hmisc}, \code{Design}, \code{prodlim}, \code{survivalROC}, \code{ipred}, \code{bootstrap}, \code{clinfun}
 }
 %\examples{}

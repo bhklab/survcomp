@@ -1,14 +1,25 @@
 Package: survcomp
 Type: Package
 Title: Performance Assessment and Comparison for Survival Analysis
-Version: 1.43.0
+Version: 1.45.0
 Date: 2021-02-04
 Description: Assessment and Comparison for Performance of Risk Prediction (Survival) Models.
 biocViews: GeneExpression, DifferentialExpression, Visualization
-Author: Benjamin Haibe-Kains, Markus Schroeder, Catharina Olsen, Christos Sotiriou, Gianluca Bontempi, John Quackenbush, Samuel Branders, Zhaleh Safikhani
-Maintainer: Benjamin Haibe-Kains <benjamin.haibe.kains@utoronto.ca>, Markus Schroeder <markus.schroeder@ucdconnect.ie>, Catharina Olsen <colsen@ulb.ac.be>
+Authors@R: c(
+    person("Benjamin", "Haibe-Kains", email="benjamin.haibe.kains@utoronto.ca",
+        role=c("aut", "cre")), 
+    person("Markus" , "Schroeder", email="markus.schroeder@ucdconnect.ie",
+        role=c("aut")), 
+    person("Catharina", "Olsen", email="colsen@ulb.ac.be", 
+        role=c("aut")),
+    person("Christos", "Sotiriou", role=c("aut")),
+    person("Gianluca", "Bontempi", role=c("aut")),
+    person("John", "Quackenbush", role=c("aut")),
+    person("Samuel", "Branders", role=c("aut")),
+    person("Zhaleh", "Safikhani", role=c("aut"))
+    )
 Depends: survival, prodlim, R (>= 3.4)
-Suggests: Hmisc, CPE, clinfun, xtable, Biobase, BiocManager, tinytex
+Suggests: Hmisc, clinfun, xtable, Biobase, BiocManager
 Imports: ipred, SuppDists, KernSmooth, survivalROC, bootstrap, grid, rmeta,
     stats, graphics
 License: Artistic-2.0
