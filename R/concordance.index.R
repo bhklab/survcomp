@@ -102,7 +102,7 @@ function(x, surv.time, surv.event, cl, weights, comppairs=10, strat, alpha=0.05,
     p <- NA
     varp <- NA
   },
-  "name"={
+  "nam"={
     stop("method not implemented!")
   })
   #bound the confidence interval
