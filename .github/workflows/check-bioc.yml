@@ -163,7 +163,7 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           sudo apt-get update -y
-          sudo apt-get install -y texlive
+          sudo apt-get install -y texlive-latex-extra
 
       - name: Install macOS system dependencies
         if: matrix.config.os == 'macOS-latest'
@@ -214,6 +214,8 @@ jobs:
           ## https://stat.ethz.ch/pipermail/bioc-devel/2020-April/016675.html
           ## https://github.com/r-lib/remotes/issues/296
           ## Ideally, all dependencies should get installed in the first pass.
+          install.packages("tinytex")
+          tinytex::tlmgr_install(c("preprint", "babel-english", "grfext"))
 
           ## For running the checks
           message(paste('****', Sys.time(), 'installing rcmdcheck and BiocCheck ****'))
