@@ -159,6 +159,12 @@ jobs:
       #     echo $sysreqs
       #     sudo -s eval "$sysreqs"
 
+      - name: Install Linux TexLive
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y texlive
+
       - name: Install macOS system dependencies
         if: matrix.config.os == 'macOS-latest'
         run: |
@@ -185,6 +191,10 @@ jobs:
           ## Edit below if you have any Windows system dependencies
         shell: Rscript {0}
 
+      - name: Install TinyTeX
+        if: runner.os != 'Linux'
+        uses: r-lib/actions/setup-tinytex@v2
+
       - name: Install BiocManager
         run: |
           message(paste('****', Sys.time(), 'installing BiocManager ****'))
@@ -204,9 +214,6 @@ jobs:
           ## https://stat.ethz.ch/pipermail/bioc-devel/2020-April/016675.html
           ## https://github.com/r-lib/remotes/issues/296
           ## Ideally, all dependencies should get installed in the first pass.
-          install.packages("tinytex")
-          tinytex::install_tinytex()
-          tinytex:::install_yihui_pkgs()
 
           ## For running the checks
           message(paste('****', Sys.time(), 'installing rcmdcheck and BiocCheck ****'))
