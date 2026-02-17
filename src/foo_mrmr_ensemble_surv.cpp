@@ -783,6 +783,8 @@ mrmr_cIndex_ensemble_remove( SEXP Rdata, SEXP Rnamat, SEXP Rmaxparents, SEXP Rnv
 	top=res_tree.begin();
 	int length_res=0;
 	int length_res_old;
+	// empty pointer to store previous result in case (see in loop)
+	int *res_old = nullptr;
 	for(unsigned int i=0;i< *npredn;++i){
 	//	std::cout<<"model for node "<<predn[i]<< " is being built!"<<std::endl;
 		one=res_tree.insert(top, predn[i]);
@@ -813,10 +815,10 @@ mrmr_cIndex_ensemble_remove( SEXP Rdata, SEXP Rnamat, SEXP Rmaxparents, SEXP Rnv
 		////////////////
 		length_res_old=length_res;
 		length_res+=2*(res_tree.size())+1;
-		int *res_all, *res_old;
+		int *res_all;
 		int ind=0;
 		res_all=new int[length_res];
-		if(length_res_old>0){
+		if(length_res_old>0 && res_old != nullptr){
 			for(unsigned int k=0;k<length_res_old;k++){
 				res_all[k]=res_old[k];
 			}
